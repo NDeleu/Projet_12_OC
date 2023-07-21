@@ -1,0 +1,3 @@
+from .first_init_database.first_initialization_db import first_init_bdd
+from .first_init_database.create_first_admin import create_first_administrator
+from .first_init_database.check_empty_db import check_administrator_existence

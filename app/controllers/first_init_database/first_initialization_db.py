@@ -27,7 +27,6 @@ def info_init_bdd():
 
 
 def sql_init_config():
-
     while True:
         username_choice = str(input(
             display_message("Enter your database administrator username: ")))
@@ -60,7 +59,6 @@ def sql_init_config():
                 "Invalid input. Please enter a valid database name without special characters or spaces.")
 
     sett = {
-        'database_type': database_driver_choice,
         'username': username_choice,
         'password': password_choice,
         'database_name': database_name_choice,
@@ -72,16 +70,15 @@ def sql_init_config():
 def set_sql_config_ini(sql_init_config_set):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     controllers_dir = os.path.dirname(script_dir)
-    root_dir = os.path.dirname(controllers_dir)
+    app_dir = os.path.dirname(controllers_dir)
+    root_dir = os.path.dirname(app_dir)
     config_file = os.path.join(root_dir, 'config.ini')
 
     config = ConfigParser()
     config.read(config_file)
 
-    config.set('sql', 'database_type', sql_init_config_set['database_type'])
     config.set('sql', 'username', sql_init_config_set['username'])
     config.set('sql', 'password', sql_init_config_set['password'])
-    config.set('sql', 'host', 'localhost')
     config.set('sql', 'database_name', sql_init_config_set['database_name'])
 
     with open(config_file, 'w') as confchange:
@@ -91,7 +88,8 @@ def set_sql_config_ini(sql_init_config_set):
 def check_config_ini_exist():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     controllers_dir = os.path.dirname(script_dir)
-    root_dir = os.path.dirname(controllers_dir)
+    app_dir = os.path.dirname(controllers_dir)
+    root_dir = os.path.dirname(app_dir)
     config_file = os.path.join(root_dir, 'config.ini')
     if os.path.exists(config_file):
         return True
@@ -112,7 +110,8 @@ def try_connect_bdd(engine):
 def check_default_jwt_secret():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     controllers_dir = os.path.dirname(script_dir)
-    root_dir = os.path.dirname(controllers_dir)
+    app_dir = os.path.dirname(controllers_dir)
+    root_dir = os.path.dirname(app_dir)
     config_file = os.path.join(root_dir, 'config.ini')
     config = ConfigParser()
     config.read(config_file)
@@ -128,7 +127,8 @@ def check_default_jwt_secret():
 def set_jwt_secret():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     controllers_dir = os.path.dirname(script_dir)
-    root_dir = os.path.dirname(controllers_dir)
+    app_dir = os.path.dirname(controllers_dir)
+    root_dir = os.path.dirname(app_dir)
     config_file = os.path.join(root_dir, 'config.ini')
     config = ConfigParser()
     config.read(config_file)

@@ -12,7 +12,8 @@ from app.views.general_views.generic_message import display_message
 def sql_database():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     models_dir = os.path.dirname(script_dir)
-    root_dir = os.path.dirname(models_dir)
+    app_dir = os.path.dirname(models_dir)
+    root_dir = os.path.dirname(app_dir)
     config_file = os.path.join(root_dir, 'config.ini')
 
     config = ConfigParser()
