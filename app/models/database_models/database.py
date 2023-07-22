@@ -68,6 +68,7 @@ def db_engine():
 
         if not database_exists(db_url):
             create_database(db_url)
+            display_message("Database created")
 
         engine = create_engine(db_url)
 

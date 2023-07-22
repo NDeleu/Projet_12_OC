@@ -3,7 +3,7 @@ import re
 
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.models import Administrator
+from app.models import Collaborator
 from app.models import session
 from app.views.general_views.generic_message import display_message
 
@@ -49,6 +49,8 @@ def form_first_admin():
         else:
             break
 
+    role = 1
+
     while True:
         password = str(input(display_message("Enter the password for the first administrator: ")))
         if len(password) < 6:
@@ -58,15 +60,15 @@ def form_first_admin():
         else:
             break
 
-    return surname, lastname, email, password
+    return surname, lastname, email, role, password
 
 
 def create_first_administrator():
     if ask_to_create_admin():
-        surname, lastname, email, password = form_first_admin()
+        surname, lastname, email, role, password = form_first_admin()
         try:
-            administrator = Administrator.create(session, surname, lastname, email, password)
-            display_message(f"Administrator created: {administrator}")
+            collaborator = Collaborator.create(session, surname, lastname, email, role, password)
+            display_message(f"Administrator created: {collaborator}")
         except SQLAlchemyError as e:
             display_message(str(e))
     else:

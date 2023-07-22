@@ -1,4 +1,4 @@
-from app.models import Event, Support, Contract
+from app.models import Event, Collaborator, Contract
 
 
 def test_create_event(db_session):
@@ -20,7 +20,7 @@ def test_create_event(db_session):
     assert new_event.attendees == 100
     assert new_event.instruction == "Bring your IDs"
     assert new_event.contract == contract
-    assert new_event.support is None
+    assert new_event.collaborator is None
 
 
 def test_read_event(db_session):
@@ -45,12 +45,12 @@ def test_read_event(db_session):
     assert read_event.attendees == 100
     assert read_event.instruction == "Bring your IDs"
     assert read_event.contract == contract
-    assert read_event.support is None
+    assert read_event.collaborator is None
 
 
 def test_update_event(db_session):
     # Create a new support for event association
-    support = Support.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", password="secret")
+    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=3, password="secret")
 
     # Create a new contract for event association
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=None)
@@ -61,13 +61,13 @@ def test_update_event(db_session):
                          instruction="Bring your IDs", contract=contract)
 
     # Update the event's name and location
-    event.update(db_session, name="Updated Conference", location="Convention Center", support=support)
+    event.update(db_session, name="Updated Conference", location="Convention Center", collaborator=collaborator)
 
     # Check if the name and location were updated successfully
     updated_event = Event.read(db_session, event.id)
     assert updated_event.name == "Updated Conference"
     assert updated_event.location == "Convention Center"
-    assert updated_event.support == support
+    assert updated_event.collaborator == collaborator
 
 
 def test_delete_event(db_session):

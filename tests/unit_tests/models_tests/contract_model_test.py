@@ -1,10 +1,13 @@
-from app.models import Contract, Customer
+from app.models import Contract, Customer, Collaborator
 
 
 def test_create_contract(db_session):
+    # Create a new seller for customer association
+    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+
     # Create a new customer for contract association
     customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", seller=None)
+                                phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Test creating a new contract
     new_contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer)
@@ -17,9 +20,12 @@ def test_create_contract(db_session):
 
 
 def test_read_contract(db_session):
+    # Create a new seller for customer association
+    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+
     # Create a new customer for contract association
     customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", seller=None)
+                                phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Test reading an existing contract from the database
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer)
@@ -35,9 +41,12 @@ def test_read_contract(db_session):
 
 
 def test_update_contract(db_session):
+    # Create a new seller for customer association
+    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+
     # Create a new customer for contract association
     customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", seller=None)
+                                phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Test updating an existing contract
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer)
@@ -51,9 +60,12 @@ def test_update_contract(db_session):
 
 
 def test_delete_contract(db_session):
+    # Create a new seller for customer association
+    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+
     # Create a new customer for contract association
     customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", seller=None)
+                                phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Test deleting an existing contract
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer)

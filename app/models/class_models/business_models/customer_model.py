@@ -1,6 +1,5 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, text
 from sqlalchemy.orm import relationship
-from sqlalchemy import text
 from datetime import datetime
 from app.models.database_models.database import Base
 
@@ -17,36 +16,46 @@ class Customer(Base):
     company = Column(String)
     date_created = Column(DateTime, default=datetime.now)
     date_updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-    seller_id = Column(Integer, ForeignKey('sellers.id'))
-    seller = relationship("Seller", back_populates="customers")
+    collaborator_id = Column(Integer, ForeignKey('collaborators.id'))
+    collaborator = relationship("Collaborator", back_populates="customers")
     contracts = relationship("Contract", back_populates="customer", cascade="all, delete")
 
-    def __init__(self, surname, lastname, email, phone, company, seller):
+    def __init__(self, surname, lastname, email, phone, company, collaborator):
         self.surname = surname
         self.lastname = lastname
         self.email = email
         self.phone = phone
         self.company = company
-        self.seller = seller
+        self.collaborator = collaborator
 
     @classmethod
-    def create(cls, session, surname, lastname, email, phone, company, seller):
+    def create(cls, session, surname, lastname, email, phone, company,
+               collaborator):
         email_exists = session.execute(
             text(
-                "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:email) "
-                "OR EXISTS (SELECT 1 FROM sellers WHERE email=:email)"
-                "OR EXISTS (SELECT 1 FROM supports WHERE email=:email)"
+                "SELECT EXISTS (SELECT 1 FROM collaborators WHERE email=:email) "
                 "OR EXISTS (SELECT 1 FROM customers WHERE email=:email)"),
             {"email": email}
         ).scalar()
 
         if email_exists:
             raise ValueError(
-                "The email address already exists for an administrator, seller, support or customer.")
+                "The email address already exists for a collaborator or customer.")
+
+        is_seller = session.execute(
+            text(
+                "SELECT 1 FROM collaborators WHERE id=:collaborator_id AND role=:role"
+            ),
+            {"collaborator_id": collaborator.id, "role": "seller"}
+        ).scalar()
+
+        if not is_seller:
+            raise ValueError(
+                "Only collaborators with the role of 'seller' can be linked to a customer.")
 
         customer = Customer(surname=surname, lastname=lastname,
                             email=email, phone=phone,
-                            company=company, seller=seller)
+                            company=company, collaborator=collaborator)
         session.add(customer)
         session.commit()
         return customer
@@ -59,16 +68,14 @@ class Customer(Base):
     def set_email(self, session, new_email):
         email_exists = session.execute(
             text(
-                "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:new_email) "
-                "OR EXISTS (SELECT 1 FROM sellers WHERE email=:new_email)"
-                "OR EXISTS (SELECT 1 FROM supports WHERE email=:new_email)"
+                "SELECT EXISTS (SELECT 1 FROM collaborators WHERE email=:new_email) "
                 "OR EXISTS (SELECT 1 FROM customers WHERE email=:new_email)"),
             {"new_email": new_email}
         ).scalar()
 
         if email_exists:
             raise ValueError(
-                "The email address already exists for an administrator, seller, support or customer.")
+                "The email address already exists for an collaborators or customer.")
 
         self.email = new_email
 
@@ -76,6 +83,18 @@ class Customer(Base):
         for key, value in kwargs.items():
             if key == 'email':
                 self.set_email(session, value)
+            elif key == 'collaborator':
+                is_seller = session.execute(
+                    text(
+                        "SELECT 1 FROM collaborators WHERE id=:collaborator_id AND role=:role"
+                    ),
+                    {"collaborator_id": value.id, "role": "seller"}
+                ).scalar()
+
+                if not is_seller:
+                    raise ValueError("Only collaborators with the role of 'seller' can be linked to a customer.")
+
+                self.collaborator = value
             else:
                 setattr(self, key, value)
         session.commit()

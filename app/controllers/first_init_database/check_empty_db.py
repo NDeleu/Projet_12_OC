@@ -1,8 +1,8 @@
-from app.models import Administrator
+from app.models import Collaborator
 from app.models import session
 
 
 def check_administrator_existence():
-    num_administrators = session.query(Administrator).count()
+    num_collaborators = session.query(Collaborator).count()
 
-    return num_administrators > 0
+    return num_collaborators > 0

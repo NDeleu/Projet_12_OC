@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, text
 from sqlalchemy.orm import relationship
 from app.models.database_models.database import Base
 
@@ -14,8 +14,8 @@ class Event(Base):
     location = Column(String)
     attendees = Column(Integer)
     instruction = Column(String)
-    support_id = Column(Integer, ForeignKey('supports.id'))
-    support = relationship("Support", back_populates="events")
+    collaborator_id = Column(Integer, ForeignKey('collaborators.id'))
+    collaborator = relationship("Collaborator", back_populates="events")
     contract_id = Column(Integer, ForeignKey('contracts.id'), unique=True)
     contract = relationship("Contract", uselist=False, back_populates="event")
 
@@ -44,7 +44,21 @@ class Event(Base):
 
     def update(self, session, **kwargs):
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            if key == 'collaborator':
+                is_support = session.execute(
+                    text(
+                        "SELECT 1 FROM collaborators WHERE id=:collaborator_id AND role=:role"
+                    ),
+                    {"collaborator_id": value.id, "role": "support"}
+                ).scalar()
+
+                if not is_support:
+                    raise ValueError(
+                        "Only collaborators with the role of 'support' can be linked to a customer.")
+
+                self.collaborator = value
+            else:
+                setattr(self, key, value)
         session.commit()
 
     def delete(self, session):

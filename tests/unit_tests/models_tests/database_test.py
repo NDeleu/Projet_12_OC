@@ -38,7 +38,7 @@ def test_database_connection(db_session):
     # vérifier si une table spécifique existe ou si vous pouvez insérer et récupérer des données.
 
     # Exemple de vérification si une table spécifique existe
-    table_exists = db_session.connection().execute(text("SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name='administrators')")).scalar()
+    table_exists = db_session.connection().execute(text("SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name='collaborators')")).scalar()
 
     # Vérifiez si la table existe
     assert table_exists
