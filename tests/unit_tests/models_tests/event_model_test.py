@@ -23,7 +23,7 @@ def test_create_event(db_session):
     assert new_event.collaborator is None
 
 
-def test_read_event(db_session):
+def test_get_by_id_event(db_session):
 
     # Create a new contract for event association
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=None)
@@ -33,7 +33,7 @@ def test_read_event(db_session):
                          event_end="2023-07-22 18:00:00", location="City Hall", attendees=100,
                          instruction="Bring your IDs", contract=contract)
 
-    read_event = Event.read(db_session, event.id)
+    read_event = Event.get_by_id(db_session, event.id)
 
     # Check if the read operation returns the correct event
     assert read_event is not None
@@ -64,7 +64,7 @@ def test_update_event(db_session):
     event.update(db_session, name="Updated Conference", location="Convention Center", collaborator=collaborator)
 
     # Check if the name and location were updated successfully
-    updated_event = Event.read(db_session, event.id)
+    updated_event = Event.get_by_id(db_session, event.id)
     assert updated_event.name == "Updated Conference"
     assert updated_event.location == "Convention Center"
     assert updated_event.collaborator == collaborator
@@ -84,7 +84,7 @@ def test_delete_event(db_session):
     event.delete(db_session)
 
     # Check if the event was deleted successfully
-    deleted_event = Event.read(db_session, event.id)
+    deleted_event = Event.get_by_id(db_session, event.id)
     assert deleted_event is None
 
 

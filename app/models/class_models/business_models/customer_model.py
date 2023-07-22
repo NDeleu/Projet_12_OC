@@ -61,8 +61,13 @@ class Customer(Base):
         return customer
 
     @classmethod
-    def read(cls, session, customer_id):
+    def get_by_id(cls, session, customer_id):
         customer = session.query(Customer).filter_by(id=customer_id).first()
+        return customer
+
+    @classmethod
+    def get_by_email(cls, session, customer_email):
+        customer = session.query(Customer).filter_by(email=customer_email).first()
         return customer
 
     def set_email(self, session, new_email):

@@ -14,13 +14,28 @@ def test_create_collaborator(db_session):
     assert new_collaborator.verify_password("secret")
 
 
-def test_read_collaborator(db_session):
+def test_get_by_id_collaborator(db_session):
     # Test reading an existing collaborator from the database
     collaborator = Collaborator.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com", role=2, password="secret")
 
-    read_collaborator = Collaborator.read(db_session, collaborator.id)
+    read_collaborator = Collaborator.get_by_id(db_session, collaborator.id)
 
-    # Check if the read operation returns the correct collaborator
+    # Check if the get by id operation returns the correct collaborator
+    assert read_collaborator is not None
+    assert read_collaborator.id == collaborator.id
+    assert read_collaborator.surname == "John"
+    assert read_collaborator.lastname == "Doe"
+    assert read_collaborator.email == "john.doe@example.com"
+    assert read_collaborator.role == Collaborator.RoleEnum.seller
+
+
+def test_get_by_email_collaborator(db_session):
+    # Test reading an existing collaborator from the database
+    collaborator = Collaborator.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com", role=2, password="secret")
+
+    read_collaborator = Collaborator.get_by_email(db_session, collaborator.email)
+
+    # Check if the get by email operation returns the correct collaborator
     assert read_collaborator is not None
     assert read_collaborator.id == collaborator.id
     assert read_collaborator.surname == "John"
@@ -37,7 +52,7 @@ def test_update_collaborator(db_session):
     collaborator.update(db_session, email="john.doe.updated@example.com")
 
     # Check if the email was updated successfully
-    updated_collaborator = Collaborator.read(db_session, collaborator.id)
+    updated_collaborator = Collaborator.get_by_id(db_session, collaborator.id)
     assert updated_collaborator.email == "john.doe.updated@example.com"
 
 
@@ -49,5 +64,5 @@ def test_delete_collaborator(db_session):
     collaborator.delete(db_session)
 
     # Check if the collaborator was deleted successfully
-    deleted_collaborator = Collaborator.read(db_session, collaborator.id)
+    deleted_collaborator = Collaborator.get_by_id(db_session, collaborator.id)
     assert deleted_collaborator is None

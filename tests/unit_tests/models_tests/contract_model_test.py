@@ -19,7 +19,7 @@ def test_create_contract(db_session):
     assert new_contract.customer == customer
 
 
-def test_read_contract(db_session):
+def test_get_by_id_contract(db_session):
     # Create a new seller for customer association
     collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
@@ -30,7 +30,7 @@ def test_read_contract(db_session):
     # Test reading an existing contract from the database
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer)
 
-    read_contract = Contract.read(db_session, contract.id)
+    read_contract = Contract.get_by_id(db_session, contract.id)
 
     # Check if the read operation returns the correct contract
     assert read_contract is not None
@@ -55,7 +55,7 @@ def test_update_contract(db_session):
     contract.update(db_session, total_amount=1500.0)
 
     # Check if the total_amount was updated successfully
-    updated_contract = Contract.read(db_session, contract.id)
+    updated_contract = Contract.get_by_id(db_session, contract.id)
     assert updated_contract.total_amount == 1500.0
 
 
@@ -74,5 +74,5 @@ def test_delete_contract(db_session):
     contract.delete(db_session)
 
     # Check if the contract was deleted successfully
-    deleted_contract = Contract.read(db_session, contract.id)
+    deleted_contract = Contract.get_by_id(db_session, contract.id)
     assert deleted_contract is None

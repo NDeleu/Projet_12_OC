@@ -32,7 +32,7 @@ class Contract(Base):
         return contract
 
     @classmethod
-    def read(cls, session, contract_id):
+    def get_by_id(cls, session, contract_id):
         contract = session.query(Contract).filter_by(id=contract_id).first()
         return contract
 

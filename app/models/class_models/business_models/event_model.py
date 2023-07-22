@@ -38,7 +38,7 @@ class Event(Base):
         return event
 
     @classmethod
-    def read(cls, session, event_id):
+    def get_by_id(cls, session, event_id):
         event = session.query(Event).filter_by(id=event_id).first()
         return event
 

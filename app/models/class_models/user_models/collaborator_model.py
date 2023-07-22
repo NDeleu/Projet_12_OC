@@ -58,8 +58,13 @@ class Collaborator(Base):
         return collaborator
 
     @classmethod
-    def read(cls, session, collaborator_id):
+    def get_by_id(cls, session, collaborator_id):
         collaborator = session.query(Collaborator).filter_by(id=collaborator_id).first()
+        return collaborator
+
+    @classmethod
+    def get_by_email(cls, session, collaborator_email):
+        collaborator = session.query(Collaborator).filter_by(email=collaborator_email).first()
         return collaborator
 
     def set_email(self, session, new_email):
