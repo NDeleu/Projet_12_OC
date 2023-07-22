@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy import text
 from passlib.hash import bcrypt
-from app.models.database_models.database import Base, session
+from app.models.database_models.database import Base
 
 
 class Administrator(Base):
@@ -23,7 +23,7 @@ class Administrator(Base):
         self.set_password(password)
 
     @classmethod
-    def create(cls, surname, lastname, email, password):
+    def create(cls, session, surname, lastname, email, password):
         email_exists = session.execute(
             text(
                 "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:email) "
@@ -44,11 +44,11 @@ class Administrator(Base):
         return administrator
 
     @classmethod
-    def read(cls, administrator_id):
+    def read(cls, session, administrator_id):
         administrator = session.query(Administrator).filter_by(id=administrator_id).first()
         return administrator
 
-    def set_email(self, new_email):
+    def set_email(self, session, new_email):
         email_exists = session.execute(
             text(
                 "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:new_email) "
@@ -67,17 +67,17 @@ class Administrator(Base):
     def set_password(self, password):
         self.password = bcrypt.hash(password)
 
-    def update(self, **kwargs):
+    def update(self, session, **kwargs):
         for key, value in kwargs.items():
             if key == 'email':
-                self.set_email(value)
+                self.set_email(session, value)
             elif key == 'password':
                 self.set_password(value)  # Hash the updated password
             else:
                 setattr(self, key, value)
         session.commit()
 
-    def delete(self):
+    def delete(self, session):
         session.delete(self)
         session.commit()
 

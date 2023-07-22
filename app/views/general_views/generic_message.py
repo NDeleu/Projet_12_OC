@@ -4,4 +4,4 @@ console = Console()
 
 
 def display_message(message):
-    console.print(f"[green red]{message}[/green red]")
+    console.print(f"[green]{message}[/green]")

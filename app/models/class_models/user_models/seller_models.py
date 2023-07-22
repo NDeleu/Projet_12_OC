@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy import text
 from passlib.hash import bcrypt
-from app.models.database_models.database import Base, session
+from app.models.database_models.database import Base
 from sqlalchemy.orm import relationship
 
 
@@ -16,7 +16,7 @@ class Seller(Base):
     password = Column(String)
     token = Column(String)
     token_expiration = Column(DateTime)
-    customers = relationship("Customer", back_populates="seller", cascade="nullify")
+    customers = relationship("Customer", back_populates="seller", cascade="all, delete")
 
     def __init__(self, surname, lastname, email, password):
         self.surname = surname
@@ -25,7 +25,7 @@ class Seller(Base):
         self.set_password(password)
 
     @classmethod
-    def create(cls, surname, lastname, email, password):
+    def create(cls, session, surname, lastname, email, password):
         email_exists = session.execute(
             text(
                 "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:email) "
@@ -40,17 +40,17 @@ class Seller(Base):
                 "The email address already exists for an administrator, seller, support or customer.")
 
         seller = Seller(surname=surname, lastname=lastname,
-                                      email=email, password=password)
+                        email=email, password=password)
         session.add(seller)
         session.commit()
         return seller
 
     @classmethod
-    def read(cls, seller_id):
+    def read(cls, session, seller_id):
         seller = session.query(Seller).filter_by(id=seller_id).first()
         return seller
 
-    def set_email(self, new_email):
+    def set_email(self, session, new_email):
         email_exists = session.execute(
             text(
                 "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:new_email) "
@@ -69,17 +69,17 @@ class Seller(Base):
     def set_password(self, password):
         self.password = bcrypt.hash(password)
 
-    def update(self, **kwargs):
+    def update(self, session, **kwargs):
         for key, value in kwargs.items():
             if key == 'email':
-                self.set_email(value)
+                self.set_email(session, value)
             elif key == 'password':
                 self.set_password(value)  # Hash the updated password
             else:
                 setattr(self, key, value)
         session.commit()
 
-    def delete(self):
+    def delete(self, session):
         session.delete(self)
         session.commit()
 

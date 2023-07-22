@@ -1,8 +1,11 @@
 import sys
-from app.models import Administrator
-from app.views.general_views.generic_message import display_message
 import re
+
 from sqlalchemy.exc import SQLAlchemyError
+
+from app.models import Administrator
+from app.models import session
+from app.views.general_views.generic_message import display_message
 
 
 def ask_to_create_admin():
@@ -62,7 +65,7 @@ def create_first_administrator():
     if ask_to_create_admin():
         surname, lastname, email, password = form_first_admin()
         try:
-            administrator = Administrator.create(surname, lastname, email, password)
+            administrator = Administrator.create(session, surname, lastname, email, password)
             display_message(f"Administrator created: {administrator}")
         except SQLAlchemyError as e:
             display_message(str(e))

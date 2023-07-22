@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy import text
 from datetime import datetime
-from app.models.database_models.database import Base, session
+from app.models.database_models.database import Base
 
 
 class Customer(Base):
@@ -30,7 +30,7 @@ class Customer(Base):
         self.seller = seller
 
     @classmethod
-    def create(cls, surname, lastname, email, phone, company, seller):
+    def create(cls, session, surname, lastname, email, phone, company, seller):
         email_exists = session.execute(
             text(
                 "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:email) "
@@ -52,11 +52,11 @@ class Customer(Base):
         return customer
 
     @classmethod
-    def read(cls, customer_id):
+    def read(cls, session, customer_id):
         customer = session.query(Customer).filter_by(id=customer_id).first()
         return customer
 
-    def set_email(self, new_email):
+    def set_email(self, session, new_email):
         email_exists = session.execute(
             text(
                 "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:new_email) "
@@ -72,15 +72,15 @@ class Customer(Base):
 
         self.email = new_email
 
-    def update(self, **kwargs):
+    def update(self, session, **kwargs):
         for key, value in kwargs.items():
             if key == 'email':
-                self.set_email(value)
+                self.set_email(session, value)
             else:
                 setattr(self, key, value)
         session.commit()
 
-    def delete(self):
+    def delete(self, session):
         session.delete(self)
         session.commit()
 

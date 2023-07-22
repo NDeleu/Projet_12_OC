@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, Boolean, Float
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from app.models.database_models.database import Base, session
+from app.models.database_models.database import Base
 
 
 class Contract(Base):
@@ -24,7 +24,7 @@ class Contract(Base):
 
 
     @classmethod
-    def create(cls, total_amount, left_to_pay, customer):
+    def create(cls, session, total_amount, left_to_pay, customer):
         contract = Contract(total_amount=total_amount, left_to_pay=left_to_pay,
                             customer=customer)
         session.add(contract)
@@ -32,16 +32,16 @@ class Contract(Base):
         return contract
 
     @classmethod
-    def read(cls, contract_id):
+    def read(cls, session, contract_id):
         contract = session.query(Contract).filter_by(id=contract_id).first()
         return contract
 
-    def update(self, **kwargs):
+    def update(self, session, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
         session.commit()
 
-    def delete(self):
+    def delete(self, session):
         session.delete(self)
         session.commit()
 

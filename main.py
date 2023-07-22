@@ -1,14 +1,12 @@
-from app.controllers import (first_init_bdd,
-                             check_administrator_existence,
-                             create_first_administrator)
-from sqlalchemy.exc import SQLAlchemyError
+from app.controllers.first_init_database.check_empty_db import check_administrator_existence
+from app.controllers.first_init_database.create_first_admin import create_first_administrator
 
 
 if __name__ == '__main__':
-    try:
-        if check_administrator_existence():
-            import app.models
-        else:
-            create_first_administrator()
-    except SQLAlchemyError:
-        first_init_bdd()
+    if check_administrator_existence():
+        import app.models
+        print("already 1 admin")
+    else:
+        create_first_administrator()
+        import app.models
+        print("no admin")

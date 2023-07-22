@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from app.models.database_models.database import Base, session
+from app.models.database_models.database import Base
 
 
 class Event(Base):
@@ -29,7 +29,7 @@ class Event(Base):
         self.contract = contract
 
     @classmethod
-    def create(cls, name, event_start, event_end, location, attendees, instruction, contract):
+    def create(cls, session, name, event_start, event_end, location, attendees, instruction, contract):
         event = Event(name=name, event_start=event_start, event_end=event_end,
                       location=location, attendees=attendees,
                       instruction=instruction, contract=contract)
@@ -38,16 +38,16 @@ class Event(Base):
         return event
 
     @classmethod
-    def read(cls, event_id):
+    def read(cls, session, event_id):
         event = session.query(Event).filter_by(id=event_id).first()
         return event
 
-    def update(self, **kwargs):
+    def update(self, session, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
         session.commit()
 
-    def delete(self):
+    def delete(self, session):
         session.delete(self)
         session.commit()
 

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy import text
 from passlib.hash import bcrypt
-from app.models.database_models.database import Base, session
+from app.models.database_models.database import Base
 from sqlalchemy.orm import relationship
 
 
@@ -16,7 +16,7 @@ class Support(Base):
     password = Column(String)
     token = Column(String)
     token_expiration = Column(DateTime)
-    events = relationship("Event", back_populates="support", cascade="nullify")
+    events = relationship("Event", back_populates="support", cascade="all, delete")
 
     def __init__(self, surname, lastname, email, password):
         self.surname = surname
@@ -25,7 +25,7 @@ class Support(Base):
         self.set_password(password)
 
     @classmethod
-    def create(cls, surname, lastname, email, password):
+    def create(cls, session, surname, lastname, email, password):
         email_exists = session.execute(
             text(
                 "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:email) "
@@ -46,11 +46,11 @@ class Support(Base):
         return support
 
     @classmethod
-    def read(cls, support_id):
+    def read(cls, session, support_id):
         support = session.query(Support).filter_by(id=support_id).first()
         return support
 
-    def set_email(self, new_email):
+    def set_email(self, session, new_email):
         email_exists = session.execute(
             text(
                 "SELECT EXISTS (SELECT 1 FROM administrators WHERE email=:new_email) "
@@ -69,17 +69,17 @@ class Support(Base):
     def set_password(self, password):
         self.password = bcrypt.hash(password)
 
-    def update(self, **kwargs):
+    def update(self, session, **kwargs):
         for key, value in kwargs.items():
             if key == 'email':
-                self.set_email(value)
+                self.set_email(session, value)
             elif key == 'password':
                 self.set_password(value)  # Hash the updated password
             else:
                 setattr(self, key, value)
         session.commit()
 
-    def delete(self):
+    def delete(self, session):
         session.delete(self)
         session.commit()
 
