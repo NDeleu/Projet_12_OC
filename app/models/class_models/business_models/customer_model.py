@@ -9,7 +9,7 @@ class Customer(Base):
     __tablename__ = 'customers'
 
     id = Column(Integer, primary_key=True)
-    surname = Column(String)
+    firstname = Column(String)
     lastname = Column(String)
     email = Column(String, unique=True)
     phone = Column(Integer)
@@ -20,8 +20,8 @@ class Customer(Base):
     collaborator = relationship("Collaborator", back_populates="customers")
     contracts = relationship("Contract", back_populates="customer", cascade="all, delete")
 
-    def __init__(self, surname, lastname, email, phone, company, collaborator):
-        self.surname = surname
+    def __init__(self, firstname, lastname, email, phone, company, collaborator):
+        self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.phone = phone
@@ -29,7 +29,7 @@ class Customer(Base):
         self.collaborator = collaborator
 
     @classmethod
-    def create(cls, session, surname, lastname, email, phone, company,
+    def create(cls, session, firstname, lastname, email, phone, company,
                collaborator):
         email_exists = session.execute(
             text(
@@ -53,7 +53,7 @@ class Customer(Base):
             raise ValueError(
                 "Only collaborators with the role of 'seller' can be linked to a customer.")
 
-        customer = Customer(surname=surname, lastname=lastname,
+        customer = Customer(firstname=firstname, lastname=lastname,
                             email=email, phone=phone,
                             company=company, collaborator=collaborator)
         session.add(customer)
@@ -119,4 +119,4 @@ class Customer(Base):
         session.commit()
 
     def __str__(self):
-        return f'{self.surname} {self.lastname}'
+        return f'{self.firstname} {self.lastname}'

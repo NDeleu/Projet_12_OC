@@ -4,15 +4,15 @@ import pytest
 
 def test_create_customer(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Test creating a new customer
-    new_customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    new_customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                     phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Check if the customer was created successfully
     assert new_customer.id is not None
-    assert new_customer.surname == "John"
+    assert new_customer.firstname == "John"
     assert new_customer.lastname == "Doe"
     assert new_customer.email == "john.doe@example.com"
     assert new_customer.phone == 123456789
@@ -22,17 +22,17 @@ def test_create_customer(db_session):
 
 def test_read_customers(db_session):
     # Create a new seller for customer association
-    collaborator1 = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
-    collaborator2 = Collaborator.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com", role=2, password="secret")
+    collaborator1 = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator2 = Collaborator.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com", role=2, password="secret")
 
     # Create some customers with different collaborators
-    customer1 = Customer.create(db_session, surname="Smith", lastname="Johnson", email="smith.johnson@example.com",
+    customer1 = Customer.create(db_session, firstname="Smith", lastname="Johnson", email="smith.johnson@example.com",
                                  phone=111111111, company="ABC Corp", collaborator=collaborator1)
 
-    customer2 = Customer.create(db_session, surname="Doe", lastname="Williams", email="doe.williams@example.com",
+    customer2 = Customer.create(db_session, firstname="Doe", lastname="Williams", email="doe.williams@example.com",
                                  phone=222222222, company="XYZ Inc", collaborator=collaborator1)
 
-    customer3 = Customer.create(db_session, surname="Smith", lastname="Brown", email="smith.brown@example.com",
+    customer3 = Customer.create(db_session, firstname="Smith", lastname="Brown", email="smith.brown@example.com",
                                  phone=333333333, company="123 Industries", collaborator=collaborator2)
 
     # Test reading all customers
@@ -58,10 +58,10 @@ def test_read_customers(db_session):
 
 def test_get_by_id_customer(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Test reading an existing customer from the database
-    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     read_customer = Customer.get_by_id(db_session, customer.id)
@@ -69,7 +69,7 @@ def test_get_by_id_customer(db_session):
     # Check if the get by id operation returns the correct customer
     assert read_customer is not None
     assert read_customer.id == customer.id
-    assert read_customer.surname == "John"
+    assert read_customer.firstname == "John"
     assert read_customer.lastname == "Doe"
     assert read_customer.email == "john.doe@example.com"
     assert read_customer.phone == 123456789
@@ -79,10 +79,10 @@ def test_get_by_id_customer(db_session):
 
 def test_get_by_email_customer(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Test reading an existing customer from the database
-    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     read_customer = Customer.get_by_email(db_session, customer.email)
@@ -90,7 +90,7 @@ def test_get_by_email_customer(db_session):
     # Check if the get by email operation returns the correct customer
     assert read_customer is not None
     assert read_customer.id == customer.id
-    assert read_customer.surname == "John"
+    assert read_customer.firstname == "John"
     assert read_customer.lastname == "Doe"
     assert read_customer.email == "john.doe@example.com"
     assert read_customer.phone == 123456789
@@ -99,10 +99,10 @@ def test_get_by_email_customer(db_session):
 
 def test_update_customer(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Test updating an existing customer
-    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Use a different email address for the updated email
@@ -119,10 +119,10 @@ def test_update_customer(db_session):
 
 def test_delete_customer(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Test deleting an existing customer
-    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Delete the customer

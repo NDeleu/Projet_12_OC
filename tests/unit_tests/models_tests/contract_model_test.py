@@ -4,10 +4,10 @@ import pytest
 
 def test_create_contract(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Create a new customer for contract association
-    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Test creating a new contract
@@ -23,10 +23,10 @@ def test_create_contract(db_session):
 @pytest.fixture
 def db_contract_data(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Create a new customer for contract association
-    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Create some test contracts
@@ -64,10 +64,10 @@ def test_read_contract(db_session, db_contract_data, user_id, signed, event, pai
 
 def test_get_by_id_contract(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Create a new customer for contract association
-    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Test reading an existing contract from the database
@@ -85,10 +85,10 @@ def test_get_by_id_contract(db_session):
 
 def test_update_contract(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Create a new customer for contract association
-    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Test updating an existing contract
@@ -104,10 +104,10 @@ def test_update_contract(db_session):
 
 def test_delete_contract(db_session):
     # Create a new seller for customer association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
 
     # Create a new customer for contract association
-    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+    customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
     # Test deleting an existing contract

@@ -15,7 +15,7 @@ class Collaborator(Base):
     __tablename__ = 'collaborators'
 
     id = Column(Integer, primary_key=True)
-    surname = Column(String)
+    firstname = Column(String)
     lastname = Column(String)
     email = Column(String, unique=True)
     role = Column(Enum(RoleEnum), nullable=False)
@@ -25,8 +25,8 @@ class Collaborator(Base):
     customers = relationship("Customer", back_populates="collaborator", cascade="all, delete")
     events = relationship("Event", back_populates="collaborator", cascade="all, delete")
 
-    def __init__(self, surname, lastname, email, role, password):
-        self.surname = surname
+    def __init__(self, firstname, lastname, email, role, password):
+        self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.set_role(role)
@@ -39,7 +39,7 @@ class Collaborator(Base):
             raise ValueError("Invalid role value")
 
     @classmethod
-    def create(cls, session, surname, lastname, email, role, password):
+    def create(cls, session, firstname, lastname, email, role, password):
         email_exists = session.execute(
             text(
                 "SELECT EXISTS (SELECT 1 FROM collaborators WHERE email=:email) "
@@ -51,7 +51,7 @@ class Collaborator(Base):
             raise ValueError(
                 "The email address already exists for an collaborators or customer.")
 
-        collaborator = Collaborator(surname=surname, lastname=lastname,
+        collaborator = Collaborator(firstname=firstname, lastname=lastname,
                                     email=email, role=role, password=password)
         session.add(collaborator)
         session.commit()
@@ -104,4 +104,4 @@ class Collaborator(Base):
         return bcrypt.verify(password, self.password)
 
     def __str__(self):
-        return f'{self.surname} {self.lastname} - {self.role}'
+        return f'{self.firstname} {self.lastname} - {self.role}'

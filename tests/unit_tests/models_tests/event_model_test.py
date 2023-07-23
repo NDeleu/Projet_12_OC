@@ -35,7 +35,7 @@ def test_read_events(db_session):
                           event_end="2023-07-22 18:00:00", location="City Hall", attendees=100,
                           instruction="Bring your IDs", contract=contract1)
 
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith",
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith",
                                        email="jane.smith@example.com", role=3, password="secret")
 
     event2 = Event.create(db_session, name="Conference2", event_start="2023-07-23 10:00:00",
@@ -89,7 +89,7 @@ def test_get_by_id_event(db_session):
 
 def test_update_event(db_session):
     # Create a new support for event association
-    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=3, password="secret")
+    collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=3, password="secret")
 
     # Create a new contract for event association
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=None)
