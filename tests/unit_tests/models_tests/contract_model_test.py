@@ -1,4 +1,5 @@
-from app.models import Contract, Customer, Collaborator
+from app.models import Contract, Customer, Collaborator, Event
+import pytest
 
 
 def test_create_contract(db_session):
@@ -17,6 +18,48 @@ def test_create_contract(db_session):
     assert new_contract.total_amount == 1000.0
     assert new_contract.left_to_pay == 500.0
     assert new_contract.customer == customer
+
+
+@pytest.fixture
+def db_contract_data(db_session):
+    # Create a new seller for customer association
+    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+
+    # Create a new customer for contract association
+    customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
+                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+
+    # Create some test contracts
+    contracts = [
+        Contract.create(db_session, total_amount=1000.0, left_to_pay=0, customer=customer, signed=True),
+        Contract.create(db_session, total_amount=1500.0, left_to_pay=750.0, customer=customer, signed=False),
+        Contract.create(db_session, total_amount=2000.0, left_to_pay=1000.0, customer=customer, signed=True),
+    ]
+
+    # Create an event and associate it with one of the contracts
+    event = Event(name="My Event", event_start="2023-07-22 10:00:00",
+                  event_end="2023-07-22 18:00:00",
+                  location="Paris", attendees=50,
+                  instruction="Some instructions", contract=contracts[0])
+    db_session.add(event)
+
+    db_session.commit()
+
+    return contracts
+
+
+@pytest.mark.parametrize("user_id, signed, event, paid, expected_count", [
+    (None, None, None, None, 3),                # Read all contracts
+    (1, None, None, None, 3),                   # Read contracts for a specific user (customer) by user_id
+    (None, True, None, None, 2),                # Read contracts by signed status (True)
+    (None, None, True, None, 1),                # Read contracts by event status (True)
+    (None, None, False, None, 2),               # Read contracts by event status (False)
+    (None, None, None, True, 1),                # Read contracts by paid status (True)
+    (None, None, None, False, 2),               # Read contracts by paid status (False)
+])
+def test_read_contract(db_session, db_contract_data, user_id, signed, event, paid, expected_count):
+    contracts = Contract.read(db_session, user_id=user_id, signed=signed, event=event, paid=paid)
+    assert len(contracts) == expected_count
 
 
 def test_get_by_id_contract(db_session):

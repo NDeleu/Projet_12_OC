@@ -19,7 +19,7 @@ class Event(Base):
     contract_id = Column(Integer, ForeignKey('contracts.id'), unique=True)
     contract = relationship("Contract", uselist=False, back_populates="event")
 
-    def __init__(self, name, event_start, event_end, location, attendees, instruction, contract):
+    def __init__(self, name, event_start, event_end, location, attendees, instruction, contract, collaborator=None):
         self.name = name
         self.event_start = event_start
         self.event_end = event_end
@@ -27,12 +27,13 @@ class Event(Base):
         self.attendees = attendees
         self.instruction = instruction
         self.contract = contract
+        self.collaborator = collaborator
 
     @classmethod
-    def create(cls, session, name, event_start, event_end, location, attendees, instruction, contract):
+    def create(cls, session, name, event_start, event_end, location, attendees, instruction, contract, collaborator=None):
         event = Event(name=name, event_start=event_start, event_end=event_end,
                       location=location, attendees=attendees,
-                      instruction=instruction, contract=contract)
+                      instruction=instruction, contract=contract, collaborator=collaborator)
         session.add(event)
         session.commit()
         return event

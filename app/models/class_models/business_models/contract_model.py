@@ -17,16 +17,17 @@ class Contract(Base):
     customer = relationship("Customer", back_populates="contracts")
     event = relationship("Event", uselist=False, back_populates="contract")
 
-    def __init__(self, total_amount, left_to_pay, customer):
+    def __init__(self, total_amount, left_to_pay, customer, signed=False):
         self.total_amount = total_amount
         self.left_to_pay = left_to_pay
+        self.signed = signed
         self.customer = customer
 
 
     @classmethod
-    def create(cls, session, total_amount, left_to_pay, customer):
+    def create(cls, session, total_amount, left_to_pay, customer, signed=False):
         contract = Contract(total_amount=total_amount, left_to_pay=left_to_pay,
-                            customer=customer)
+                            customer=customer, signed=signed)
         session.add(contract)
         session.commit()
         return contract
@@ -36,22 +37,25 @@ class Contract(Base):
         query = session.query(Contract)
 
         if user_id is not None:
-            query = query.filter(Contract.customer.has(collaborator_id=user_id))
+            query = query.filter(
+                Contract.customer.has(collaborator_id=user_id))
 
         if signed is not None:
             query = query.filter(Contract.signed == signed)
 
-        if event is not None:
-            if event is True:
-                query = query.filter(Contract.event != None)
-            elif event is False:
-                query = query.filter(Contract.event == None)
+        if event is True:
+            query = query.filter(Contract.event != None)
+        elif event is False:
+            query = query.filter(Contract.event == None)
+        else:
+            pass
 
-        if paid is not None:
-            if paid is True:
-                query = query.filter(Contract.left_to_pay <= 0)
-            elif paid is False:
-                query = query.filter(Contract.left_to_pay > 0)
+        if paid is True:
+            query = query.filter(Contract.left_to_pay <= 0)
+        elif paid is False:
+            query = query.filter(Contract.left_to_pay > 0)
+        else:
+            pass
 
         list_contracts = query.distinct().all()
         return list_contracts

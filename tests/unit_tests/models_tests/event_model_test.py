@@ -23,6 +23,45 @@ def test_create_event(db_session):
     assert new_event.collaborator is None
 
 
+def test_read_events(db_session):
+    # Test reading events from the database with optional filters
+
+    # Create a new contract for event association
+    contract1 = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=None)
+    contract2 = Contract.create(db_session, total_amount=1500.0, left_to_pay=750.0, customer=None)
+
+    # Create some events with and without collaborators
+    event1 = Event.create(db_session, name="Conference1", event_start="2023-07-22 10:00:00",
+                          event_end="2023-07-22 18:00:00", location="City Hall", attendees=100,
+                          instruction="Bring your IDs", contract=contract1)
+
+    collaborator = Collaborator.create(db_session, surname="Jane", lastname="Smith",
+                                       email="jane.smith@example.com", role=3, password="secret")
+
+    event2 = Event.create(db_session, name="Conference2", event_start="2023-07-23 10:00:00",
+                          event_end="2023-07-23 18:00:00", location="Convention Center", attendees=200,
+                          instruction="Bring your badges", contract=contract2, collaborator=collaborator)
+
+    # Test reading all events
+    all_events = Event.read(db_session)
+    assert len(all_events) == 2
+
+    # Test reading events associated with a specific collaborator
+    events_with_collaborator = Event.read(db_session, user_id=collaborator.id)
+    assert len(events_with_collaborator) == 1
+    assert events_with_collaborator[0] == event2
+
+    # Test reading events with collaborators
+    events_with_support = Event.read(db_session, supported=True)
+    assert len(events_with_support) == 1
+    assert events_with_support[0] == event2
+
+    # Test reading events without collaborators
+    events_without_support = Event.read(db_session, supported=False)
+    assert len(events_without_support) == 1
+    assert events_without_support[0] == event1
+
+
 def test_get_by_id_event(db_session):
 
     # Create a new contract for event association

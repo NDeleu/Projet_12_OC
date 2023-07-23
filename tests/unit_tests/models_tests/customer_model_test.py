@@ -1,4 +1,5 @@
 from app.models import Customer, Collaborator
+import pytest
 
 
 def test_create_customer(db_session):
@@ -17,6 +18,42 @@ def test_create_customer(db_session):
     assert new_customer.phone == 123456789
     assert new_customer.company == "ABC Corp"
     assert new_customer.collaborator == collaborator
+
+
+def test_read_customers(db_session):
+    # Create a new seller for customer association
+    collaborator1 = Collaborator.create(db_session, surname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
+    collaborator2 = Collaborator.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com", role=2, password="secret")
+
+    # Create some customers with different collaborators
+    customer1 = Customer.create(db_session, surname="Smith", lastname="Johnson", email="smith.johnson@example.com",
+                                 phone=111111111, company="ABC Corp", collaborator=collaborator1)
+
+    customer2 = Customer.create(db_session, surname="Doe", lastname="Williams", email="doe.williams@example.com",
+                                 phone=222222222, company="XYZ Inc", collaborator=collaborator1)
+
+    customer3 = Customer.create(db_session, surname="Smith", lastname="Brown", email="smith.brown@example.com",
+                                 phone=333333333, company="123 Industries", collaborator=collaborator2)
+
+    # Test reading all customers
+    all_customers = Customer.read(db_session)
+    assert len(all_customers) == 3
+    assert customer1 in all_customers
+    assert customer2 in all_customers
+    assert customer3 in all_customers
+
+    # Test reading customers associated with a specific collaborator
+    collaborator1_customers = Customer.read(db_session, user_id=collaborator1.id)
+    assert len(collaborator1_customers) == 2
+    assert customer1 in collaborator1_customers
+    assert customer2 in collaborator1_customers
+    assert customer3 not in collaborator1_customers
+
+    collaborator2_customers = Customer.read(db_session, user_id=collaborator2.id)
+    assert len(collaborator2_customers) == 1
+    assert customer1 not in collaborator2_customers
+    assert customer2 not in collaborator2_customers
+    assert customer3 in collaborator2_customers
 
 
 def test_get_by_id_customer(db_session):
@@ -68,7 +105,7 @@ def test_update_customer(db_session):
     customer = Customer.create(db_session, surname="John", lastname="Doe", email="john.doe@example.com",
                                 phone=123456789, company="ABC Corp", collaborator=collaborator)
 
-    # Update the customer's email and phone
+    # Use a different email address for the updated email
     customer.update(db_session, email="john.doe.updated@example.com", phone=987654321)
 
     # Check if the email and phone were updated successfully
@@ -76,6 +113,9 @@ def test_update_customer(db_session):
     assert updated_customer.email == "john.doe.updated@example.com"
     assert updated_customer.phone == 987654321
 
+    # Try to update the customer's email to an existing email (should raise ValueError)
+    with pytest.raises(ValueError):
+        customer.update(db_session, email="jane.smith@example.com")
 
 def test_delete_customer(db_session):
     # Create a new seller for customer association
