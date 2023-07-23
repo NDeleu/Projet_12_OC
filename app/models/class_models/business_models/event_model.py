@@ -38,6 +38,22 @@ class Event(Base):
         return event
 
     @classmethod
+    def read(cls, session, user_id=None, supported=None):
+        query = session.query(Event)
+
+        if user_id is not None:
+            query = query.filter(Event.collaborator_id == user_id)
+
+        if supported is not None:
+            if supported is True:
+                query = query.filter(Event.collaborator != None)
+            elif supported is False:
+                query = query.filter(Event.collaborator == None)
+
+        list_events = query.distinct().all()
+        return list_events
+
+    @classmethod
     def get_by_id(cls, session, event_id):
         event = session.query(Event).filter_by(id=event_id).first()
         return event

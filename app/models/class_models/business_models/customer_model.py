@@ -61,6 +61,16 @@ class Customer(Base):
         return customer
 
     @classmethod
+    def read(cls, session, user_id=None):
+        query = session.query(Customer)
+
+        if user_id is not None:
+            query = query.filter(Customer.collaborator_id == user_id)
+
+        list_customers = query.distinct().all()
+        return list_customers
+
+    @classmethod
     def get_by_id(cls, session, customer_id):
         customer = session.query(Customer).filter_by(id=customer_id).first()
         return customer

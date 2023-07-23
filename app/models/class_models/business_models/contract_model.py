@@ -32,6 +32,31 @@ class Contract(Base):
         return contract
 
     @classmethod
+    def read(cls, session, user_id=None, signed=None, event=None, paid=None):
+        query = session.query(Contract)
+
+        if user_id is not None:
+            query = query.filter(Contract.customer.has(collaborator_id=user_id))
+
+        if signed is not None:
+            query = query.filter(Contract.signed == signed)
+
+        if event is not None:
+            if event is True:
+                query = query.filter(Contract.event != None)
+            elif event is False:
+                query = query.filter(Contract.event == None)
+
+        if paid is not None:
+            if paid is True:
+                query = query.filter(Contract.left_to_pay <= 0)
+            elif paid is False:
+                query = query.filter(Contract.left_to_pay > 0)
+
+        list_contracts = query.distinct().all()
+        return list_contracts
+
+    @classmethod
     def get_by_id(cls, session, contract_id):
         contract = session.query(Contract).filter_by(id=contract_id).first()
         return contract
