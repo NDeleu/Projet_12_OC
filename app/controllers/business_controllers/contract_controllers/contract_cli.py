@@ -48,9 +48,8 @@ def update_form(ctx):
     contract_id = click.prompt("Contract_Id", type=click.INT)
     total_amount = click.prompt("Total_Amount", type=click.FLOAT, default=None)
     left_to_pay = click.prompt("Left_to_Pay", type=click.FLOAT, default=None)
-    customer = click.prompt("Customer_Id", type=click.INT, default=None)
     signed = click.prompt("Signed", type=click.BOOL, default=False)
-    update_func(session, user, contract_id, total_amount, left_to_pay, customer, signed)
+    update_func(session, user, contract_id, total_amount, left_to_pay, signed)
 
 
 @contract_form.command()
@@ -105,12 +104,11 @@ def get_by_id(ctx, contract_id):
 @click.argument('contract_id', type=int)
 @click.option('--total_amount', type=float, default=None)
 @click.option('--left_to_pay', type=float, default=None)
-@click.option('--customer', type=int, default=None)
 @click.option('--signed', type=bool, default=False)
-def update(ctx, contract_id, total_amount, left_to_pay, customer, signed):
+def update(ctx, contract_id, total_amount, left_to_pay, signed):
     session = ctx.obj
     user = None
-    update_func(session, user, contract_id, total_amount, left_to_pay, customer, signed)
+    update_func(session, user, contract_id, total_amount, left_to_pay, signed)
 
 
 @contract.command()

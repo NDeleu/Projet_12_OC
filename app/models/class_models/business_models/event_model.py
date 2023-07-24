@@ -95,19 +95,19 @@ class Event(Base):
         return event
 
     @classmethod
-    def read(cls, session, user_id=None, supported=None):
+    def read(cls, session, user_id=None, is_supported=None):
         query = session.query(Event)
 
         if user_id is not None:
             query = query.filter(Event.collaborator_id == user_id)
 
-        if supported is not None and not isinstance(supported, bool):
-            raise ValueError("Supported must be either True, False, or None.")
+        if is_supported is not None and not isinstance(is_supported, bool):
+            raise ValueError("Is_supported must be either True, False, or None.")
 
-        if supported is not None:
-            if supported is True:
+        if is_supported is not None:
+            if is_supported is True:
                 query = query.filter(Event.collaborator != None)
-            elif supported is False:
+            elif is_supported is False:
                 query = query.filter(Event.collaborator == None)
 
         list_events = query.distinct().all()
@@ -120,15 +120,16 @@ class Event(Base):
 
     def update(self, session, **kwargs):
         for key, value in kwargs.items():
-            if key == 'collaborator':
-                is_support = value.role == value.__class__.RoleEnum.support
-                if not is_support:
-                    raise ValueError(
-                        f"Only collaborators with the role of 'support' can be linked to a customer.")
+            if value is not None:
+                if key == 'collaborator':
+                    is_support = value.role == value.__class__.RoleEnum.support
+                    if not is_support:
+                        raise ValueError(
+                            f"Only collaborators with the role of 'support' can be linked to a customer.")
 
-                self.collaborator = value
-            else:
-                setattr(self, key, value)
+                    self.collaborator = value
+                else:
+                    setattr(self, key, value)
         session.commit()
 
     def delete(self, session):

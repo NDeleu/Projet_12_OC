@@ -90,7 +90,8 @@ class Contract(Base):
 
     def update(self, session, **kwargs):
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            if value is not None:
+                setattr(self, key, value)
         session.commit()
 
     def delete(self, session):

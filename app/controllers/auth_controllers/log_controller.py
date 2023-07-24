@@ -37,8 +37,7 @@ def login_func(session, email, password):
 
 
 @login_required
-def logout_func(session):
-    user = get_logged_as_user(session)
+def logout_func(session, user):
 
     if user:
         user.token = None

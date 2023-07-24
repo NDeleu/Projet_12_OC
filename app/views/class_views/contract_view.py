@@ -4,7 +4,7 @@ console = Console()
 
 
 def display_contract(contract):
-    console.print("[bold green]Contract Details:[/bold green]")
+    console.print("[bold yellow]Contract Details:[/bold yellow]")
     console.print(f"Contract ID: {contract.id}")
     console.print(f"Date Created: {contract.date_created}")
     console.print(f"Total Amount: {contract.total_amount}")

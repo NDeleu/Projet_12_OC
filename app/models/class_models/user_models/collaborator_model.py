@@ -117,14 +117,15 @@ class Collaborator(Base):
                 "The email address already exists for a collaborator or customer.")
 
         for key, value in kwargs.items():
-            if key == 'email':
-                self.set_email(value)
-            elif key == 'password':
-                self.set_password(value)
-            elif key == 'role':
-                raise ValueError("Role cannot be updated.")
-            else:
-                setattr(self, key, value)
+            if value is not None:
+                if key == 'email':
+                    self.set_email(value)
+                elif key == 'password':
+                    self.set_password(value)
+                elif key == 'role':
+                    raise ValueError("Role cannot be updated.")
+                else:
+                    setattr(self, key, value)
         session.commit()
 
     def delete(self, session):

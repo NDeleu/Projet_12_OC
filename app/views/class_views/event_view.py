@@ -4,7 +4,7 @@ console = Console()
 
 
 def display_event(event):
-    console.print("[bold green]Event Details:[/bold green]")
+    console.print("[bold yellow]Event Details:[/bold yellow]")
     console.print(f"ID: {event.id}")
     console.print(f"Name: {event.name}")
     console.print(f"Start Time: {event.event_start}")

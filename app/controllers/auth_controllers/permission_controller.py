@@ -65,7 +65,7 @@ def login_required_admin_or_support(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
         if user and user.role in ["administrator", "support"]:
-            return func(session, user.role, user.user_id, *args, **kwargs)
+            return func(session, user, *args, **kwargs)
         else:
             display_message("Permission denied. Please log in as an administrator or support.")
     return wrapper
@@ -75,7 +75,7 @@ def login_required_admin_or_seller(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
         if user and user.role in ["administrator", "seller"]:
-            return func(session, user.role, user.user_id, *args, **kwargs)
+            return func(session, user, *args, **kwargs)
         else:
             display_message("Permission denied. Please log in as an administrator or support.")
     return wrapper
@@ -85,7 +85,7 @@ def login_required_admin(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
         if user and user.role == 'administrator':
-            return func(session, *args, **kwargs)
+            return func(session, user, *args, **kwargs)
         else:
             display_message("Permission denied. Please log in as an administrator.")
     return wrapper
@@ -95,7 +95,7 @@ def login_required_seller(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
         if user and user.role == 'seller':
-            return func(session, *args, **kwargs)
+            return func(session, user, *args, **kwargs)
         else:
             display_message("Permission denied. Please log in as an seller.")
     return wrapper
@@ -105,19 +105,9 @@ def login_required_support(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
         if user and user.role == 'support':
-            return func(session, *args, **kwargs)
+            return func(session, user, *args, **kwargs)
         else:
             display_message("Permission denied. Please log in as an support.")
-    return wrapper
-
-
-def login_required_with_role(func):
-    def wrapper(session, *args, **kwargs):
-        user = get_logged_as_user(session)
-        if user:
-            return func(session, user.role, user.user_id, *args, **kwargs)
-        else:
-            display_message("Permission denied. Please log in.")
     return wrapper
 
 
@@ -125,7 +115,7 @@ def login_required(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
         if user:
-            return func(session, *args, **kwargs)
+            return func(session, user, *args, **kwargs)
         else:
             display_message("Permission denied. Please log in.")
     return wrapper

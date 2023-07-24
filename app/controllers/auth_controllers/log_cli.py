@@ -15,7 +15,8 @@ def login_form(ctx):
 @click.pass_context
 def logout_form(ctx):
     session = ctx.obj
-    logout_func(session)
+    user = None
+    logout_func(session, user)
 
 
 @click.command()
@@ -31,4 +32,5 @@ def login(ctx, email, password):
 @click.pass_context
 def logout(ctx):
     session = ctx.obj
-    logout_func(session)
+    user = None
+    logout_func(session, user)

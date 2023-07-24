@@ -4,7 +4,7 @@ console = Console()
 
 
 def display_collaborator(collaborator):
-    console.print("[bold green]Administrator found:[/bold green]")
+    console.print("[bold yellow]Administrator found:[/bold yellow]")
     console.print(f"ID: {collaborator.id}")
     console.print(f"Firstname: {collaborator.firstname}")
     console.print(f"Lastname: {collaborator.lastname}")

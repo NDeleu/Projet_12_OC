@@ -4,7 +4,7 @@ console = Console()
 
 
 def display_customer(customer):
-    console.print("[bold green]Administrator found:[/bold green]")
+    console.print("[bold yellow]Administrator found:[/bold yellow]")
     console.print(f"ID: {customer.id}")
     console.print(f"Firstname: {customer.firstname}")
     console.print(f"Lastname: {customer.lastname}")

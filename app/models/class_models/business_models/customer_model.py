@@ -123,17 +123,18 @@ class Customer(Base):
                 "The email address already exists for a collaborator or customer.")
 
         for key, value in kwargs.items():
-            if key == 'email':
-                self.set_email(value)
-            elif key == 'collaborator':
-                is_seller = value.role == value.__class__.RoleEnum.seller
-                if not is_seller:
-                    raise ValueError(
-                        f"Only collaborators with the role of 'seller' can be linked to a customer.")
+            if value is not None:
+                if key == 'email':
+                    self.set_email(value)
+                elif key == 'collaborator':
+                    is_seller = value.role == value.__class__.RoleEnum.seller
+                    if not is_seller:
+                        raise ValueError(
+                            f"Only collaborators with the role of 'seller' can be linked to a customer.")
 
-                self.collaborator = value
-            else:
-                setattr(self, key, value)
+                    self.collaborator = value
+                else:
+                    setattr(self, key, value)
         session.commit()
 
     def delete(self, session):
