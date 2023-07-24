@@ -1,5 +1,6 @@
 from app.models import Contract, Customer, Collaborator, Event
 import pytest
+from datetime import datetime
 
 
 def test_create_contract(db_session):
@@ -37,8 +38,8 @@ def db_contract_data(db_session):
     ]
 
     # Create an event and associate it with one of the contracts
-    event = Event(name="My Event", event_start="2023-07-22 10:00:00",
-                  event_end="2023-07-22 18:00:00",
+    event = Event(name="My Event", event_start=datetime(2023, 7, 22, 10, 0, 0),
+                  event_end=datetime(2023, 7, 22, 18, 0, 0),
                   location="Paris", attendees=50,
                   instruction="Some instructions", contract=contracts[0])
     db_session.add(event)

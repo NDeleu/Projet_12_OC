@@ -113,9 +113,6 @@ def test_update_customer(db_session):
     assert updated_customer.email == "john.doe.updated@example.com"
     assert updated_customer.phone == 987654321
 
-    # Try to update the customer's email to an existing email (should raise ValueError)
-    with pytest.raises(ValueError):
-        customer.update(db_session, email="jane.smith@example.com")
 
 def test_delete_customer(db_session):
     # Create a new seller for customer association

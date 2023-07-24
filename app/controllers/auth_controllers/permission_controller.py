@@ -39,23 +39,6 @@ def clear_token_from_file():
         file.write("")
 
 
-def get_logged_as_role(session, role_wanted):
-    token = get_token_from_file()
-    if token:
-        try:
-            payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-            user_id = payload.get("user_id")
-            role = payload.get("role")
-            if role != role_wanted:
-                return None
-            else:
-                return Collaborator.get_by_id(session, user_id)
-        except jwt.ExpiredSignatureError:
-            clear_token_from_file()
-            return None
-    return None
-
-
 def get_logged_as_user(session):
     token = get_token_from_file()
     if token:
@@ -78,10 +61,30 @@ def get_token_from_file():
         return None
 
 
+def login_required_admin_or_support(func):
+    def wrapper(session, *args, **kwargs):
+        user = get_logged_as_user(session)
+        if user and user.role in ["administrator", "support"]:
+            return func(session, user.role, user.user_id, *args, **kwargs)
+        else:
+            display_message("Permission denied. Please log in as an administrator or support.")
+    return wrapper
+
+
+def login_required_admin_or_seller(func):
+    def wrapper(session, *args, **kwargs):
+        user = get_logged_as_user(session)
+        if user and user.role in ["administrator", "seller"]:
+            return func(session, user.role, user.user_id, *args, **kwargs)
+        else:
+            display_message("Permission denied. Please log in as an administrator or support.")
+    return wrapper
+
+
 def login_required_admin(func):
     def wrapper(session, *args, **kwargs):
-        administrator = get_logged_as_role(session, "administrator")
-        if administrator:
+        user = get_logged_as_user(session)
+        if user and user.role == 'administrator':
             return func(session, *args, **kwargs)
         else:
             display_message("Permission denied. Please log in as an administrator.")
@@ -90,8 +93,8 @@ def login_required_admin(func):
 
 def login_required_seller(func):
     def wrapper(session, *args, **kwargs):
-        administrator = get_logged_as_role(session, "seller")
-        if administrator:
+        user = get_logged_as_user(session)
+        if user and user.role == 'seller':
             return func(session, *args, **kwargs)
         else:
             display_message("Permission denied. Please log in as an seller.")
@@ -100,11 +103,21 @@ def login_required_seller(func):
 
 def login_required_support(func):
     def wrapper(session, *args, **kwargs):
-        administrator = get_logged_as_role(session, "support")
-        if administrator:
+        user = get_logged_as_user(session)
+        if user and user.role == 'support':
             return func(session, *args, **kwargs)
         else:
             display_message("Permission denied. Please log in as an support.")
+    return wrapper
+
+
+def login_required_with_role(func):
+    def wrapper(session, *args, **kwargs):
+        user = get_logged_as_user(session)
+        if user:
+            return func(session, user.role, user.user_id, *args, **kwargs)
+        else:
+            display_message("Permission denied. Please log in.")
     return wrapper
 
 

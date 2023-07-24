@@ -42,12 +42,14 @@ def form_url_config():
                 "Invalid input. Please enter a valid username without special characters or spaces.")
 
     while True:
-        password_choice = str(input(display_message("Enter your database password: ")))
-        if password_choice.strip():
+        password_choice = str(
+            input(display_message("Enter your database password: ")))
+        if password_choice.strip() and re.match("^[a-zA-Z0-9!@#$%^&*()_-]+$",
+                                                password_choice):
             break
         else:
             display_message(
-                "Invalid input. Please enter a non-empty password.")
+                "Invalid input. Please enter a non-empty password containing only letters, numbers, and a limited set of special characters (!@#$%^&*()_-).")
 
     while True:
         database_name_choice = str(

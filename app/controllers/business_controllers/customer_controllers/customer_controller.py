@@ -10,9 +10,9 @@ from app.views.general_views.generic_message import display_message
 @login_required_admin
 def create_customer(session):
     while True:
-        surname = click.prompt("Surname", type=click.STRING)
-        if re.search(r'[!@#$%^&*(),.?":{}|<>]', surname):
-            display_message("Surname should not contain special characters. Try again.")
+        firstname = click.prompt("firstname", type=click.STRING)
+        if re.search(r'[!@#$%^&*(),.?":{}|<>]', firstname):
+            display_message("firstname should not contain special characters. Try again.")
         else:
             break
 
@@ -56,7 +56,7 @@ def create_customer(session):
                 break
 
     try:
-        customer = Customer.create(session, surname, lastname, email, phone, company, collaborator)
+        customer = Customer.create(session, firstname, lastname, email, phone, company, collaborator)
         display_message(f"Customer created: {customer}")
     except ValueError as e:
         display_message(str(e))
@@ -72,18 +72,51 @@ def read_customer(session, collaborator_id):
 
 
 @login_required_admin
-def update_customer(session, customer_id, surname, lastname, email, phone, company, collaborator_email):
+def update_customer(session, customer_id, firstname, lastname, email, phone, company, collaborator_email):
     customer = Customer.get_by_id(session, customer_id)
     if customer:
-        kwargs = {'surname': surname, 'lastname': lastname, 'email': email, 'phone': phone, 'company': company}
-        kwargs = {k: v for k, v in kwargs.items() if v is not None}
+        # Validate the inputs for firstname and lastname
+        if re.search(r'[!@#$%^&*(),.?":{}|<>]', firstname):
+            display_message("firstname should not contain special characters. Try again.")
+            return
 
+        if re.search(r'[!@#$%^&*(),.?":{}|<>]', lastname):
+            display_message("Lastname should not contain special characters. Try again.")
+            return
+
+        # Validate the input for email
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            display_message("Email address is not valid. Please try again.")
+            return
+
+        # Validate the input for phone
+        if not str(phone).strip():
+            display_message("Phone number cannot be empty. Please try again.")
+            return
+
+        # Validate the input for company
+        if re.search(r'[!@#$%^&*(),.?":{}|<>]', company):
+            display_message("Company should not contain special characters. Try again.")
+            return
+
+        # Validate collaborator email and existence
         if collaborator_email:
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", collaborator_email):
+                display_message("Collaborator email address is not valid. Please try again.")
+                return
+
             collaborator = Collaborator.get_by_email(session, collaborator_email)
             if not collaborator:
                 display_message("Collaborator email address is not valid. Please try again.")
                 return
+
+        # Update the customer's information if any updates provided
+        kwargs = {'firstname': firstname, 'lastname': lastname, 'email': email, 'phone': phone, 'company': company}
+
+        if collaborator_email:
             kwargs['collaborator'] = collaborator
+
+        kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
         if kwargs:
             customer.update(session, **kwargs)
@@ -92,6 +125,7 @@ def update_customer(session, customer_id, surname, lastname, email, phone, compa
             display_message("No updates provided")
     else:
         display_message("Customer not found")
+
 
 
 @login_required_admin

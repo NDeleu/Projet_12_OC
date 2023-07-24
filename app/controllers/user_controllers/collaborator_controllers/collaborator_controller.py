@@ -9,9 +9,9 @@ from app.views.general_views.generic_message import display_message
 @login_required_admin
 def create_collaborator(session):
     while True:
-        surname = click.prompt("Surname", type=click.STRING)
-        if re.search(r'[!@#$%^&*(),.?":{}|<>]', surname):
-            display_message("Surname should not contain special characters. Try again.")
+        firstname = click.prompt("firstname", type=click.STRING)
+        if re.search(r'[!@#$%^&*(),.?":{}|<>]', firstname):
+            display_message("firstname should not contain special characters. Try again.")
         else:
             break
 
@@ -53,7 +53,7 @@ def create_collaborator(session):
             break
 
     try:
-        collaborator = Collaborator.create(session, surname, lastname, email, role, password)
+        collaborator = Collaborator.create(session, firstname, lastname, email, role, password)
         display_message(f"Collaborator created: {collaborator}")
     except ValueError as e:
         display_message(str(e))
@@ -69,10 +69,25 @@ def read_collaborator(session, collaborator_id):
 
 
 @login_required_admin
-def update_collaborator(session, collaborator_id, surname, lastname, email):
+def update_collaborator(session, collaborator_id, firstname, lastname, email):
     collaborator = Collaborator.read(session, collaborator_id)
     if collaborator:
-        kwargs = {'surname': surname, 'lastname': lastname, 'email': email}
+        # Validate the inputs for firstname and lastname
+        if re.search(r'[!@#$%^&*(),.?":{}|<>]', firstname):
+            display_message("firstname should not contain special characters. Try again.")
+            return
+
+        if re.search(r'[!@#$%^&*(),.?":{}|<>]', lastname):
+            display_message("Lastname should not contain special characters. Try again.")
+            return
+
+        # Validate the input for email
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            display_message("Email address is not valid. Please try again.")
+            return
+
+        # Update the collaborator's information if any updates provided
+        kwargs = {'firstname': firstname, 'lastname': lastname, 'email': email}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
         if kwargs:
             collaborator.update(session, **kwargs)
@@ -81,6 +96,7 @@ def update_collaborator(session, collaborator_id, surname, lastname, email):
             display_message("No updates provided")
     else:
         display_message("Collaborator not found")
+
 
 
 @login_required_admin

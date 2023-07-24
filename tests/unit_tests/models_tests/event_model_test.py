@@ -1,5 +1,5 @@
 from app.models import Event, Collaborator, Contract
-
+from datetime import datetime
 
 def test_create_event(db_session):
 
@@ -7,8 +7,8 @@ def test_create_event(db_session):
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=None)
 
     # Test creating a new event
-    new_event = Event.create(db_session, name="Conference", event_start="2023-07-22 10:00:00",
-                             event_end="2023-07-22 18:00:00", location="City Hall", attendees=100,
+    new_event = Event.create(db_session, name="Conference", event_start=datetime(2023, 7, 22, 10, 0, 0),
+                             event_end=datetime(2023, 7, 22, 18, 0, 0), location="City Hall", attendees=100,
                              instruction="Bring your IDs", contract=contract)
 
     # Check if the event was created successfully
@@ -31,15 +31,15 @@ def test_read_events(db_session):
     contract2 = Contract.create(db_session, total_amount=1500.0, left_to_pay=750.0, customer=None)
 
     # Create some events with and without collaborators
-    event1 = Event.create(db_session, name="Conference1", event_start="2023-07-22 10:00:00",
-                          event_end="2023-07-22 18:00:00", location="City Hall", attendees=100,
+    event1 = Event.create(db_session, name="Conference1", event_start=datetime(2023, 7, 22, 10, 0, 0),
+                          event_end=datetime(2023, 7, 22, 18, 0, 0), location="City Hall", attendees=100,
                           instruction="Bring your IDs", contract=contract1)
 
     collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith",
                                        email="jane.smith@example.com", role=3, password="secret")
 
-    event2 = Event.create(db_session, name="Conference2", event_start="2023-07-23 10:00:00",
-                          event_end="2023-07-23 18:00:00", location="Convention Center", attendees=200,
+    event2 = Event.create(db_session, name="Conference2", event_start=datetime(2023, 7, 22, 10, 0, 0),
+                          event_end=datetime(2023, 7, 22, 18, 0, 0), location="Convention Center", attendees=200,
                           instruction="Bring your badges", contract=contract2, collaborator=collaborator)
 
     # Test reading all events
@@ -68,8 +68,8 @@ def test_get_by_id_event(db_session):
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=None)
 
     # Test reading an existing event from the database
-    event = Event.create(db_session, name="Conference", event_start="2023-07-22 10:00:00",
-                         event_end="2023-07-22 18:00:00", location="City Hall", attendees=100,
+    event = Event.create(db_session, name="Conference", event_start=datetime(2023, 7, 22, 10, 0, 0),
+                         event_end=datetime(2023, 7, 22, 18, 0, 0), location="City Hall", attendees=100,
                          instruction="Bring your IDs", contract=contract)
 
     read_event = Event.get_by_id(db_session, event.id)
@@ -95,8 +95,8 @@ def test_update_event(db_session):
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=None)
 
     # Test updating an existing event
-    event = Event.create(db_session, name="Conference", event_start="2023-07-22 10:00:00",
-                         event_end="2023-07-22 18:00:00", location="City Hall", attendees=100,
+    event = Event.create(db_session, name="Conference", event_start=datetime(2023, 7, 22, 10, 0, 0),
+                         event_end=datetime(2023, 7, 22, 18, 0, 0), location="City Hall", attendees=100,
                          instruction="Bring your IDs", contract=contract)
 
     # Update the event's name and location
@@ -115,8 +115,8 @@ def test_delete_event(db_session):
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=None)
 
     # Test deleting an existing event
-    event = Event.create(db_session, name="Conference", event_start="2023-07-22 10:00:00",
-                         event_end="2023-07-22 18:00:00", location="City Hall", attendees=100,
+    event = Event.create(db_session, name="Conference", event_start=datetime(2023, 7, 22, 10, 0, 0),
+                         event_end=datetime(2023, 7, 22, 18, 0, 0), location="City Hall", attendees=100,
                          instruction="Bring your IDs", contract=contract)
 
     # Delete the event
