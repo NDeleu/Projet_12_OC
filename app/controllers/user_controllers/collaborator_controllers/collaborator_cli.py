@@ -35,7 +35,7 @@ def read_form(ctx):
 def get_by_id_form(ctx):
     session = ctx.obj
     user = None
-    collaborator_id = click.prompt("Id", type=click.INT)
+    collaborator_id = click.prompt("Collaborator_Id", type=click.INT)
     get_by_id_func(session, user, collaborator_id)
 
 
@@ -53,7 +53,7 @@ def get_by_email_form(ctx):
 def update_form(ctx):
     session = ctx.obj
     user = None
-    collaborator_id = click.prompt("Collaborator_id", type=click.INT)
+    collaborator_id = click.prompt("Collaborator_Id", type=click.INT)
     firstname = click.prompt("Firstname", type=click.STRING, default=None)
     lastname = click.prompt("Lastname", type=click.STRING, default=None)
     email = click.prompt("Email", type=click.STRING, default=None)
@@ -66,7 +66,7 @@ def update_form(ctx):
 def delete_form(ctx):
     session = ctx.obj
     user = None
-    collaborator_id = click.prompt("Id", type=click.INT)
+    collaborator_id = click.prompt("Collaborator_Id", type=click.INT)
     delete_func(session, user, collaborator_id)
 
 
@@ -117,10 +117,10 @@ def get_by_email(ctx, collaborator_email):
 @collaborator.command()
 @click.pass_context
 @click.argument('collaborator_id', type=int)
-@click.option('firstname', type=str, default=None)
-@click.argument('lastname', type=str, default=None)
-@click.argument('email', type=str, default=None)
-@click.argument('password', type=str, default=None)
+@click.option('--firstname', type=str, default=None)
+@click.option('--lastname', type=str, default=None)
+@click.option('--email', type=str, default=None)
+@click.option('--password', type=str, default=None)
 def update(ctx, collaborator_id, firstname, lastname, email, password):
     session = ctx.obj
     user = None
