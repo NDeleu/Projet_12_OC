@@ -1,33 +1,24 @@
 import re
-import click
 from datetime import datetime, timedelta
 
 from .permission_controller import generate_token, save_token_to_file, \
-    get_logged_as_user, clear_token_from_file
+    get_logged_as_user, clear_token_from_file, login_required
 from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.views.general_views.generic_message import display_message
 
 
-def login_set(session):
+def login_func(session, email, password):
+    if not email:
+        raise ValueError("Email cannot be empty.")
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        raise ValueError("Invalid email format.")
 
-    while True:
-        email = click.prompt("Email", type=click.STRING)
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            display_message(
-                "L'adresse e-mail n'est pas valide. Veuillez réessayer.")
-        else:
-            break
-
-    while True:
-        password = click.prompt("Password", type=click.STRING, hide_input=True)
-        if re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
-            display_message(
-                "Password should not contain special characters. Try again.")
-        elif len(password) < 6:
-            display_message(
-                "Password should be at least 6 characters long. Try again.")
-        else:
-            break
+    if not password:
+        raise ValueError("Invalid input. Password cannot be empty.")
+    if not password.strip():
+        raise ValueError("Invalid input. Password cannot be empty.")
+    if not re.match("^[a-zA-Z0-9!@#$%^&*()_-]+$", password):
+        raise ValueError("Invalid input. Please enter a non-empty password containing only letters, numbers, and a limited set of special characters (!@#$%^&*()_-).")
 
     collaborator = Collaborator.get_by_email(session, email)
 
@@ -45,7 +36,8 @@ def login_set(session):
         display_message("User not found")
 
 
-def logout_set(session):
+@login_required
+def logout_func(session):
     user = get_logged_as_user(session)
 
     if user:

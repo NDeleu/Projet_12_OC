@@ -13,6 +13,9 @@ class Collaborator(Base):
         seller = 2
         support = 3
 
+        def __json__(self):
+            return self.value
+
     __tablename__ = 'collaborators'
 
     id = Column(Integer, primary_key=True)

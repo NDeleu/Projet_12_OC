@@ -22,7 +22,7 @@ SECRET_KEY = config.get('jwt', 'secret_key_jwt')
 def generate_token(user_id, role):
     payload = {
         "user_id": user_id,
-        "role": role,
+        "role": role.__json__(),
         "exp": datetime.utcnow() + timedelta(minutes=10)
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
