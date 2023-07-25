@@ -3,12 +3,12 @@ from .contract_controller import create_func, read_func, get_by_id_func, update_
 from app.views.general_views.generic_message import display_message_info
 
 
-@click.group()
+@click.group(help="Contract forms command group")
 def contract_form():
     pass
 
 
-@contract_form.command()
+@contract_form.command(help="Create a contract with form")
 @click.pass_context
 def create_form(ctx):
     session = ctx.obj
@@ -24,7 +24,7 @@ def create_form(ctx):
     create_func(session, user, total_amount, left_to_pay, customer, signed)
 
 
-@contract_form.command()
+@contract_form.command(help="Get a list of contracts with form")
 @click.pass_context
 def read_form(ctx):
     session = ctx.obj
@@ -40,7 +40,7 @@ def read_form(ctx):
     read_func(session, user, mine, is_signed, with_event, is_paid)
 
 
-@contract_form.command()
+@contract_form.command(help="Get a contract with his ID with form")
 @click.pass_context
 def get_by_id_form(ctx):
     session = ctx.obj
@@ -50,7 +50,7 @@ def get_by_id_form(ctx):
     get_by_id_func(session, user, contract_id)
 
 
-@contract_form.command()
+@contract_form.command(help="Update a contract with form")
 @click.pass_context
 def update_form(ctx):
     session = ctx.obj
@@ -66,7 +66,7 @@ def update_form(ctx):
     update_func(session, user, contract_id, total_amount, left_to_pay, signed)
 
 
-@contract_form.command()
+@contract_form.command(help="Delete a contract with form")
 @click.pass_context
 def delete_form(ctx):
     session = ctx.obj
@@ -76,28 +76,28 @@ def delete_form(ctx):
     delete_func(session, user, contract_id)
 
 
-@click.group()
+@click.group(help="Contract command group")
 def contract():
     pass
 
 
-@contract.command()
+@contract.command(help="Create a contract")
 @click.pass_context
-@click.argument('total_amount', type=float)
-@click.argument('left_to_pay', type=float)
-@click.argument('customer', type=int)
-@click.argument('signed', type=bool, default=False)
+@click.argument('total_amount', type=float, help="Total contract amount in numerical value.")
+@click.argument('left_to_pay', type=float, help="Left to pay in numerical value.")
+@click.argument('customer', type=int, help="Customer ID in numerical value.")
+@click.argument('signed', type=bool, default=False, help="Contract signed, for yes: True, for no: False.")
 def create(ctx, total_amount, left_to_pay, customer, signed):
     session = ctx.obj
     user = None
     create_func(session, user, total_amount, left_to_pay, customer, signed)
 
 
-@contract.command()
-@click.option('--mine', type=bool, default=False)
-@click.option('--is_signed', type=bool, default=None)
-@click.option('--with_event', type=bool, default=None)
-@click.option('--is_paid', type=bool, default=None)
+@contract.command(help="Get a list of contracts")
+@click.option('--mine', type=bool, default=False, help="If you are seller, filter awarded contracts: True, not this filter: False.")
+@click.option('--is_signed', type=bool, default=None, help="Filter only contracts signed: True, not signed: False, both: None.")
+@click.option('--with_event', type=bool, default=None, help="Filter only contracts with existing event: True, without existing event: False, both: None.")
+@click.option('--is_paid', type=bool, default=None, help="Filter only contracts paid: True, not paid: False, both: None.")
 @click.pass_context
 def read(ctx, mine, is_signed, with_event, is_paid):
     session = ctx.obj
@@ -105,8 +105,8 @@ def read(ctx, mine, is_signed, with_event, is_paid):
     read_func(session, user, mine, is_signed, with_event, is_paid)
 
 
-@contract.command()
-@click.argument('contract_id', type=int)
+@contract.command(help="Get a contract with his ID")
+@click.argument('contract_id', type=int, help="Contract ID in numerical value.")
 @click.pass_context
 def get_by_id(ctx, contract_id):
     session = ctx.obj
@@ -114,20 +114,20 @@ def get_by_id(ctx, contract_id):
     get_by_id_func(session, user, contract_id)
 
 
-@contract.command()
+@contract.command(help="Update a contract")
 @click.pass_context
-@click.argument('contract_id', type=int)
-@click.option('--total_amount', type=float, default=None)
-@click.option('--left_to_pay', type=float, default=None)
-@click.option('--signed', type=bool, default=False)
+@click.argument('contract_id', type=int, help="Contract ID in numerical value.")
+@click.option('--total_amount', type=float, default=None, help="For change: Total contract amount in numerical value, for keep unchanged: None.")
+@click.option('--left_to_pay', type=float, default=None, help="For change: Left to pay in numerical value, for keep unchanged: None.")
+@click.option('--signed', type=bool, default=False, help="Contract signed, for yes: True, for no: False.")
 def update(ctx, contract_id, total_amount, left_to_pay, signed):
     session = ctx.obj
     user = None
     update_func(session, user, contract_id, total_amount, left_to_pay, signed)
 
 
-@contract.command()
-@click.argument('contract_id', type=int)
+@contract.command(help="Delete a contract")
+@click.argument('contract_id', type=int, help="Contract ID in numerical value.")
 @click.pass_context
 def delete(ctx, contract_id):
     session = ctx.obj

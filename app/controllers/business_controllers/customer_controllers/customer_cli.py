@@ -3,12 +3,12 @@ from .customer_controller import create_func, read_func, get_by_id_func, get_by_
 from app.views.general_views.generic_message import display_message_info
 
 
-@click.group()
+@click.group(help="Customer forms command group")
 def customer_form():
     pass
 
 
-@customer_form.command()
+@customer_form.command(help="Create a customer with form")
 @click.pass_context
 def create_form(ctx):
     session = ctx.obj
@@ -26,7 +26,7 @@ def create_form(ctx):
     create_func(session, user, firstname, lastname, email, phone, company)
 
 
-@customer_form.command()
+@customer_form.command(help="Get a list of customers with form")
 @click.pass_context
 def read_form(ctx):
     session = ctx.obj
@@ -36,7 +36,7 @@ def read_form(ctx):
     read_func(session, user, mine)
 
 
-@customer_form.command()
+@customer_form.command(help="Get a customer with his ID with form")
 @click.pass_context
 def get_by_id_form(ctx):
     session = ctx.obj
@@ -46,7 +46,7 @@ def get_by_id_form(ctx):
     get_by_id_func(session, user, customer_id)
 
 
-@customer_form.command()
+@customer_form.command(help="Get a customer with his email with form")
 @click.pass_context
 def get_by_email_form(ctx):
     session = ctx.obj
@@ -56,7 +56,7 @@ def get_by_email_form(ctx):
     get_by_email_func(session, user, customer_email)
 
 
-@customer_form.command()
+@customer_form.command(help="Update a customer with form")
 @click.pass_context
 def update_form(ctx):
     session = ctx.obj
@@ -76,7 +76,7 @@ def update_form(ctx):
     update_func(session, user, customer_id, firstname, lastname, email, phone, company)
 
 
-@customer_form.command()
+@customer_form.command(help="Delete a customer with form")
 @click.pass_context
 def delete_form(ctx):
     session = ctx.obj
@@ -86,26 +86,26 @@ def delete_form(ctx):
     delete_func(session, user, customer_id)
 
 
-@click.group()
+@click.group(help="Customer command group")
 def customer():
     pass
 
 
-@customer.command()
+@customer.command(help="Create a customer")
 @click.pass_context
-@click.argument('firstname', type=str)
-@click.argument('lastname', type=str)
-@click.argument('email', type=str)
-@click.argument('phone', type=int)
-@click.argument('company', type=str)
+@click.argument('firstname', type=str, help="Firstname in alphabetical value.")
+@click.argument('lastname', type=str, help="Lastname in alphabetical value.")
+@click.argument('email', type=str, help="Email in alphabetical value and in form alpha@alpha.alpha.")
+@click.argument('phone', type=int, help="Phone number in numerical value.")
+@click.argument('company', type=str, help="Customer's compagny in alphabetical value.")
 def create(ctx, firstname, lastname, email, phone, company):
     session = ctx.obj
     user = None
     create_func(session, user, firstname, lastname, email, phone, company)
 
 
-@customer.command()
-@click.option('--mine', type=bool, default=False)
+@customer.command(help="Get a list of customers")
+@click.option('--mine', type=bool, default=False, help="If you are seller, filter awarded customers: True, not this filter: False.")
 @click.pass_context
 def read(ctx, mine):
     session = ctx.obj
@@ -113,8 +113,8 @@ def read(ctx, mine):
     read_func(session, user, mine)
 
 
-@customer.command()
-@click.argument('customer_id', type=int)
+@customer.command(help="Get a customer with his ID")
+@click.argument('customer_id', type=int, help="Customer ID in numerical value.")
 @click.pass_context
 def get_by_id(ctx, customer_id):
     session = ctx.obj
@@ -122,8 +122,8 @@ def get_by_id(ctx, customer_id):
     get_by_id_func(session, user, customer_id)
 
 
-@customer.command()
-@click.argument('customer_email', type=str)
+@customer.command(help="Get a customer with his email")
+@click.argument('customer_email', type=str, help="Customer Email in alphabetical value and in form alpha@alpha.alpha.")
 @click.pass_context
 def get_by_email(ctx, customer_email):
     session = ctx.obj
@@ -131,22 +131,22 @@ def get_by_email(ctx, customer_email):
     get_by_email_func(session, user, customer_email)
 
 
-@customer.command()
+@customer.command(help="Update a customer")
 @click.pass_context
-@click.argument('customer_id', type=int)
-@click.option('--firstname', type=str, default=None)
-@click.option('--lastname', type=str, default=None)
-@click.option('--email', type=str, default=None)
-@click.option('--phone', type=int, default=None)
-@click.option('--company', type=str, default=None)
+@click.argument('customer_id', type=int, help="Customer ID in numerical value.")
+@click.option('--firstname', type=str, default=None, help="For change: Firstname in alphabetical value, for keep unchanged: None.")
+@click.option('--lastname', type=str, default=None, help="For change: Lastname in alphabetical value, for keep unchanged: None.")
+@click.option('--email', type=str, default=None, help="For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.")
+@click.option('--phone', type=int, default=None, help="For change: Phone number in numerical value, for keep unchanged: None.")
+@click.option('--company', type=str, default=None, help="For change: Customer's compagny in alphabetical value, for keep unchanged: None.")
 def update(ctx, customer_id, firstname, lastname, email, phone, company):
     session = ctx.obj
     user = None
     update_func(session, user, customer_id, firstname, lastname, email, phone, company)
 
 
-@customer.command()
-@click.argument('customer_id', type=int)
+@customer.command(help="Delete a customer")
+@click.argument('customer_id', type=int, help="Customer ID in numerical value.")
 @click.pass_context
 def delete(ctx, customer_id):
     session = ctx.obj

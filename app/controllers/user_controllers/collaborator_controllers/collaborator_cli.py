@@ -3,12 +3,12 @@ from .collaborator_controller import create_func, read_func, get_by_id_func, get
 from app.views.general_views.generic_message import display_message_info
 
 
-@click.group()
+@click.group(help="Collaborator forms command group")
 def collaborator_form():
     pass
 
 
-@collaborator_form.command()
+@collaborator_form.command(help="Create a collaborator with form")
 @click.pass_context
 def create_form(ctx):
     session = ctx.obj
@@ -26,7 +26,7 @@ def create_form(ctx):
     create_func(session, user, firstname, lastname, email, role, password)
 
 
-@collaborator_form.command()
+@collaborator_form.command(help="Get a list of collaborators with form")
 @click.pass_context
 def read_form(ctx):
     session = ctx.obj
@@ -34,7 +34,7 @@ def read_form(ctx):
     read_func(session, user)
 
 
-@collaborator_form.command()
+@collaborator_form.command(help="Get a collaborator with his ID with form")
 @click.pass_context
 def get_by_id_form(ctx):
     session = ctx.obj
@@ -44,7 +44,7 @@ def get_by_id_form(ctx):
     get_by_id_func(session, user, collaborator_id)
 
 
-@collaborator_form.command()
+@collaborator_form.command(help="Get a collaborator with his email with form")
 @click.pass_context
 def get_by_email_form(ctx):
     session = ctx.obj
@@ -54,7 +54,7 @@ def get_by_email_form(ctx):
     get_by_email_func(session, user, collaborator_email)
 
 
-@collaborator_form.command()
+@collaborator_form.command(help="Update a collaborator with form")
 @click.pass_context
 def update_form(ctx):
     session = ctx.obj
@@ -72,7 +72,7 @@ def update_form(ctx):
     update_func(session, user, collaborator_id, firstname, lastname, email, password)
 
 
-@collaborator_form.command()
+@collaborator_form.command(help="Delete a collaborator with form")
 @click.pass_context
 def delete_form(ctx):
     session = ctx.obj
@@ -82,25 +82,25 @@ def delete_form(ctx):
     delete_func(session, user, collaborator_id)
 
 
-@click.group()
+@click.group(help="Collaborator command group")
 def collaborator():
     pass
 
 
-@collaborator.command()
+@collaborator.command(help="Create a collaborator")
 @click.pass_context
-@click.argument('firstname', type=str)
-@click.argument('lastname', type=str)
-@click.argument('email', type=str)
-@click.argument('role', type=int)
-@click.argument('password', type=str)
+@click.argument('firstname', type=str, help="Firstname in alphabetical value.")
+@click.argument('lastname', type=str, help="Lastname in alphabetical value.")
+@click.argument('email', type=str, help="Email in alphabetical value and in form alpha@alpha.alpha.")
+@click.argument('role', type=int, help="Role in numerical value, administrator: 1, seller: 2, support: 3.")
+@click.argument('password', type=str, help="Password in form with letters, numbers, and a limited set of special characters (!@#$%^&*()_-).")
 def create(ctx, firstname, lastname, email, role, password):
     session = ctx.obj
     user = None
     create_func(session, user, firstname, lastname, email, role, password)
 
 
-@collaborator.command()
+@collaborator.command(help="Get a list of collaborators")
 @click.pass_context
 def read(ctx):
     session = ctx.obj
@@ -108,8 +108,8 @@ def read(ctx):
     read_func(session, user)
 
 
-@collaborator.command()
-@click.argument('collaborator_id', type=int)
+@collaborator.command(help="Get a collaborator with his ID")
+@click.argument('collaborator_id', type=int, help="Collaborator ID in numerical value.")
 @click.pass_context
 def get_by_id(ctx, collaborator_id):
     session = ctx.obj
@@ -117,8 +117,8 @@ def get_by_id(ctx, collaborator_id):
     get_by_id_func(session, user, collaborator_id)
 
 
-@collaborator.command()
-@click.argument('collaborator_email', type=str)
+@collaborator.command(help="Get a collaborator with his email")
+@click.argument('collaborator_email', type=str, help="Collaborator Email in alphabetical value and in form alpha@alpha.alpha.")
 @click.pass_context
 def get_by_email(ctx, collaborator_email):
     session = ctx.obj
@@ -126,21 +126,21 @@ def get_by_email(ctx, collaborator_email):
     get_by_email_func(session, user, collaborator_email)
 
 
-@collaborator.command()
+@collaborator.command(help="Update a collaborator")
 @click.pass_context
-@click.argument('collaborator_id', type=int)
-@click.option('--firstname', type=str, default=None)
-@click.option('--lastname', type=str, default=None)
-@click.option('--email', type=str, default=None)
-@click.option('--password', type=str, default=None)
+@click.argument('collaborator_id', type=int, help="Collaborator ID in numerical value.")
+@click.option('--firstname', type=str, default=None, help="For change: Firstname in alphabetical value, for keep unchanged: None.")
+@click.option('--lastname', type=str, default=None, help="For change: Lastname in alphabetical value, for keep unchanged: None.")
+@click.option('--email', type=str, default=None, help="For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.")
+@click.option('--password', type=str, default=None, help="For change: Password in form with letters, numbers, and a limited set of special characters (!@#$%^&*()_-), for keep unchanged: None.")
 def update(ctx, collaborator_id, firstname, lastname, email, password):
     session = ctx.obj
     user = None
     update_func(session, user, collaborator_id, firstname, lastname, email, password)
 
 
-@collaborator.command()
-@click.argument('collaborator_id', type=int)
+@collaborator.command(help="Delete a collaborator")
+@click.argument('collaborator_id', type=int, help="Collaborator ID in numerical value.")
 @click.pass_context
 def delete(ctx, collaborator_id):
     session = ctx.obj

@@ -52,12 +52,12 @@ def test_read_events(db_session):
     assert events_with_collaborator[0] == event2
 
     # Test reading events with collaborators
-    events_with_support = Event.read(db_session, supported=True)
+    events_with_support = Event.read(db_session, is_supported=True)
     assert len(events_with_support) == 1
     assert events_with_support[0] == event2
 
     # Test reading events without collaborators
-    events_without_support = Event.read(db_session, supported=False)
+    events_without_support = Event.read(db_session, is_supported=False)
     assert len(events_without_support) == 1
     assert events_without_support[0] == event1
 

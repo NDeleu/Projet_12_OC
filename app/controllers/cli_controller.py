@@ -7,7 +7,7 @@ from .business_controllers.contract_controllers.contract_cli import contract, co
 from .business_controllers.event_controllers.event_cli import event, event_form
 
 
-@click.group()
+@click.group(help="Various forms for login, logout, etc.")
 @click.pass_context
 def form(ctx):
     pass
@@ -21,7 +21,7 @@ form.add_command(contract_form, name='contract')
 form.add_command(event_form, name='event')
 
 
-@click.group()
+@click.group(help="Main command group")
 @click.pass_context
 def cli(ctx):
     pass

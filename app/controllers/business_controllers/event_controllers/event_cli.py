@@ -4,12 +4,12 @@ from app.views.general_views.generic_message import display_message_info
 from datetime import datetime
 
 
-@click.group()
+@click.group(help="Event forms command group")
 def event_form():
     pass
 
 
-@event_form.command()
+@event_form.command(help="Create an event with form")
 @click.pass_context
 def create_form(ctx):
     session = ctx.obj
@@ -31,7 +31,7 @@ def create_form(ctx):
     create_func(session, user, name, event_start, event_end, location, attendees, instruction, contract)
 
 
-@event_form.command()
+@event_form.command(help="Get a list of events with form")
 @click.pass_context
 def read_form(ctx):
     session = ctx.obj
@@ -43,7 +43,7 @@ def read_form(ctx):
     read_func(session, user, mine, is_supported)
 
 
-@event_form.command()
+@event_form.command(help="Get an event with his ID with form")
 @click.pass_context
 def get_by_id_form(ctx):
     session = ctx.obj
@@ -53,7 +53,7 @@ def get_by_id_form(ctx):
     get_by_id_func(session, user, event_id)
 
 
-@event_form.command()
+@event_form.command(help="Update an event with form")
 @click.pass_context
 def update_form(ctx):
     session = ctx.obj
@@ -79,7 +79,7 @@ def update_form(ctx):
     update_func(session, user, event_id, name, event_start, event_end, location, attendees, instruction, contract, support)
 
 
-@event_form.command()
+@event_form.command(help="Delete an event with form")
 @click.pass_context
 def delete_form(ctx):
     session = ctx.obj
@@ -89,29 +89,29 @@ def delete_form(ctx):
     delete_func(session, user, event_id)
 
 
-@click.group()
+@click.group(help="Event command group")
 def event():
     pass
 
 
-@event.command()
+@event.command(help="Create an event")
 @click.pass_context
-@click.argument('name', type=str)
-@click.argument('event_start', type=datetime)
-@click.argument('event_end', type=datetime)
-@click.argument('location', type=str)
-@click.argument('attendees', type=int)
-@click.argument('instruction', type=str)
-@click.argument('contract', type=int)
+@click.argument('name', type=str, help="Event Name in alphabetical value.")
+@click.argument('event_start', type=datetime, help="Event start date in this form: YYYY-MM-DD HH:MM:SS.")
+@click.argument('event_end', type=datetime, help="Event end date in this form: YYYY-MM-DD HH:MM:SS.")
+@click.argument('location', type=str, help="Event location in alphabetical value.")
+@click.argument('attendees', type=int, help="Attendees amount in numerical value.")
+@click.argument('instruction', type=str, help="Some instructions for the event in alphabetical value.")
+@click.argument('contract', type=int, help="Contract Id in numerical value.")
 def create(ctx, name, event_start, event_end, location, attendees, instruction, contract):
     session = ctx.obj
     user = None
     create_func(session, user, name, event_start, event_end, location, attendees, instruction, contract)
 
 
-@event.command()
-@click.option('--mine', type=bool, default=False)
-@click.option('--is_supported', type=bool, default=None)
+@event.command(help="Get a list of events")
+@click.option('--mine', type=bool, default=False, help="If you are support, filter awarded events: True, not this filter: False.")
+@click.option('--is_supported', type=bool, default=None, help="Filter only contracts with support assigned: True, without support assigned: False, both: None.")
 @click.pass_context
 def read(ctx, mine, is_supported):
     session = ctx.obj
@@ -119,8 +119,8 @@ def read(ctx, mine, is_supported):
     read_func(session, user, mine, is_supported)
 
 
-@event.command()
-@click.argument('event_id', type=int)
+@event.command(help="Get an event with his ID")
+@click.argument('event_id', type=int, help="Event ID in numerical value.")
 @click.pass_context
 def get_by_id(ctx, event_id):
     session = ctx.obj
@@ -128,25 +128,25 @@ def get_by_id(ctx, event_id):
     get_by_id_func(session, user, event_id)
 
 
-@event.command()
+@event.command(help="Update an event")
 @click.pass_context
-@click.argument('event_id', type=int)
-@click.option('--name', type=str, default=None)
-@click.option('--event_start', type=datetime, default=None)
-@click.option('--event_end', type=datetime, default=None)
-@click.option('--location', type=str, default=None)
-@click.option('--attendees', type=int, default=None)
-@click.option('--instruction', type=str, default=None)
-@click.option('--contract', type=int, default=None)
-@click.option('--support', type=int, default=None)
+@click.argument('event_id', type=int, help="Event ID in numerical value.")
+@click.option('--name', type=str, default=None, help="For change: Event Name in alphabetical value, for keep unchanged: None.")
+@click.option('--event_start', type=datetime, default=None, help="For change: Event start date in this form: YYYY-MM-DD HH:MM:SS, for keep unchanged: None.")
+@click.option('--event_end', type=datetime, default=None, help="For change: Event end date in this form: YYYY-MM-DD HH:MM:SS, for keep unchanged: None.")
+@click.option('--location', type=str, default=None, help="For change: Event location in alphabetical value, for keep unchanged: None.")
+@click.option('--attendees', type=int, default=None, help="For change: Attendees amount in numerical value, for keep unchanged: None.")
+@click.option('--instruction', type=str, default=None, help="For change: Some instructions for the event in alphabetical value, for keep unchanged: None.")
+@click.option('--contract', type=int, default=None, help="For change: Contract Id in numerical value, for keep unchanged: None.")
+@click.option('--support', type=int, default=None, help="For change: Support Id in numerical value, for keep unchanged: None.")
 def update(ctx, event_id, name, event_start, event_end, location, attendees, instruction, contract, support):
     session = ctx.obj
     user = None
     update_func(session, user, event_id, name, event_start, event_end, location, attendees, instruction, contract, support)
 
 
-@event.command()
-@click.argument('event_id', type=int)
+@event.command(help="Delete an event")
+@click.argument('event_id', type=int, help="Event ID in numerical value.")
 @click.pass_context
 def delete(ctx, event_id):
     session = ctx.obj
