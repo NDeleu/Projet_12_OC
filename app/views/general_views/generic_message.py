@@ -3,10 +3,6 @@ from rich.console import Console
 console = Console()
 
 
-def display_message(message):
-    console.print(f"[green]{message}[/green]")
-
-
 def display_message_success(message):
     console.print(f"[bold green]{message}[/bold green]")
 
@@ -17,3 +13,7 @@ def display_message_error(message):
 
 def display_message_info(message):
     console.print(f"[bold blue]{message}[/bold blue]")
+
+
+def display_message_correction(message):
+    console.print(f"[bold orange]{message}[/bold orange]")

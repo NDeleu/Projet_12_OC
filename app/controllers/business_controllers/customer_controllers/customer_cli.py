@@ -1,5 +1,6 @@
 import click
 from .customer_controller import create_func, read_func, get_by_id_func, get_by_email_func, update_func, delete_func
+from app.views.general_views.generic_message import display_message_info
 
 
 @click.group()
@@ -12,10 +13,15 @@ def customer_form():
 def create_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("Firstname in alphabetical value.")
     firstname = click.prompt("Firstname", type=click.STRING)
+    display_message_info("Lastname in alphabetical value.")
     lastname = click.prompt("Lastname", type=click.STRING)
+    display_message_info("Email in alphabetical value and in form alpha@alpha.alpha.")
     email = click.prompt("Email", type=click.STRING)
+    display_message_info("Phone number in numerical value.")
     phone = click.prompt("Phone", type=click.INT)
+    display_message_info("Customer's compagny in alphabetical value.")
     company = click.prompt("Company", type=click.STRING)
     create_func(session, user, firstname, lastname, email, phone, company)
 
@@ -25,6 +31,7 @@ def create_form(ctx):
 def read_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("If you are seller, filter awarded customers: True, not this filter: False.")
     mine = click.prompt("Mine", type=click.BOOL, default=False)
     read_func(session, user, mine)
 
@@ -34,6 +41,7 @@ def read_form(ctx):
 def get_by_id_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("Customer ID in numerical value.")
     customer_id = click.prompt("Customer_Id", type=click.INT)
     get_by_id_func(session, user, customer_id)
 
@@ -43,6 +51,7 @@ def get_by_id_form(ctx):
 def get_by_email_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("Customer Email in alphabetical value and in form alpha@alpha.alpha.")
     customer_email = click.prompt("Email", type=click.STRING)
     get_by_email_func(session, user, customer_email)
 
@@ -52,11 +61,17 @@ def get_by_email_form(ctx):
 def update_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("Customer ID in numerical value.")
     customer_id = click.prompt("Collaborator_id", type=click.INT)
+    display_message_info("For change: Firstname in alphabetical value, for keep unchanged: None.")
     firstname = click.prompt("Firstname", type=click.STRING, default=None)
+    display_message_info("For change: Lastname in alphabetical value, for keep unchanged: None.")
     lastname = click.prompt("Lastname", type=click.STRING, default=None)
+    display_message_info("For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.")
     email = click.prompt("Email", type=click.STRING, default=None)
+    display_message_info("For change: Phone number in numerical value, for keep unchanged: None.")
     phone = click.prompt("Phone", type=click.INT, default=None)
+    display_message_info("For change: Customer's compagny in alphabetical value, for keep unchanged: None.")
     company = click.prompt("Company", type=click.STRING, default=None)
     update_func(session, user, customer_id, firstname, lastname, email, phone, company)
 
@@ -66,6 +81,7 @@ def update_form(ctx):
 def delete_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("Customer ID in numerical value")
     customer_id = click.prompt("Customer_Id", type=click.INT)
     delete_func(session, user, customer_id)
 

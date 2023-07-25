@@ -70,6 +70,8 @@ class Collaborator(Base):
             raise ValueError("Invalid input. Password cannot be empty.")
         if not password.strip():
             raise ValueError("Invalid input. Password cannot be empty.")
+        if len(password) < 6:
+            raise ValueError("Password should be at least 6 characters long.")
         if not re.match("^[a-zA-Z0-9!@#$%^&*()_-]+$", password):
             raise ValueError("Invalid input. Please enter a non-empty password containing only letters, numbers, and a limited set of special characters (!@#$%^&*()_-).")
         self.password = bcrypt.hash(password)

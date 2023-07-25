@@ -1,5 +1,6 @@
 import click
 from .contract_controller import create_func, read_func, get_by_id_func, update_func, delete_func
+from app.views.general_views.generic_message import display_message_info
 
 
 @click.group()
@@ -12,9 +13,13 @@ def contract_form():
 def create_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("Total contract amount in numerical value.")
     total_amount = click.prompt("Total_Amount", type=click.FLOAT)
+    display_message_info("Left to pay in numerical value.")
     left_to_pay = click.prompt("Left_to_Pay", type=click.FLOAT)
+    display_message_info("Customer ID in numerical value.")
     customer = click.prompt("Customer_Id", type=click.INT)
+    display_message_info("Contract signed, for yes: True, for no: False.")
     signed = click.prompt("Signed", type=click.BOOL, default=False)
     create_func(session, user, total_amount, left_to_pay, customer, signed)
 
@@ -24,9 +29,13 @@ def create_form(ctx):
 def read_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("If you are seller, filter awarded contracts: True, not this filter: False.")
     mine = click.prompt("Mine", type=click.BOOL, default=False)
+    display_message_info("Filter only contracts signed: True, not signed: False, both: None.")
     is_signed = click.prompt("Is_Signed", type=click.BOOL, default=None)
+    display_message_info("Filter only contracts with existing event: True, without existing event: False, both: None.")
     with_event = click.prompt("With_Event", type=click.BOOL, default=None)
+    display_message_info("Filter only contracts paid: True, not paid: False, both: None.")
     is_paid = click.prompt("Is_Paid", type=click.BOOL, default=None)
     read_func(session, user, mine, is_signed, with_event, is_paid)
 
@@ -36,6 +45,7 @@ def read_form(ctx):
 def get_by_id_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("Contract ID in numerical value.")
     contract_id = click.prompt("Contract_Id", type=click.INT)
     get_by_id_func(session, user, contract_id)
 
@@ -45,9 +55,13 @@ def get_by_id_form(ctx):
 def update_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("Contract ID in numerical value.")
     contract_id = click.prompt("Contract_Id", type=click.INT)
+    display_message_info("For change: Total contract amount in numerical value, for keep unchanged: None.")
     total_amount = click.prompt("Total_Amount", type=click.FLOAT, default=None)
+    display_message_info("For change: Left to pay in numerical value, for keep unchanged: None.")
     left_to_pay = click.prompt("Left_to_Pay", type=click.FLOAT, default=None)
+    display_message_info("Contract signed, for yes: True, for no: False.")
     signed = click.prompt("Signed", type=click.BOOL, default=False)
     update_func(session, user, contract_id, total_amount, left_to_pay, signed)
 
@@ -57,6 +71,7 @@ def update_form(ctx):
 def delete_form(ctx):
     session = ctx.obj
     user = None
+    display_message_info("Contract ID in numerical value.")
     contract_id = click.prompt("Contract_Id", type=click.INT)
     delete_func(session, user, contract_id)
 
