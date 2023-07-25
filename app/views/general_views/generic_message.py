@@ -4,11 +4,11 @@ console = Console()
 
 
 def display_message_success(message):
-    console.print(f"[bold green]{message}[/bold green]")
+    console.print(f"[bold green]SUCCESS: {message}[/bold green]")
 
 
 def display_message_error(message):
-    console.print(f"[bold red]{message}[/bold red]")
+    console.print(f"[bold red]ERROR: {message}[/bold red]")
 
 
 def display_message_info(message):
@@ -16,4 +16,4 @@ def display_message_info(message):
 
 
 def display_message_correction(message):
-    console.print(f"[bold orange]{message}[/bold orange]")
+    console.print(f"[bold orange]CARE: {message}[/bold orange]")

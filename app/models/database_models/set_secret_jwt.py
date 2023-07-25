@@ -1,7 +1,7 @@
 import os
 from configparser import ConfigParser
 import secrets
-from app.views.general_views.generic_message import display_message
+from app.views.general_views.generic_message import display_message_success
 
 
 def set_jwt_secret():
@@ -22,4 +22,4 @@ def set_jwt_secret():
         with open(config_file, 'w') as confchange:
             config.write(confchange)
 
-        display_message("The JWT Secret Key has been configured.")
+        display_message_success("The JWT Secret Key has been configured.")

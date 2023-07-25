@@ -8,7 +8,7 @@ from sqlalchemy_utils import create_database, database_exists
 
 from .set_url_database import set_url_config
 
-from app.views.general_views.generic_message import display_message
+from app.views.general_views.generic_message import display_message_success, display_message_info
 
 
 def sql_database():
@@ -43,9 +43,9 @@ def set_url_db():
             db_url = f"postgresql://{sql_database_info['user']}:{sql_database_info['password']}@{sql_database_info['host']}:{sql_database_info['port']}/{sql_database_info['dbname']}"
             break
         else:
-            display_message("Your database configuration is default, you need to change your set up.")
+            display_message_info("Your database configuration is default, you need to change your set up.")
             if set_url_config():
-                display_message("Successful database configuration change.")
+                display_message_success("Successful database configuration change.")
             else:
                 raise SQLAlchemyError("Error Database initialization. Try to fix it and retry later.")
     return db_url
@@ -67,16 +67,16 @@ def db_engine():
 
         if not database_exists(db_url):
             create_database(db_url)
-            display_message("Database created")
+            display_message_success("Database created")
 
         engine = create_engine(db_url)
 
         if try_connect_bdd(engine):
             break
         else:
-            display_message("The configuration did not allow to connect to the database, you need to change your set up.")
+            display_message_info("The configuration did not allow to connect to the database, you need to change your set up.")
             if set_url_config():
-                display_message("Successful database configuration change.")
+                display_message_success("Successful database configuration change.")
             else:
                 raise SQLAlchemyError("Error Database initialization. Try to fix it and retry later.")
 

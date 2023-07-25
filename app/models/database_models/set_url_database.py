@@ -1,7 +1,7 @@
 import os
 import re
 from configparser import ConfigParser
-from app.views.general_views.generic_message import display_message
+from app.views.general_views.generic_message import display_message_info, display_message_success, display_message_error
 
 
 def set_url_config():
@@ -14,9 +14,10 @@ def set_url_config():
 
 def choice_change_url():
     while True:
-        display_message("Do you want change your Database configuration now ?")
+        display_message_info("Do you want change your Database configuration now ?")
         try:
-            change_select_choice = int(input(display_message("Select 1 for yes or 2 for no: ")))
+            display_message_info("Choice select in numerical value: for Yes: 1, for No: 2.")
+            change_select_choice = int(input("Choice"))
             if change_select_choice == 1:
                 selected_choice = True
                 break
@@ -24,43 +25,39 @@ def choice_change_url():
                 selected_choice = False
                 break
             else:
-                display_message("Invalid choice. Please try again.")
+                display_message_error("Invalid choice. Please try again.")
         except ValueError:
-            display_message("Invalid input. Please enter a valid choice.")
+            display_message_error("Invalid input. Please enter a valid choice.")
     return selected_choice
 
 
 def form_url_config():
     while True:
-        username_choice = str(input(
-            display_message("Enter your database administrator username: ")))
+        display_message_info("Enter your database administrator username in alphabetical value: ")
+        username_choice = str(input("Database administrator username"))
 
         if re.match("^[a-zA-Z0-9]+$", username_choice):
             break
         else:
-            display_message(
-                "Invalid input. Please enter a valid username without special characters or spaces.")
+            display_message_error("Invalid input. Please enter a valid username without special characters or spaces.")
 
     while True:
-        password_choice = str(
-            input(display_message("Enter your database password: ")))
-        if password_choice.strip() and re.match("^[a-zA-Z0-9!@#$%^&*()_-]+$",
-                                                password_choice):
+        display_message_info("Enter your database password containing only letters, numbers, and a limited set of special characters.")
+        password_choice = str(input("Database password"))
+        if password_choice.strip() and re.match("^[a-zA-Z0-9!@#$%^&*()_-]+$", password_choice):
             break
         else:
-            display_message(
-                "Invalid input. Please enter a non-empty password containing only letters, numbers, and a limited set of special characters (!@#$%^&*()_-).")
+            display_message_error("Invalid input. Please enter a non-empty password containing only letters, numbers, and a limited set of special characters (!@#$%^&*()_-).")
 
     while True:
-        database_name_choice = str(
-            input(display_message("Enter your database name: ")))
+        display_message_info("Enter your database name: ")
+        database_name_choice = str(input("Database name"))
 
         # Vérification avec une expression régulière pour restreindre à alphanumérique
         if re.match("^[a-zA-Z0-9]+$", database_name_choice):
             break
         else:
-            display_message(
-                "Invalid input. Please enter a valid database name without special characters or spaces.")
+            display_message_error("Invalid input. Please enter a valid database name without special characters or spaces.")
 
     sett = {
         'username': username_choice,
@@ -90,3 +87,5 @@ def set_sql_config_ini():
 
     with open(config_file, 'w') as confchange:
         config.write(confchange)
+
+    display_message_success("Database information was updated successfully")
