@@ -8,6 +8,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 from sqlalchemy_utils import create_database, database_exists, drop_database
 
+from app.models.class_models.user_models.collaborator_model import Collaborator
+
 
 @pytest.fixture(scope='session')
 def postgresql():
@@ -71,3 +73,33 @@ def db_session(postgresql):
     # Supprimez la base de données temporaire une fois les tests terminés
     if database_exists(db_url):
         drop_database(db_url)
+
+
+@pytest.fixture
+def admin_user(db_session):
+    # Create a fake user with the role of an administrator
+    user = Collaborator(firstname="Admin", lastname="User", email="admin@example.com",
+                        role=1, password="password")
+    db_session.add(user)
+    db_session.commit()
+    return user
+
+
+@pytest.fixture
+def seller_user(db_session):
+    # Create a fake user with the role of an seller
+    user = Collaborator(firstname="Seller", lastname="User", email="seller@example.com",
+                        role=2, password="password")
+    db_session.add(user)
+    db_session.commit()
+    return user
+
+
+@pytest.fixture
+def support_user(db_session):
+    # Create a fake user with the role of an support
+    user = Collaborator(firstname="Support", lastname="User", email="support@example.com",
+                        role=3, password="password")
+    db_session.add(user)
+    db_session.commit()
+    return user

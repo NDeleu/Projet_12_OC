@@ -1,4 +1,5 @@
 from app.models import Collaborator
+import pytest
 
 
 def test_create_collaborator(db_session):
@@ -84,6 +85,14 @@ def test_update_collaborator(db_session):
     # Check if the email was updated successfully
     updated_collaborator = Collaborator.get_by_id(db_session, collaborator.id)
     assert updated_collaborator.email == "john.doe.updated@example.com"
+
+    # Test updating a collaborator with an invalid email (email already exists for another collaborator)
+    with pytest.raises(ValueError, match="The email address already exists for a collaborator or customer."):
+        Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="john.doe.updated@example.com", role=3, password="secret")
+
+    # Test updating a collaborator's role (this should raise a PermissionError)
+    with pytest.raises(PermissionError, match="Role cannot be updated."):
+        collaborator.update(db_session, role=3)
 
 
 def test_delete_collaborator(db_session):

@@ -59,21 +59,21 @@ class Event(Base):
         if attendees is None:
             raise ValueError("Attendees cannot be empty.")
         if not isinstance(attendees, int):
-            raise ValueError("Attendees must be an integer.")
+            raise TypeError("Attendees must be an integer.")
         self.attendees = attendees
 
     def set_event_start(self, event_start):
         if not event_start:
             raise ValueError("Event start date cannot be empty.")
         if not isinstance(event_start, datetime):
-            raise ValueError("Event start must be a datetime object.")
+            raise TypeError("Event start must be a datetime object.")
         self.event_start = event_start
 
     def set_event_end(self, event_end):
         if not event_end:
             raise ValueError("Event end date cannot be empty.")
         if not isinstance(event_end, datetime):
-            raise ValueError("Event start must be a datetime object.")
+            raise TypeError("Event start must be a datetime object.")
         self.event_end = event_end
 
     @classmethod
@@ -88,7 +88,7 @@ class Event(Base):
         if collaborator:
             is_support = collaborator.role == collaborator.__class__.RoleEnum.support
             if not is_support:
-                raise ValueError(
+                raise PermissionError(
                     f"Only collaborators with the role of 'support' can be linked to a customer.")
 
         session.commit()
@@ -102,7 +102,7 @@ class Event(Base):
             query = query.filter(Event.collaborator_id == user_id)
 
         if is_supported is not None and not isinstance(is_supported, bool):
-            raise ValueError("Is_supported must be either True, False, or None.")
+            raise TypeError("Is_supported must be either True, False, or None.")
 
         if is_supported is not None:
             if is_supported is True:
@@ -124,7 +124,7 @@ class Event(Base):
                 if key == 'collaborator':
                     is_support = value.role == value.__class__.RoleEnum.support
                     if not is_support:
-                        raise ValueError(
+                        raise PermissionError(
                             f"Only collaborators with the role of 'support' can be linked to a customer.")
 
                     self.collaborator = value

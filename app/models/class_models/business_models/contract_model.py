@@ -25,17 +25,17 @@ class Contract(Base):
 
     def set_total_amount(self, total_amount):
         if not isinstance(total_amount, (int, float)):
-            raise ValueError("Total amount must be a numeric value.")
+            raise TypeError("Total amount must be a numeric value.")
         self.total_amount = total_amount
 
     def set_left_to_pay(self, left_to_pay):
         if not isinstance(left_to_pay, (int, float)):
-            raise ValueError("Left to pay must be a numeric value.")
+            raise TypeError("Left to pay must be a numeric value.")
         self.left_to_pay = left_to_pay
 
     def set_signed(self, signed):
         if not isinstance(signed, bool):
-            raise ValueError("Signed must be a boolean value.")
+            raise TypeError("Signed must be a boolean value.")
         self.signed = signed
 
     @classmethod
@@ -55,13 +55,13 @@ class Contract(Base):
                 Contract.customer.has(collaborator_id=user_id))
 
         if signed is not None and not isinstance(signed, bool):
-            raise ValueError("Signed must be either True, False, or None.")
+            raise TypeError("Signed must be either True, False, or None.")
 
         if signed is not None:
             query = query.filter(Contract.signed == signed)
 
         if event is not None and not isinstance(event, bool):
-            raise ValueError("Event must be either True, False, or None.")
+            raise TypeError("Event must be either True, False, or None.")
 
         if event is True:
             query = query.filter(Contract.event != None)
@@ -71,7 +71,7 @@ class Contract(Base):
             pass
 
         if paid is not None and not isinstance(paid, bool):
-            raise ValueError("Paid must be either True, False, or None.")
+            raise TypeError("Paid must be either True, False, or None.")
 
         if paid is True:
             query = query.filter(Contract.left_to_pay <= 0)

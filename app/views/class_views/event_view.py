@@ -40,7 +40,6 @@ def display_announce_event_list():
 
 def display_event_summary(event):
     console.print(" ")
-    console.print("[bold yellow]Event Details:[/bold yellow]")
     console.print(f"Event ID: {event.id}")
     console.print(f"Name: {event.name}")
     console.print(f"Start Time: {event.event_start}")

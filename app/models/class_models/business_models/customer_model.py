@@ -56,7 +56,7 @@ class Customer(Base):
         if not phone:
             raise ValueError("Phone cannot be empty.")
         if not isinstance(phone, int):
-            raise ValueError("Invalid input. Phone should contain only integer.")
+            raise TypeError("Invalid input. Phone should contain only integer.")
         self.phone = phone
 
     def set_company(self, company):
@@ -80,7 +80,7 @@ class Customer(Base):
 
         is_seller = collaborator.role == collaborator.__class__.RoleEnum.seller
         if not is_seller:
-            raise ValueError(
+            raise PermissionError(
                 f"Only collaborators with the role of 'seller' can be linked to a customer.")
 
         customer = Customer(firstname=firstname, lastname=lastname,
@@ -129,7 +129,7 @@ class Customer(Base):
                 elif key == 'collaborator':
                     is_seller = value.role == value.__class__.RoleEnum.seller
                     if not is_seller:
-                        raise ValueError(
+                        raise PermissionError(
                             f"Only collaborators with the role of 'seller' can be linked to a customer.")
 
                     self.collaborator = value

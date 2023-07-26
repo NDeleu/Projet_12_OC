@@ -40,7 +40,6 @@ def display_announce_contract_list():
 
 def display_contract_summary(contract):
     console.print(" ")
-    console.print("[bold yellow]Contract Details:[/bold yellow]")
     console.print(f"Contract ID: {contract.id}")
     console.print(f"Total Amount: {contract.total_amount}")
     console.print(f"Left to Pay: {contract.left_to_pay}")

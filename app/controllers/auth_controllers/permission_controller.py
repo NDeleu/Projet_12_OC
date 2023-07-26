@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import jwt
 
 from app.models.class_models.user_models.collaborator_model import Collaborator
-from app.views.general_views.generic_message import display_message_error
+
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 controllers_dir = os.path.dirname(script_dir)
@@ -64,50 +64,50 @@ def get_token_from_file():
 def login_required_admin_or_support(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
-        if user and user.role in ["administrator", "support"]:
+        if user and user.role in [Collaborator.RoleEnum.administrator, Collaborator.RoleEnum.support]:
             return func(session, user, *args, **kwargs)
         else:
-            display_message_error("Permission denied. Please log in as an administrator or support.")
+            raise PermissionError("Permission denied. Please log in as an administrator or support.")
     return wrapper
 
 
 def login_required_admin_or_seller(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
-        if user and user.role in ["administrator", "seller"]:
+        if user and user.role in [Collaborator.RoleEnum.administrator, Collaborator.RoleEnum.seller]:
             return func(session, user, *args, **kwargs)
         else:
-            display_message_error("Permission denied. Please log in as an administrator or support.")
+            raise PermissionError("Permission denied. Please log in as an administrator or support.")
     return wrapper
 
 
 def login_required_admin(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
-        if user and user.role == 'administrator':
+        if user and user.role == Collaborator.RoleEnum.administrator:
             return func(session, user, *args, **kwargs)
         else:
-            display_message_error("Permission denied. Please log in as an administrator.")
+            raise PermissionError("Permission denied. Please log in as an administrator.")
     return wrapper
 
 
 def login_required_seller(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
-        if user and user.role == 'seller':
+        if user and user.role == Collaborator.RoleEnum.seller:
             return func(session, user, *args, **kwargs)
         else:
-            display_message_error("Permission denied. Please log in as an seller.")
+            raise PermissionError("Permission denied. Please log in as an seller.")
     return wrapper
 
 
 def login_required_support(func):
     def wrapper(session, *args, **kwargs):
         user = get_logged_as_user(session)
-        if user and user.role == 'support':
+        if user and user.role == Collaborator.RoleEnum.support:
             return func(session, user, *args, **kwargs)
         else:
-            display_message_error("Permission denied. Please log in as an support.")
+            raise PermissionError("Permission denied. Please log in as an support.")
     return wrapper
 
 
@@ -117,5 +117,5 @@ def login_required(func):
         if user:
             return func(session, user, *args, **kwargs)
         else:
-            display_message_error("Permission denied. Please log in.")
+            raise PermissionError("Permission denied. Please log in.")
     return wrapper

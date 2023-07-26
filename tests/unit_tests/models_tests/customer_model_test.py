@@ -19,6 +19,15 @@ def test_create_customer(db_session):
     assert new_customer.company == "ABC Corp"
     assert new_customer.collaborator == collaborator
 
+    # Test creating a new customer with an email that already exists for another customer or collaborator
+    existing_email = "john.doe@example.com"
+    with pytest.raises(ValueError,
+                       match="The email address already exists for a collaborator or customer."):
+        Customer.create(db_session, firstname="Alice", lastname="Smith",
+                        email=existing_email,
+                        phone=987654321, company="XYZ Corp",
+                        collaborator=collaborator)
+
 
 def test_read_customers(db_session):
     # Create a new seller for customer association
@@ -76,6 +85,11 @@ def test_get_by_id_customer(db_session):
     assert read_customer.company == "ABC Corp"
     assert read_customer.collaborator == collaborator
 
+    # Test reading a customer with an invalid customer_id (non-existent customer_id)
+    non_existent_customer_id = 999
+    customer = Customer.get_by_id(db_session, non_existent_customer_id)
+    assert customer is None
+
 
 def test_get_by_email_customer(db_session):
     # Create a new seller for customer association
@@ -97,6 +111,12 @@ def test_get_by_email_customer(db_session):
     assert read_customer.company == "ABC Corp"
     assert read_customer.collaborator == collaborator
 
+    # Test reading a customer with an invalid customer_email (non-existent email)
+    non_existent_email = "non_existent@example.com"
+    customer = Customer.get_by_email(db_session, non_existent_email)
+    assert customer is None
+
+
 def test_update_customer(db_session):
     # Create a new seller for customer association
     collaborator = Collaborator.create(db_session, firstname="Jane", lastname="Smith", email="jane.smith@example.com", role=2, password="secret")
@@ -112,6 +132,12 @@ def test_update_customer(db_session):
     updated_customer = Customer.get_by_id(db_session, customer.id)
     assert updated_customer.email == "john.doe.updated@example.com"
     assert updated_customer.phone == 987654321
+
+    # Test updating an existing customer with an email that already exists for another customer or collaborator
+    customer2 = Customer.create(db_session, firstname="Customer", lastname="Two", email="customer.two@example.com",
+                                phone=555555555, company="XYZ Corp", collaborator=collaborator)
+    with pytest.raises(ValueError, match="The email address already exists for a collaborator or customer."):
+        customer.update(db_session, email="customer.two@example.com")
 
 
 def test_delete_customer(db_session):

@@ -125,7 +125,7 @@ class Collaborator(Base):
                 elif key == 'password':
                     self.set_password(value)
                 elif key == 'role':
-                    raise ValueError("Role cannot be updated.")
+                    raise PermissionError("Role cannot be updated.")
                 else:
                     setattr(self, key, value)
         session.commit()

@@ -37,7 +37,6 @@ def display_announce_collaborator_list():
 
 def display_collaborator_summary(collaborator):
     console.print(" ")
-    console.print("[bold yellow]Collaborator Details:[/bold yellow]")
     console.print(f"ID: {collaborator.id}")
     console.print(f"Name: {collaborator.firstname} - {collaborator.lastname}")
     console.print(f"Role: {collaborator.role}")
