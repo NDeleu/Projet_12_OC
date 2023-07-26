@@ -1,6 +1,6 @@
 from app.models.class_models.business_models.contract_model import Contract
 from app.models.class_models.business_models.customer_model import Customer
-from app.models.class_models.business_models.event_model import Event
+from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.controllers.auth_controllers.permission_controller import login_required_admin, login_required, login_required_seller, login_required_admin_or_seller
 from app.views.class_views.contract_view import display_contract_detail, display_contract_summary, display_announce_contract_list
 from app.views.general_views.generic_message import display_message_success, display_message_error, display_message_correction
@@ -24,7 +24,7 @@ def create_func(session, user, total_amount, left_to_pay, customer, signed):
 def read_func(session, user, mine, is_signed, with_event, is_paid):
     try:
         if mine:
-            if user.role == "seller":
+            if user.role == Collaborator.RoleEnum.seller:
                 contracts = Contract.read(session, user_id=user.id, signed=is_signed, event=with_event, paid=is_paid)
             else:
                 display_message_correction("Permission denied. Please log in as a seller to access the mine option for events. The full list of contracts is selected instead.")
@@ -56,7 +56,7 @@ def update_func(session, user, contract_id, total_amount, left_to_pay, signed):
     try:
         contract = Contract.get_by_id(session, contract_id)
         if contract:
-            if user.role == "administrator" or contract.customer.collaborator_id == user.id:
+            if user.role == Collaborator.RoleEnum.administrator or contract.customer.collaborator_id == user.id:
                 contract.update(session, total_amount=total_amount, left_to_pay=left_to_pay, signed=signed)
                 display_message_success("Contract updated successfully.")
                 display_contract_detail(contract)

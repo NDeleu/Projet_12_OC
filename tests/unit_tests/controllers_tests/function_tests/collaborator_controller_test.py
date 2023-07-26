@@ -11,7 +11,7 @@ from unittest.mock import patch
 import pytest
 
 
-def test_create_func(db_session, admin_user, capsys):
+def test_collaborator_create_func(db_session, admin_user, capsys):
     # Test data
     firstname = "John"
     lastname = "Doe"
@@ -37,7 +37,7 @@ def test_create_func(db_session, admin_user, capsys):
     assert "SUCCESS: Collaborator created successfully." in captured_stdout
 
 
-def test_read_func(db_session, admin_user, capsys):
+def test_collaborator_read_func(db_session, admin_user, capsys):
     # Test data
     collaborator = Collaborator(firstname="John", lastname="Doe", email="john.doe@example.com",
                                 role=Collaborator.RoleEnum.administrator, password="securepassword")
@@ -57,7 +57,7 @@ def test_read_func(db_session, admin_user, capsys):
     assert f"{collaborator.email}" in captured_stdout
 
 
-def test_get_by_id_func(db_session, admin_user, capsys):
+def test_collaborator_get_by_id_func(db_session, admin_user, capsys):
     # Test data
     collaborator = Collaborator(firstname="John", lastname="Doe", email="john.doe@example.com",
                                 role=Collaborator.RoleEnum.administrator, password="securepassword")
@@ -77,8 +77,19 @@ def test_get_by_id_func(db_session, admin_user, capsys):
     assert f"{collaborator.email}" in captured_stdout
     assert f"{collaborator.role}" in captured_stdout
 
+    wrong_collaborator_id = 250
 
-def test_get_by_email_func(db_session, admin_user, capsys):
+    # Mock the get_logged_as_user function to return the admin_user
+    with patch("app.controllers.auth_controllers.permission_controller.get_logged_as_user", return_value=admin_user):
+        # Run the function
+        get_by_id_func(db_session, wrong_collaborator_id)
+
+    captured_stdout = capsys.readouterr().out
+
+    assert "Collaborator not found." in captured_stdout
+
+
+def test_collaborator_get_by_email_func(db_session, admin_user, capsys):
     # Test data
     collaborator = Collaborator(firstname="John", lastname="Doe", email="john.doe@example.com",
                                 role=Collaborator.RoleEnum.administrator, password="securepassword")
@@ -98,8 +109,19 @@ def test_get_by_email_func(db_session, admin_user, capsys):
     assert f"{collaborator.email}" in captured_stdout
     assert f"{collaborator.role}" in captured_stdout
 
+    wrong_collaborator_email = "wrong.email@example.fr"
 
-def test_update_func(db_session, admin_user, capsys):
+    # Mock the get_logged_as_user function to return the admin_user
+    with patch("app.controllers.auth_controllers.permission_controller.get_logged_as_user", return_value=admin_user):
+        # Run the function
+        get_by_email_func(db_session, wrong_collaborator_email)
+
+    captured_stdout = capsys.readouterr().out
+
+    assert "Collaborator not found." in captured_stdout
+
+
+def test_collaborator_update_func(db_session, admin_user, capsys):
     # Test data
     collaborator = Collaborator(firstname="John", lastname="Doe", email="john.doe@example.com",
                                 role=Collaborator.RoleEnum.administrator, password="securepassword")
@@ -128,7 +150,7 @@ def test_update_func(db_session, admin_user, capsys):
     assert "SUCCESS: Collaborator updated successfully." in captured_stdout
 
 
-def test_delete_func(db_session, admin_user, capsys):
+def test_collaborator_delete_func(db_session, admin_user, capsys):
     # Test data
     collaborator = Collaborator(firstname="John", lastname="Doe", email="john.doe@example.com",
                                 role=Collaborator.RoleEnum.administrator, password="securepassword")

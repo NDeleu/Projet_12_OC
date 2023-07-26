@@ -20,7 +20,7 @@ def create_func(session, user, firstname, lastname, email, phone, company):
 def read_func(session, user, mine):
     try:
         if mine:
-            if user.role == 'seller':
+            if user.role == Collaborator.RoleEnum.seller:
                 list_customers = Customer.read(session, user.id)
             else:
                 display_message_correction(

@@ -79,9 +79,7 @@ class Event(Base):
     @classmethod
     def create(cls, session, name, event_start, event_end, location, attendees, instruction, contract, collaborator=None):
 
-        event = Event(name=name, event_start=event_start, event_end=event_end,
-                      location=location, attendees=attendees,
-                      instruction=instruction, contract=contract, collaborator=collaborator)
+        event = Event(name=name, event_start=event_start, event_end=event_end, location=location, attendees=attendees, instruction=instruction, contract=contract, collaborator=collaborator)
 
         session.add(event)
 

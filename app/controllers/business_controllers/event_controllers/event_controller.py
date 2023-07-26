@@ -7,13 +7,13 @@ from app.views.general_views.generic_message import display_message_error, displ
 
 
 @login_required_seller
-def create_func(session, user, name, event_start, event_end, location, attendees, instruction, contract):
+def create_func(session, user, name, event_start, event_end, location, attendees, instruction, contract_id):
     try:
-        contract_instance = Contract.get_by_id(session, contract)
+        contract_instance = Contract.get_by_id(session, contract_id)
         if contract_instance:
             if contract_instance.signed:
                 if contract_instance.customer.collaborator_id == user.id:
-                    event = Event.create(session, name, event_start, event_end, location, attendees, instruction, contract,)
+                    event = Event.create(session, name, event_start, event_end, location, attendees, instruction, contract_instance)
                     display_message_success("Event created successfully.")
                     display_event_detail(event)
                 else:
@@ -30,7 +30,7 @@ def create_func(session, user, name, event_start, event_end, location, attendees
 def read_func(session, user, mine, is_supported):
     try:
         if mine:
-            if user.role == 'support':
+            if user.role == Collaborator.RoleEnum.support:
                 list_events = Event.read(session, user.id, is_supported=is_supported)
             else:
                 display_message_correction("Permission denied. Please log in as a support to access the mine option for events. The full list of events is selected instead.")
@@ -58,34 +58,41 @@ def get_by_id_func(session, user, event_id):
 
 
 @login_required_admin_or_support
-def update_func(session, user, event_id, name, event_start, event_end, location, attendees, instruction, contract, support):
+def update_func(session, user, event_id, name, event_start, event_end, location, attendees, instruction, contract_id, support_id):
     try:
         event = Event.get_by_id(session, event_id)
         if event:
-            if user.role == "administrator":
-                if support is not None:
-                    support_collaborator = Collaborator.get_by_id(session, support)
+            if user.role == Collaborator.RoleEnum.administrator:
+                if support_id is not None:
+                    support_collaborator = Collaborator.get_by_id(session, support_id)
                     if support_collaborator and support_collaborator.role == Collaborator.RoleEnum.support:
                         event.update(session, collaborator=support_collaborator)
                         display_message_correction("Support field has been updated but CARE : administrator can only update event support field. Any other changes will be ignored.")
+                        display_event_detail(event)
                     else:
                         display_message_error("Invalid support ID. Please provide a valid support collaborator.")
                 else:
                     display_message_error("Administrator can only update event support field. Any other changes will be ignored.")
-            else:
-                if user.role == "support":
-                    if event.collaborator:
-                        if event.collaborator_id == user.id:
-                            event.update(session, name=name, event_start=event_start,
-                                         event_end=event_end, location=location,
-                                         attendees=attendees, instruction=instruction,
-                                         contract=contract)
-                            display_message_correction("Fields have been updated but not the support field as only Administrator has permission.")
+            elif user.role == Collaborator.RoleEnum.support:
+                if event.collaborator:
+                    if event.collaborator_id == user.id:
+                        if contract_id is not None:
+                            contract_instance = Contract.get_by_id(session,
+                                                                   contract_id)
                         else:
-                            display_message_error("The user is not the support assigned to this event. Only designated support can update these fields.")
+                            contract_instance = None
+                        event.update(session, name=name, event_start=event_start,
+                                     event_end=event_end, location=location,
+                                     attendees=attendees, instruction=instruction,
+                                     contract=contract_instance)
+                        display_message_correction("Fields have been updated but not the support field as only Administrator has permission.")
+                        display_event_detail(event)
                     else:
-                        display_message_error("The event has no assigned support. Only designated support can update these fields.")
-            display_event_detail(event)
+                        display_message_error("The user is not the support assigned to this event. Only designated support can update these fields.")
+                else:
+                    display_message_error("The event has no assigned support. Only designated support can update these fields.")
+            else:
+                display_message_error("Permission denied. Please log in as a support or administrator for update event.")
         else:
             display_message_error("Event not found.")
     except ValueError as e:
