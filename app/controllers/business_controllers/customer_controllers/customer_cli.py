@@ -21,7 +21,7 @@ def create_form(ctx):
         display_message_info("Email in alphabetical value and in form alpha@alpha.alpha.")
         email = click.prompt("Email", type=click.STRING)
         display_message_info("Phone number in numerical value.")
-        phone = click.prompt("Phone", type=click.INT)
+        phone = click.prompt("Phone", type=click.STRING)
         display_message_info("Customer's compagny in alphabetical value.")
         company = click.prompt("Company", type=click.STRING)
         create_func(session, user, firstname, lastname, email, phone, company)
@@ -83,7 +83,7 @@ def update_form(ctx):
         display_message_info("For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.")
         email = click.prompt("Email", type=click.STRING, default=None)
         display_message_info("For change: Phone number in numerical value, for keep unchanged: None.")
-        phone = click.prompt("Phone", type=click.INT, default=None)
+        phone = click.prompt("Phone", type=click.STRING, default=None)
         display_message_info("For change: Customer's compagny in alphabetical value, for keep unchanged: None.")
         company = click.prompt("Company", type=click.STRING, default=None)
         update_func(session, user, customer_id, firstname, lastname, email, phone, company)
@@ -114,7 +114,7 @@ def customer():
 @click.argument('firstname', type=str, help="Firstname in alphabetical value.")
 @click.argument('lastname', type=str, help="Lastname in alphabetical value.")
 @click.argument('email', type=str, help="Email in alphabetical value and in form alpha@alpha.alpha.")
-@click.argument('phone', type=int, help="Phone number in numerical value.")
+@click.argument('phone', type=str, help="Phone number in numerical value.")
 @click.argument('company', type=str, help="Customer's compagny in alphabetical value.")
 def create(ctx, firstname, lastname, email, phone, company):
     try:
@@ -167,7 +167,7 @@ def get_by_email(ctx, customer_email):
 @click.option('--firstname', type=str, default=None, help="For change: Firstname in alphabetical value, for keep unchanged: None.")
 @click.option('--lastname', type=str, default=None, help="For change: Lastname in alphabetical value, for keep unchanged: None.")
 @click.option('--email', type=str, default=None, help="For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.")
-@click.option('--phone', type=int, default=None, help="For change: Phone number in numerical value, for keep unchanged: None.")
+@click.option('--phone', type=str, default=None, help="For change: Phone number in numerical value, for keep unchanged: None.")
 @click.option('--company', type=str, default=None, help="For change: Customer's compagny in alphabetical value, for keep unchanged: None.")
 def update(ctx, customer_id, firstname, lastname, email, phone, company):
     try:

@@ -13,7 +13,7 @@ class Customer(Base):
     firstname = Column(String(length=50))
     lastname = Column(String(length=50))
     email = Column(String(length=100), unique=True)
-    phone = Column(Integer)
+    phone = Column(String(length=20))
     company = Column(String(length=100))
     date_created = Column(DateTime, default=datetime.now)
     date_updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
@@ -55,8 +55,10 @@ class Customer(Base):
     def set_phone(self, phone):
         if not phone:
             raise ValueError("Phone cannot be empty.")
-        if not isinstance(phone, int):
-            raise TypeError("Invalid input. Phone should contain only integer.")
+        if not isinstance(phone, str):
+            raise TypeError("Invalid input. Phone should contain only numerical digits.")
+        if not re.match(r"^[+]?[0-9\s]+$", phone):
+            raise ValueError("Invalid input. Please enter a valid phone without special characters and only numerical digits (0,1,2,3,4,5,6,7,8,9) and potentialy + for the first character.")
         self.phone = phone
 
     def set_company(self, company):

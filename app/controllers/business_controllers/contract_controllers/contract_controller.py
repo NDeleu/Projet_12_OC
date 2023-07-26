@@ -1,15 +1,15 @@
 from app.models.class_models.business_models.contract_model import Contract
 from app.models.class_models.business_models.customer_model import Customer
 from app.models.class_models.user_models.collaborator_model import Collaborator
-from app.controllers.auth_controllers.permission_controller import login_required_admin, login_required, login_required_seller, login_required_admin_or_seller
+from app.controllers.auth_controllers.permission_controller import login_required_admin, login_required, login_required_admin_or_seller
 from app.views.class_views.contract_view import display_contract_detail, display_contract_summary, display_announce_contract_list
 from app.views.general_views.generic_message import display_message_success, display_message_error, display_message_correction
 
 
 @login_required_admin
-def create_func(session, user, total_amount, left_to_pay, customer, signed):
+def create_func(session, user, total_amount, left_to_pay, customer_id, signed):
     try:
-        customer_instance = Customer.get_by_id(session, customer)
+        customer_instance = Customer.get_by_id(session, customer_id)
         if customer_instance:
             contract = Contract.create(session, total_amount, left_to_pay, customer_instance, signed)
             display_message_success("Contract created successfully.")

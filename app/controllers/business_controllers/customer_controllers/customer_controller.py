@@ -67,7 +67,7 @@ def update_func(session, user, customer_id, firstname, lastname, email, phone, c
         if customer:
             if customer.collaborator_id == user.id:
                 customer.update(session, firstname=firstname, lastname=lastname, email=email, phone=phone, company=company)
-                display_message_success("Contract updated successfully.")
+                display_message_success("Customer updated successfully.")
                 display_customer_detail(customer)
             else:
                 display_message_error("Only the seller assigned to the customer can edit the customer's profile.")

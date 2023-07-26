@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime, Boolean, Numeric
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.models.database_models.database import Base
+from decimal import Decimal, ROUND_HALF_UP
 
 
 class Contract(Base):
@@ -24,13 +25,21 @@ class Contract(Base):
         self.customer = customer
 
     def set_total_amount(self, total_amount):
-        if not isinstance(total_amount, (int, float)):
-            raise TypeError("Total amount must be a numeric value.")
+        if not isinstance(total_amount, Decimal):
+            if isinstance(total_amount, (int, float)):
+                total_amount = Decimal(str(total_amount)).quantize(
+                    Decimal('0.00'), rounding=ROUND_HALF_UP)
+            else:
+                raise TypeError("Total amount must be a Decimal value.")
         self.total_amount = total_amount
 
     def set_left_to_pay(self, left_to_pay):
-        if not isinstance(left_to_pay, (int, float)):
-            raise TypeError("Left to pay must be a numeric value.")
+        if not isinstance(left_to_pay, Decimal):
+            if isinstance(left_to_pay, (int, float)):
+                left_to_pay = Decimal(str(left_to_pay)).quantize(
+                    Decimal('0.00'), rounding=ROUND_HALF_UP)
+            else:
+                raise TypeError("Left to Pay must be a Decimal value.")
         self.left_to_pay = left_to_pay
 
     def set_signed(self, signed):

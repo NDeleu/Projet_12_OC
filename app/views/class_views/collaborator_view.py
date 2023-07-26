@@ -1,4 +1,5 @@
 from rich.console import Console
+from app.models.class_models.user_models.collaborator_model import Collaborator
 
 console = Console()
 
@@ -10,7 +11,7 @@ def display_collaborator_detail(collaborator):
     console.print(f"Lastname: {collaborator.lastname}")
     console.print(f"Role: {collaborator.role}")
     console.print(f"Email: {collaborator.email}")
-    if collaborator.role == "support":
+    if collaborator.role == Collaborator.RoleEnum.support:
         list_events = collaborator.events
         if list_events:
             console.print("Events:")
@@ -19,7 +20,7 @@ def display_collaborator_detail(collaborator):
                 console.print(f"  Event Name: {event.name}")
         else:
             console.print("Events: None")
-    elif collaborator.role == "seller":
+    elif collaborator.role == Collaborator.RoleEnum.seller:
         list_customers = collaborator.customers
         if list_customers:
             console.print("Customer:")

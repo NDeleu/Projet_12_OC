@@ -8,14 +8,14 @@ def test_create_customer(db_session):
 
     # Test creating a new customer
     new_customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                    phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                    phone="0123456789", company="ABC Corp", collaborator=collaborator)
 
     # Check if the customer was created successfully
     assert new_customer.id is not None
     assert new_customer.firstname == "John"
     assert new_customer.lastname == "Doe"
     assert new_customer.email == "john.doe@example.com"
-    assert new_customer.phone == 123456789
+    assert new_customer.phone == "0123456789"
     assert new_customer.company == "ABC Corp"
     assert new_customer.collaborator == collaborator
 
@@ -25,7 +25,7 @@ def test_create_customer(db_session):
                        match="The email address already exists for a collaborator or customer."):
         Customer.create(db_session, firstname="Alice", lastname="Smith",
                         email=existing_email,
-                        phone=987654321, company="XYZ Corp",
+                        phone="9876543210", company="XYZ Corp",
                         collaborator=collaborator)
 
 
@@ -36,13 +36,13 @@ def test_read_customers(db_session):
 
     # Create some customers with different collaborators
     customer1 = Customer.create(db_session, firstname="Smith", lastname="Johnson", email="smith.johnson@example.com",
-                                 phone=111111111, company="ABC Corp", collaborator=collaborator1)
+                                 phone="111111111", company="ABC Corp", collaborator=collaborator1)
 
     customer2 = Customer.create(db_session, firstname="Doe", lastname="Williams", email="doe.williams@example.com",
-                                 phone=222222222, company="XYZ Inc", collaborator=collaborator1)
+                                 phone="222222222", company="XYZ Inc", collaborator=collaborator1)
 
     customer3 = Customer.create(db_session, firstname="Smith", lastname="Brown", email="smith.brown@example.com",
-                                 phone=333333333, company="123 Industries", collaborator=collaborator2)
+                                 phone="333333333", company="123 Industries", collaborator=collaborator2)
 
     # Test reading all customers
     all_customers = Customer.read(db_session)
@@ -71,7 +71,7 @@ def test_get_by_id_customer(db_session):
 
     # Test reading an existing customer from the database
     customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                phone="123456789", company="ABC Corp", collaborator=collaborator)
 
     read_customer = Customer.get_by_id(db_session, customer.id)
 
@@ -81,7 +81,7 @@ def test_get_by_id_customer(db_session):
     assert read_customer.firstname == "John"
     assert read_customer.lastname == "Doe"
     assert read_customer.email == "john.doe@example.com"
-    assert read_customer.phone == 123456789
+    assert read_customer.phone == "123456789"
     assert read_customer.company == "ABC Corp"
     assert read_customer.collaborator == collaborator
 
@@ -97,7 +97,7 @@ def test_get_by_email_customer(db_session):
 
     # Test reading an existing customer from the database
     customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                phone="123456789", company="ABC Corp", collaborator=collaborator)
 
     read_customer = Customer.get_by_email(db_session, customer.email)
 
@@ -107,7 +107,7 @@ def test_get_by_email_customer(db_session):
     assert read_customer.firstname == "John"
     assert read_customer.lastname == "Doe"
     assert read_customer.email == "john.doe@example.com"
-    assert read_customer.phone == 123456789
+    assert read_customer.phone == "123456789"
     assert read_customer.company == "ABC Corp"
     assert read_customer.collaborator == collaborator
 
@@ -123,19 +123,19 @@ def test_update_customer(db_session):
 
     # Test updating an existing customer
     customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                phone="123456789", company="ABC Corp", collaborator=collaborator)
 
     # Use a different email address for the updated email
-    customer.update(db_session, email="john.doe.updated@example.com", phone=987654321)
+    customer.update(db_session, email="john.doe.updated@example.com", phone="987654321")
 
     # Check if the email and phone were updated successfully
     updated_customer = Customer.get_by_id(db_session, customer.id)
     assert updated_customer.email == "john.doe.updated@example.com"
-    assert updated_customer.phone == 987654321
+    assert updated_customer.phone == "987654321"
 
     # Test updating an existing customer with an email that already exists for another customer or collaborator
     customer2 = Customer.create(db_session, firstname="Customer", lastname="Two", email="customer.two@example.com",
-                                phone=555555555, company="XYZ Corp", collaborator=collaborator)
+                                phone="555555555", company="XYZ Corp", collaborator=collaborator)
     with pytest.raises(ValueError, match="The email address already exists for a collaborator or customer."):
         customer.update(db_session, email="customer.two@example.com")
 
@@ -146,7 +146,7 @@ def test_delete_customer(db_session):
 
     # Test deleting an existing customer
     customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                phone="123456789", company="ABC Corp", collaborator=collaborator)
 
     # Delete the customer
     customer.delete(db_session)

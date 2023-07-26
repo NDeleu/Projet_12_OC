@@ -21,10 +21,10 @@ def contracts(db_session, seller_user):
     other_seller_user = Collaborator(firstname="OtherSeller", lastname="OtherUser", email="other.seller@example.com", role=2, password="password")
 
     # Create two Customer instances for Contract set up
-    customer1 = Customer(firstname="Jean", lastname="Dupont", email="jean.dupont@exemple.com", phone=1234567890, company="La super boutique", collaborator=seller_user)
+    customer1 = Customer(firstname="Jean", lastname="Dupont", email="jean.dupont@exemple.com", phone="1234567890", company="La super boutique", collaborator=seller_user)
     db_session.add(customer1)
 
-    customer2 = Customer(firstname="Adrien", lastname="Lepuit", email="adrien.lepuit@exemple.com", phone=2134567890, company="Le super stock", collaborator=other_seller_user)
+    customer2 = Customer(firstname="Adrien", lastname="Lepuit", email="adrien.lepuit@exemple.com", phone="2134567890", company="Le super stock", collaborator=other_seller_user)
     db_session.add(customer1)
 
     # Create four Contract instances
@@ -182,7 +182,7 @@ def test_event_read_as_other_func(db_session, contracts, admin_user, support_use
     with patch(
             "app.controllers.auth_controllers.permission_controller.get_logged_as_user",
             return_value=admin_user):
-        read_func(db_session, mine=False, is_supported=None)
+        read_func(db_session, mine=False, is_supported=True)
 
     captured_stdout = capsys.readouterr().out
 
@@ -190,7 +190,7 @@ def test_event_read_as_other_func(db_session, contracts, admin_user, support_use
     assert f"{event2.name}" in captured_stdout
 
 
-def test_get_by_id_func(db_session, contracts, support_user, capsys):
+def test_event_get_by_id_func(db_session, contracts, support_user, capsys):
 
     # Set contracts for create event
     contract1, contract2, contract3, contract4 = contracts
@@ -226,7 +226,6 @@ def test_get_by_id_func(db_session, contracts, support_user, capsys):
     captured_stdout = capsys.readouterr().out
 
     assert "Event not found." in captured_stdout
-
 
 
 def test_event_update_as_support_func(db_session, contracts, support_user, capsys):

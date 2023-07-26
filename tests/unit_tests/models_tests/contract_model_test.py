@@ -10,10 +10,10 @@ def test_create_contract(db_session):
 
     # Create a new customer for contract association
     customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                phone="0123456789", company="ABC Corp", collaborator=collaborator)
 
     # Test creating a new contract
-    new_contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer)
+    new_contract = Contract.create(db_session, total_amount=1000.00, left_to_pay=500.00, customer=customer)
 
     # Check if the contract was created successfully
     assert new_contract.id is not None
@@ -24,15 +24,15 @@ def test_create_contract(db_session):
 
     # Test creating a new contract with invalid input (non-numeric total_amount)
     with pytest.raises(TypeError):
-        Contract.create(db_session, total_amount="invalid", left_to_pay=500.0, customer=customer)
+        Contract.create(db_session, total_amount="invalid", left_to_pay=500.00, customer=customer)
 
     # Test creating a new contract with invalid input (non-numeric left_to_pay)
-    with pytest.raises(TypeError, match="Left to pay must be a numeric value."):
-        Contract.create(db_session, total_amount=1000.0, left_to_pay="invalid", customer=customer)
+    with pytest.raises(TypeError):
+        Contract.create(db_session, total_amount=1000.00, left_to_pay="invalid", customer=customer)
 
     # Test creating a new contract with invalid input (non-boolean signed)
     with pytest.raises(TypeError, match="Signed must be a boolean value."):
-        Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer, signed="invalid")
+        Contract.create(db_session, total_amount=1000.00, left_to_pay=500.00, customer=customer, signed="invalid")
 
 
 @pytest.fixture
@@ -42,7 +42,7 @@ def db_contract_data(db_session):
 
     # Create a new customer for contract association
     customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                phone="0123456789", company="ABC Corp", collaborator=collaborator)
 
     # Create some test contracts
     contracts = [
@@ -96,7 +96,7 @@ def test_get_by_id_contract(db_session):
 
     # Create a new customer for contract association
     customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                phone="0123456789", company="ABC Corp", collaborator=collaborator)
 
     # Test reading an existing contract from the database
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer)
@@ -122,7 +122,7 @@ def test_update_contract(db_session):
 
     # Create a new customer for contract association
     customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                phone="0123456789", company="ABC Corp", collaborator=collaborator)
 
     # Test updating an existing contract
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer)
@@ -145,7 +145,7 @@ def test_delete_contract(db_session):
 
     # Create a new customer for contract association
     customer = Customer.create(db_session, firstname="John", lastname="Doe", email="john.doe@example.com",
-                                phone=123456789, company="ABC Corp", collaborator=collaborator)
+                                phone="1234567890", company="ABC Corp", collaborator=collaborator)
 
     # Test deleting an existing contract
     contract = Contract.create(db_session, total_amount=1000.0, left_to_pay=500.0, customer=customer)

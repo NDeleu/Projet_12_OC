@@ -20,10 +20,10 @@ def display_event_detail(event):
         console.print("Contract: None")
     if event.contract.customer:
         console.print("Customer:")
-        console.print(f"  Customer ID {event.contract.customer_id}")
-        console.print(f"  Customer Name {event.contract.customer_id}")
-        console.print(f"  Customer Email {event.contract.customer_id}")
-        console.print(f"  Customer Phone {event.contract.customer_id}")
+        console.print(f"  Customer ID: {event.contract.customer_id}")
+        console.print(f"  Customer Name: {event.contract.customer.firstname} - {event.contract.customer.lastname}")
+        console.print(f"  Customer Email: {event.contract.customer.email}")
+        console.print(f"  Customer Phone: {event.contract.customer.phone}")
     else:
         console.print("Customer: None")
     if event.collaborator:
@@ -46,7 +46,7 @@ def display_event_summary(event):
     console.print(f"End Time: {event.event_end}")
     console.print(f"Location: {event.location}")
     if event.contract.customer:
-        console.print(f"  Customer Email {event.contract.customer_id}")
+        console.print(f"  Customer Email {event.contract.customer.email}")
     else:
         console.print("  Customer: None")
     if event.contract:
