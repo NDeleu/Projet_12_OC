@@ -4,16 +4,15 @@ from app.views.general_views.generic_message import display_message_info, displa
 
 
 @click.group(help="Customer forms command group")
-def customer_form():
+def customerform():
     pass
 
 
-@customer_form.command(help="Create a customer with form")
+@customerform.command(help="Create a customer with form")
 @click.pass_context
-def create_form(ctx):
+def createform(ctx):
     try:
         session = ctx.obj
-        user = None
         display_message_info("Firstname in alphabetical value.")
         firstname = click.prompt("Firstname", type=click.STRING)
         display_message_info("Lastname in alphabetical value.")
@@ -24,56 +23,52 @@ def create_form(ctx):
         phone = click.prompt("Phone", type=click.STRING)
         display_message_info("Customer's compagny in alphabetical value.")
         company = click.prompt("Company", type=click.STRING)
-        create_func(session, user, firstname, lastname, email, phone, company)
+        create_func(session, firstname, lastname, email, phone, company)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer_form.command(help="Get a list of customers with form")
+@customerform.command(help="Get a list of customers with form")
 @click.pass_context
-def read_form(ctx):
+def readform(ctx):
     try:
         session = ctx.obj
-        user = None
         display_message_info("If you are seller, filter awarded customers: True, not this filter: False.")
         mine = click.prompt("Mine", type=click.BOOL, default=False)
-        read_func(session, user, mine)
+        read_func(session, mine)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer_form.command(help="Get a customer with his ID with form")
+@customerform.command(help="Get a customer with his ID with form")
 @click.pass_context
-def get_by_id_form(ctx):
+def getbyidform(ctx):
     try:
         session = ctx.obj
-        user = None
         display_message_info("Customer ID in numerical value.")
         customer_id = click.prompt("Customer_Id", type=click.INT)
-        get_by_id_func(session, user, customer_id)
+        get_by_id_func(session, customer_id)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer_form.command(help="Get a customer with his email with form")
+@customerform.command(help="Get a customer with his email with form")
 @click.pass_context
-def get_by_email_form(ctx):
+def getbyemailform(ctx):
     try:
         session = ctx.obj
-        user = None
         display_message_info("Customer Email in alphabetical value and in form alpha@alpha.alpha.")
         customer_email = click.prompt("Email", type=click.STRING)
-        get_by_email_func(session, user, customer_email)
+        get_by_email_func(session, customer_email)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer_form.command(help="Update a customer with form")
+@customerform.command(help="Update a customer with form")
 @click.pass_context
-def update_form(ctx):
+def updateform(ctx):
     try:
         session = ctx.obj
-        user = None
         display_message_info("Customer ID in numerical value.")
         customer_id = click.prompt("Collaborator_id", type=click.INT)
         display_message_info("For change: Firstname in alphabetical value, for keep unchanged: None.")
@@ -86,20 +81,19 @@ def update_form(ctx):
         phone = click.prompt("Phone", type=click.STRING, default=None)
         display_message_info("For change: Customer's compagny in alphabetical value, for keep unchanged: None.")
         company = click.prompt("Company", type=click.STRING, default=None)
-        update_func(session, user, customer_id, firstname, lastname, email, phone, company)
+        update_func(session, customer_id, firstname, lastname, email, phone, company)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer_form.command(help="Delete a customer with form")
+@customerform.command(help="Delete a customer with form")
 @click.pass_context
-def delete_form(ctx):
+def deleteform(ctx):
     try:
         session = ctx.obj
-        user = None
         display_message_info("Customer ID in numerical value")
         customer_id = click.prompt("Customer_Id", type=click.INT)
-        delete_func(session, user, customer_id)
+        delete_func(session, customer_id)
     except Exception as e:
         display_message_error(str(e))
 
@@ -109,61 +103,77 @@ def customer():
     pass
 
 
-@customer.command(help="Create a customer")
+@customer.command(help="Create a customer\n\n"
+                          "Parameters:\n"
+                          "   firstname (str): Firstname in alphabetical value.\n"
+                          "   lastname (str): Lastname in alphabetical value.\n"
+                          "   email (str): Email in alphabetical value and in form alpha@alpha.alpha.\n"
+                          "   phone (str): Phone number in numerical value.\n"
+                          "   company (str): Customer's company in alphabetical value.")
 @click.pass_context
-@click.argument('firstname', type=str, help="Firstname in alphabetical value.")
-@click.argument('lastname', type=str, help="Lastname in alphabetical value.")
-@click.argument('email', type=str, help="Email in alphabetical value and in form alpha@alpha.alpha.")
-@click.argument('phone', type=str, help="Phone number in numerical value.")
-@click.argument('company', type=str, help="Customer's compagny in alphabetical value.")
+@click.argument('firstname', type=str)
+@click.argument('lastname', type=str)
+@click.argument('email', type=str)
+@click.argument('phone', type=str)
+@click.argument('company', type=str)
 def create(ctx, firstname, lastname, email, phone, company):
     try:
         session = ctx.obj
-        user = None
-        create_func(session, user, firstname, lastname, email, phone, company)
+        create_func(session, firstname, lastname, email, phone, company)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer.command(help="Get a list of customers")
+@customer.command(help="Get a list of customers\n\n"
+                          "Options:\n"
+                          "   --mine (bool): If you are seller, filter awarded customers: True, not this filter: False.")
 @click.option('--mine', type=bool, default=False, help="If you are seller, filter awarded customers: True, not this filter: False.")
 @click.pass_context
 def read(ctx, mine):
     try:
         session = ctx.obj
-        user = None
-        read_func(session, user, mine)
+        read_func(session, mine)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer.command(help="Get a customer with his ID")
-@click.argument('customer_id', type=int, help="Customer ID in numerical value.")
+@customer.command(help="Get a customer with his ID\n\n"
+                          "Parameters:\n"
+                          "   customer_id (int): Customer ID in numerical value.")
+@click.argument('customer_id', type=int)
 @click.pass_context
-def get_by_id(ctx, customer_id):
+def getbyid(ctx, customer_id):
     try:
         session = ctx.obj
-        user = None
-        get_by_id_func(session, user, customer_id)
+        get_by_id_func(session, customer_id)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer.command(help="Get a customer with his email")
-@click.argument('customer_email', type=str, help="Customer Email in alphabetical value and in form alpha@alpha.alpha.")
+@customer.command(help="Get a customer with his email\n\n"
+                          "Parameters:\n"
+                          "   customer_email (str): Customer Email in alphabetical value and in form alpha@alpha.alpha.")
+@click.argument('customer_email', type=str)
 @click.pass_context
-def get_by_email(ctx, customer_email):
+def getbyemail(ctx, customer_email):
     try:
         session = ctx.obj
-        user = None
-        get_by_email_func(session, user, customer_email)
+        get_by_email_func(session, customer_email)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer.command(help="Update a customer")
+@customer.command(help="Update a customer\n\n"
+                          "Parameters:\n"
+                          "   customer_id (int): Customer ID in numerical value.\n"
+                          "Options:\n"
+                          "   --firstname (str): For change: Firstname in alphabetical value, for keep unchanged: None.\n"
+                          "   --lastname (str): For change: Lastname in alphabetical value, for keep unchanged: None.\n"
+                          "   --email (str): For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.\n"
+                          "   --phone (str): For change: Phone number in numerical value, for keep unchanged: None.\n"
+                          "   --company (str): For change: Customer's company in alphabetical value, for keep unchanged: None.")
 @click.pass_context
-@click.argument('customer_id', type=int, help="Customer ID in numerical value.")
+@click.argument('customer_id', type=int)
 @click.option('--firstname', type=str, default=None, help="For change: Firstname in alphabetical value, for keep unchanged: None.")
 @click.option('--lastname', type=str, default=None, help="For change: Lastname in alphabetical value, for keep unchanged: None.")
 @click.option('--email', type=str, default=None, help="For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.")
@@ -172,19 +182,19 @@ def get_by_email(ctx, customer_email):
 def update(ctx, customer_id, firstname, lastname, email, phone, company):
     try:
         session = ctx.obj
-        user = None
-        update_func(session, user, customer_id, firstname, lastname, email, phone, company)
+        update_func(session, customer_id, firstname, lastname, email, phone, company)
     except Exception as e:
         display_message_error(str(e))
 
 
-@customer.command(help="Delete a customer")
-@click.argument('customer_id', type=int, help="Customer ID in numerical value.")
+@customer.command(help="Delete a customer\n\n"
+                          "Parameters:\n"
+                          "   customer_id (int): Customer ID in numerical value.")
+@click.argument('customer_id', type=int)
 @click.pass_context
 def delete(ctx, customer_id):
     try:
         session = ctx.obj
-        user = None
-        delete_func(session, user, customer_id)
+        delete_func(session, customer_id)
     except Exception as e:
         display_message_error(str(e))

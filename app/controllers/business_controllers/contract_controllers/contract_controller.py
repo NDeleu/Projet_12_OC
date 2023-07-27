@@ -15,7 +15,7 @@ def create_func(session, user, total_amount, left_to_pay, customer_id, signed):
             display_message_success("Contract created successfully.")
             display_contract_detail(contract)
         else:
-            display_message_error("Contract not found.")
+            display_message_error("Customer not found.")
     except ValueError as e:
         display_message_error(f"Error creating contract: {e}")
 

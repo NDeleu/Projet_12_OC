@@ -6,7 +6,7 @@ from app.views.general_views.generic_message import display_message_error
 
 @click.command(help="Login with form")
 @click.pass_context
-def login_form(ctx):
+def loginform(ctx):
     try:
         session = ctx.obj
         display_message_info("Enter your email")
@@ -20,19 +20,21 @@ def login_form(ctx):
 
 @click.command(help="Logout the user")
 @click.pass_context
-def logout_form(ctx):
+def logoutform(ctx):
     try:
         session = ctx.obj
-        user = None
-        logout_func(session, user)
+        logout_func(session)
     except Exception as e:
         display_message_error(str(e))
 
 
-@click.command(help="Login")
+@click.command(help="Login\n\n"
+                    "Parameters:\n"
+                    "   email (str): Enter your email\n"
+                    "   password (str): Enter your password")
 @click.pass_context
-@click.argument('email', type=str, help="Enter your email")
-@click.argument('password', type=str, help="Enter your password")
+@click.argument('email', type=str)
+@click.argument('password', type=str)
 def login(ctx, email, password):
     try:
         session = ctx.obj
@@ -46,7 +48,6 @@ def login(ctx, email, password):
 def logout(ctx):
     try:
         session = ctx.obj
-        user = None
-        logout_func(session, user)
+        logout_func(session)
     except Exception as e:
         display_message_error(str(e))
