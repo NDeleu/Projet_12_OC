@@ -76,7 +76,7 @@ def test_customer_read_as_other_func(db_session, admin_user, seller_user, capsys
     assert f"{customer1.email}" in captured_stdout
     assert f"{customer2.email}" in captured_stdout
 
-    assert "Permission denied. Please login as a seller to access the mine option for customers. The full list of customers is selected instead." in captured_stdout
+    assert "Permission denied. Please login as a seller to access the mine option for customers. The full list of customers is selected instead." in captured_stdout.replace("\n", " ")
 
     # Mock the get_logged_as_user function to return the admin_user
     with patch(

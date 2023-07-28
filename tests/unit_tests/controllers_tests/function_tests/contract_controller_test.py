@@ -95,7 +95,7 @@ def test_contract_read_func(db_session, admin_user, seller_user, support_user, c
     assert f"{contract1.id}" and f"{contract1.total_amount}" and f"{contract1.left_to_pay}" and f"{customer1.email}" and "Signed: Yes" in captured_stdout
     assert f"{contract2.id}" and f"{contract2.total_amount}" and f"{contract2.left_to_pay}" and f"{customer2.email}" and "Signed: No" not in captured_stdout
 
-    assert "Permission denied. Please log in as a seller to access the mine option for events. The full list of contracts is selected instead." in captured_stdout
+    assert "Permission denied. Please log in as a seller to access the mine option for events. The full list of contracts is selected instead." in captured_stdout.replace("\n", "")
 
     # Verify that the filtered contract (contract2) is listed
     with patch(

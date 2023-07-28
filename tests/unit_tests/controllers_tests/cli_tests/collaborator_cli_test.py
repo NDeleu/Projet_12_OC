@@ -15,6 +15,8 @@ def test_collaborator_api_cli_create(db_session, admin_user):
     role = "1"  # Administrator role
     password = "Test@123"  # A valid password
 
+    role_output = Collaborator.RoleEnum.administrator
+
     # Mock the get_logged_as_user function to return the admin_user
     with patch("app.controllers.auth_controllers.permission_controller.get_logged_as_user", return_value=admin_user):
         # Use `invoke` with `obj` argument to pass `db_session` to the command
@@ -28,7 +30,7 @@ def test_collaborator_api_cli_create(db_session, admin_user):
 
     assert f"{firstname}" in result.output.strip()
     assert f"{lastname}" in result.output.strip()
-    assert f"{role}" in result.output.strip()
+    assert f"{role_output}" in result.output.strip()
     assert f"{email}" in result.output.strip()
 
 

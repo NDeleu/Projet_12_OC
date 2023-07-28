@@ -100,7 +100,7 @@ def test_event_create_wrong_contract_1_func(db_session, contracts, seller_user, 
 
     captured_stdout = capsys.readouterr().out
 
-    assert "The contract is not signed. It must be signed to create a relative event." in captured_stdout
+    assert "The contract is not signed. It must be signed to create a relative event." in captured_stdout.replace("\n", "")
 
 
 def test_event_create_wrong_contract_2_func(db_session, contracts, seller_user, capsys):
@@ -121,7 +121,7 @@ def test_event_create_wrong_contract_2_func(db_session, contracts, seller_user, 
 
     captured_stdout = capsys.readouterr().out
 
-    assert "The user is not the seller assigned to this contract. Only the designated seller can create an event relating to this contract." in captured_stdout
+    assert "The user is not the seller assigned to this contract. Only the designated seller can create an event relating to this contract." in captured_stdout.replace("\n", "")
 
 
 def test_event_read_as_support_func(db_session, contracts, support_user, capsys):
@@ -177,7 +177,7 @@ def test_event_read_as_other_func(db_session, contracts, admin_user, support_use
     assert f"{event1.name}" in captured_stdout
     assert f"{event2.name}" in captured_stdout
 
-    assert "Permission denied. Please log in as a support to access the mine option for events. The full list of events is selected instead." in captured_stdout
+    assert "Permission denied. Please log in as a support to access the mine option for events. The full list of events is selected instead." in captured_stdout.replace("\n", "")
 
     # Mock the get_logged_as_user function to return the admin_user
     with patch(
@@ -275,7 +275,7 @@ def test_event_update_as_support_func(db_session, contracts, support_user, capsy
     assert updated_event.contract_id == contract2.id
     assert updated_event.collaborator_id == support_user.id
 
-    assert "Fields have been updated but not the support field as only Administrator has permission." in captured_stdout
+    assert "Fields have been updated but not the support field as only Administrator has permission." in captured_stdout.replace("\n", "")
 
 
 def test_event_update_as_admin_func(db_session, contracts, support_user, admin_user, capsys):
@@ -325,7 +325,7 @@ def test_event_update_as_admin_func(db_session, contracts, support_user, admin_u
     assert updated_event.contract_id == event.contract_id
     assert updated_event.collaborator_id == support_user.id
 
-    assert "Support field has been updated but CARE : administrator can only update event support field. Any other changes will be ignored." in captured_stdout
+    assert "Support field has been updated but CARE : administrator can only update event support field. Any other changes will be ignored." in captured_stdout.replace("\n", "")
 
 
 def test_delete_func(db_session, contracts, support_user, capsys):
