@@ -1,10 +1,10 @@
 import click
 
-from .auth_controllers.log_cli import login, logout, login_form, logout_form
-from .user_controllers.collaborator_controllers.collaborator_cli import collaborator, collaborator_form
-from .business_controllers.customer_controllers.customer_cli import customer, customer_form
-from .business_controllers.contract_controllers.contract_cli import contract, contract_form
-from .business_controllers.event_controllers.event_cli import event, event_form
+from .auth_controllers.log_cli import login, logout, loginform, logoutform
+from .user_controllers.collaborator_controllers.collaborator_cli import collaborator, collaboratorform
+from .business_controllers.customer_controllers.customer_cli import customer, customerform
+from .business_controllers.contract_controllers.contract_cli import contract, contractform
+from .business_controllers.event_controllers.event_cli import event, eventform
 
 
 @click.group(help="Various forms for login, logout, etc.")
@@ -13,12 +13,12 @@ def form(ctx):
     pass
 
 
-form.add_command(login_form, name='login')
-form.add_command(logout_form, name='logout')
-form.add_command(collaborator_form, name='collaborator')
-form.add_command(customer_form, name='customer')
-form.add_command(contract_form, name='contract')
-form.add_command(event_form, name='event')
+form.add_command(loginform, name='login')
+form.add_command(logoutform, name='logout')
+form.add_command(collaboratorform, name='collaborator')
+form.add_command(customerform, name='customer')
+form.add_command(contractform, name='contract')
+form.add_command(eventform, name='event')
 
 
 @click.group(help="Main command group")
