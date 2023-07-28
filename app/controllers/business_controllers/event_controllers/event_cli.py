@@ -4,6 +4,36 @@ from app.views.general_views.generic_message import display_message_info, displa
 from datetime import datetime
 
 
+def convert_input_to_datetime(input_string):
+    formats_to_try = [
+        "%Y/%m/%d-%H:%M:%S",
+        "%Y/%m/%d-%H:%M",
+        "%Y/%m/%d",
+        "%d/%m/%Y-%H:%M:%S",
+        "%d/%m/%Y-%H:%M",
+        "%d/%m/%Y",
+    ]
+
+    for date_format in formats_to_try:
+        try:
+            date_time_obj = datetime.strptime(input_string, date_format)
+            return date_time_obj
+        except ValueError:
+            pass
+
+    raise ValueError("Unrecognized date format")
+
+
+def convert_input_to_integer(input_string):
+    try:
+        int_obj = int(input_string)
+        return int_obj
+    except ValueError:
+        pass
+
+    raise ValueError("Input not suitable for an integer.")
+
+
 @click.group(help="Event forms command group")
 def eventform():
     pass
@@ -16,10 +46,12 @@ def createform(ctx):
         session = ctx.obj
         display_message_info("Event Name in alphabetical value.")
         name = click.prompt("Name", type=click.STRING)
-        display_message_info("Event start date in this form: YYYY-MM-DD HH:MM:SS.")
-        event_start = click.prompt("Event_Start", type=click.DateTime)
-        display_message_info("Event end date in this form: YYYY-MM-DD HH:MM:SS.")
-        event_end = click.prompt("Event_End", type=click.DateTime)
+        display_message_info("Event start date in this form: YYYY/MM/DD-HH:MM:SS.")
+        event_start = click.prompt("Event_Start", type=click.STRING)
+        event_start = convert_input_to_datetime(event_start)
+        display_message_info("Event end date in this form: YYYY/MM/DD-HH:MM:SS.")
+        event_end = click.prompt("Event_End", type=click.STRING)
+        event_end = convert_input_to_datetime(event_end)
         display_message_info("Event location in alphabetical value.")
         location = click.prompt("Location", type=click.STRING)
         display_message_info("Attendees amount in numerical value.")
@@ -40,8 +72,14 @@ def readform(ctx):
         session = ctx.obj
         display_message_info("If you are support, filter awarded events: True, not this filter: False.")
         mine = click.prompt("Mine", type=click.BOOL, default=False)
-        display_message_info("Filter only contracts with support assigned: True, without support assigned: False, both: None.")
-        is_supported = click.prompt("Is_Supported", type=click.BOOL, default=None)
+        display_message_info("Filter only contracts with support assigned: True, without support assigned: False, both: Both.")
+        is_supported = click.prompt("Is_Supported", type=click.STRING, default="Both")
+        if is_supported == "Both":
+            is_supported = None
+        elif is_supported == "True":
+            is_supported = True
+        elif is_supported == "False":
+            is_supported = False
         read_func(session, mine, is_supported)
     except Exception as e:
         display_message_error(str(e))
@@ -68,20 +106,46 @@ def updateform(ctx):
         event_id = click.prompt("Event_Id", type=click.INT)
         display_message_info("For change: Event Name in alphabetical value, for keep unchanged: None.")
         name = click.prompt("Name", type=click.STRING, default=None)
-        display_message_info("For change: Event start date in this form: YYYY-MM-DD HH:MM:SS, for keep unchanged: None.")
-        event_start = click.prompt("Event_Start", type=click.DateTime, default=None)
-        display_message_info("For change: Event end date in this form: YYYY-MM-DD HH:MM:SS, for keep unchanged: None.")
-        event_end = click.prompt("Event_End", type=click.DateTime, default=None)
+        if name == "None":
+            name = None
+        display_message_info("For change: Event start date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.")
+        event_start = click.prompt("Event_Start", type=click.STRING, default=None)
+        if event_start == "None":
+            event_start = None
+        if event_start is not None:
+            event_start = convert_input_to_datetime(event_start)
+        display_message_info("For change: Event end date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.")
+        event_end = click.prompt("Event_End", type=click.STRING, default=None)
+        if event_end == "None":
+            event_end = None
+        if event_end is not None:
+            event_end = convert_input_to_datetime(event_end)
         display_message_info("For change: Event location in alphabetical value, for keep unchanged: None.")
         location = click.prompt("Location", type=click.STRING, default=None)
+        if location == "None":
+            location = None
         display_message_info("For change: Attendees amount in numerical value, for keep unchanged: None.")
-        attendees = click.prompt("Attendees", type=click.INT, default=None)
+        attendees = click.prompt("Attendees", type=click.STRING, default=None)
+        if attendees == "None":
+            attendees = None
+        if attendees is not None:
+            attendees = convert_input_to_integer(attendees)
         display_message_info("For change: Some instructions for the event in alphabetical value, for keep unchanged: None.")
         instruction = click.prompt("Instruction", type=click.STRING, default=None)
+        if instruction == "None":
+            instruction = None
         display_message_info("For change: Contract Id in numerical value, for keep unchanged: None.")
-        contract = click.prompt("Contract_Id", type=click.INT, default=None)
+        contract = click.prompt("Contract_Id", type=click.STRING, default=None)
+        if contract == "None":
+            contract = None
+        if contract is not None:
+            contract = convert_input_to_integer(contract)
         display_message_info("For change: Support Id in numerical value, for keep unchanged: None.")
-        support = click.prompt("Support_Id", type=click.INT, default=None)
+        support = click.prompt("Support_Id", type=click.STRING, default=None)
+        if support == "None":
+            support = None
+        if support is not None:
+            support = convert_input_to_integer(support)
         update_func(session, event_id, name, event_start, event_end, location, attendees, instruction, contract, support)
     except Exception as e:
         display_message_error(str(e))
@@ -107,16 +171,16 @@ def event():
 @event.command(help="Create an event\n\n"
                      "Parameters:\n"
                      "   name (str): Event Name in alphabetical value.\n"
-                     "   event_start (datetime): Event start date in this form: YYYY-MM-DD HH:MM:SS.\n"
-                     "   event_end (datetime): Event end date in this form: YYYY-MM-DD HH:MM:SS.\n"
+                     "   event_start (datetime): Event start date in this form: YYYY/MM/DD-HH:MM:SS.\n"
+                     "   event_end (datetime): Event end date in this form: YYYY/MM/DD-HH:MM:SS.\n"
                      "   location (str): Event location in alphabetical value.\n"
                      "   attendees (int): Attendees amount in numerical value.\n"
                      "   instruction (str): Some instructions for the event in alphabetical value.\n"
                      "   contract (int): Contract Id in numerical value.")
 @click.pass_context
 @click.argument('name', type=str)
-@click.argument('event_start', type=datetime)
-@click.argument('event_end', type=datetime)
+@click.argument('event_start', type=str)
+@click.argument('event_end', type=str)
 @click.argument('location', type=str)
 @click.argument('attendees', type=int)
 @click.argument('instruction', type=str)
@@ -124,6 +188,8 @@ def event():
 def create(ctx, name, event_start, event_end, location, attendees, instruction, contract):
     try:
         session = ctx.obj
+        event_start = convert_input_to_datetime(event_start)
+        event_end = convert_input_to_datetime(event_end)
         create_func(session, name, event_start, event_end, location, attendees, instruction, contract)
     except Exception as e:
         display_message_error(str(e))
@@ -162,8 +228,8 @@ def getbyid(ctx, event_id):
                      "   event_id (int): Event ID in numerical value.\n"
                      "Options:\n"
                      "   --name (str): For change: Event Name in alphabetical value, for keep unchanged: None.\n"
-                     "   --event_start (datetime): For change: Event start date in this form: YYYY-MM-DD HH:MM:SS, for keep unchanged: None.\n"
-                     "   --event_end (datetime): For change: Event end date in this form: YYYY-MM-DD HH:MM:SS, for keep unchanged: None.\n"
+                     "   --event_start (datetime): For change: Event start date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.\n"
+                     "   --event_end (datetime): For change: Event end date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.\n"
                      "   --location (str): For change: Event location in alphabetical value, for keep unchanged: None.\n"
                      "   --attendees (int): For change: Attendees amount in numerical value, for keep unchanged: None.\n"
                      "   --instruction (str): For change: Some instructions for the event in alphabetical value, for keep unchanged: None.\n"
@@ -172,8 +238,8 @@ def getbyid(ctx, event_id):
 @click.pass_context
 @click.argument('event_id', type=int)
 @click.option('--name', type=str, default=None, help="For change: Event Name in alphabetical value, for keep unchanged: None.")
-@click.option('--event_start', type=datetime, default=None, help="For change: Event start date in this form: YYYY-MM-DD HH:MM:SS, for keep unchanged: None.")
-@click.option('--event_end', type=datetime, default=None, help="For change: Event end date in this form: YYYY-MM-DD HH:MM:SS, for keep unchanged: None.")
+@click.option('--event_start', type=str, default=None, help="For change: Event start date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.")
+@click.option('--event_end', type=str, default=None, help="For change: Event end date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.")
 @click.option('--location', type=str, default=None, help="For change: Event location in alphabetical value, for keep unchanged: None.")
 @click.option('--attendees', type=int, default=None, help="For change: Attendees amount in numerical value, for keep unchanged: None.")
 @click.option('--instruction', type=str, default=None, help="For change: Some instructions for the event in alphabetical value, for keep unchanged: None.")
@@ -182,6 +248,10 @@ def getbyid(ctx, event_id):
 def update(ctx, event_id, name, event_start, event_end, location, attendees, instruction, contract, support):
     try:
         session = ctx.obj
+        if event_start is not None:
+            event_start = convert_input_to_datetime(event_start)
+        if event_end is not None:
+            event_end = convert_input_to_datetime(event_end)
         update_func(session, event_id, name, event_start, event_end, location, attendees, instruction, contract, support)
     except Exception as e:
         display_message_error(str(e))

@@ -3,6 +3,16 @@ from .contract_controller import create_func, read_func, get_by_id_func, update_
 from app.views.general_views.generic_message import display_message_info, display_message_error
 
 
+def convert_input_to_float(input_string):
+    try:
+        float_obj = float(input_string)
+        return float_obj
+    except ValueError:
+        pass
+
+    raise ValueError("Input not suitable for a float.")
+
+
 @click.group(help="Contract forms command group")
 def contractform():
     pass
@@ -82,9 +92,17 @@ def updateform(ctx):
         display_message_info("Contract ID in numerical value.")
         contract_id = click.prompt("Contract_Id", type=click.INT)
         display_message_info("For change: Total contract amount in numerical value, for keep unchanged: None.")
-        total_amount = click.prompt("Total_Amount", type=click.FLOAT, default=None)
+        total_amount = click.prompt("Total_Amount", type=click.STRING, default=None)
+        if total_amount == "None":
+            total_amount = None
+        if total_amount is not None:
+            total_amount = convert_input_to_float(total_amount)
         display_message_info("For change: Left to pay in numerical value, for keep unchanged: None.")
-        left_to_pay = click.prompt("Left_to_Pay", type=click.FLOAT, default=None)
+        left_to_pay = click.prompt("Left_to_Pay", type=click.STRING, default=None)
+        if left_to_pay == "None":
+            left_to_pay = None
+        if left_to_pay is not None:
+            left_to_pay = convert_input_to_float(total_amount)
         display_message_info("Contract signed, for yes: True, for no: False.")
         signed = click.prompt("Signed", type=click.BOOL, default=False)
         update_func(session, contract_id, total_amount, left_to_pay, signed)

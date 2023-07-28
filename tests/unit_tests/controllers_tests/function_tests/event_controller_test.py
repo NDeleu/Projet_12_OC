@@ -19,6 +19,7 @@ def contracts(db_session, seller_user):
 
     # Create one more seller_user instance of customer
     other_seller_user = Collaborator(firstname="OtherSeller", lastname="OtherUser", email="other.seller@example.com", role=2, password="password")
+    db_session.add(other_seller_user)
 
     # Create two Customer instances for Contract set up
     customer1 = Customer(firstname="Jean", lastname="Dupont", email="jean.dupont@exemple.com", phone="1234567890", company="La super boutique", collaborator=seller_user)

@@ -71,12 +71,20 @@ def updateform(ctx):
         collaborator_id = click.prompt("Collaborator_Id", type=click.INT)
         display_message_info("For change: Firstname in alphabetical value, for keep unchanged: None.")
         firstname = click.prompt("Firstname", type=click.STRING, default=None)
+        if firstname == "None":
+            firstname = None
         display_message_info("For change: Lastname in alphabetical value, for keep unchanged: None.")
         lastname = click.prompt("Lastname", type=click.STRING, default=None)
+        if lastname == "None":
+            lastname = None
         display_message_info("For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.")
         email = click.prompt("Email", type=click.STRING, default=None)
+        if email == "None":
+            email = None
         display_message_info("For change: Password in form with letters, numbers, and a limited set of special characters (!@#$%^&*()_-), for keep unchanged: None.")
         password = click.prompt("Password", type=click.STRING, hide_input=True, default=None)
+        if password == "None":
+            password = None
         update_func(session, collaborator_id, firstname, lastname, email, password)
     except Exception as e:
         display_message_error(str(e))

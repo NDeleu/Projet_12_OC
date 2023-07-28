@@ -73,14 +73,24 @@ def updateform(ctx):
         customer_id = click.prompt("Collaborator_id", type=click.INT)
         display_message_info("For change: Firstname in alphabetical value, for keep unchanged: None.")
         firstname = click.prompt("Firstname", type=click.STRING, default=None)
+        if firstname == "None":
+            firstname = None
         display_message_info("For change: Lastname in alphabetical value, for keep unchanged: None.")
         lastname = click.prompt("Lastname", type=click.STRING, default=None)
+        if lastname == "None":
+            lastname = None
         display_message_info("For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.")
         email = click.prompt("Email", type=click.STRING, default=None)
+        if email == "None":
+            email = None
         display_message_info("For change: Phone number in numerical value, for keep unchanged: None.")
         phone = click.prompt("Phone", type=click.STRING, default=None)
+        if phone == "None":
+            phone = None
         display_message_info("For change: Customer's compagny in alphabetical value, for keep unchanged: None.")
         company = click.prompt("Company", type=click.STRING, default=None)
+        if company == "None":
+            company = None
         update_func(session, customer_id, firstname, lastname, email, phone, company)
     except Exception as e:
         display_message_error(str(e))

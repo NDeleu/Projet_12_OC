@@ -279,3 +279,26 @@ def test_collaborator_updateform(db_session, admin_user):
     assert f"{new_firstname}" in result.output.strip()
     assert f"{new_lastname}" in result.output.strip()
     assert f"{new_email}" in result.output.strip()
+
+
+def test_collaborator_delete_form(db_session, admin_user):
+    runner = CliRunner()
+
+    collaborator_instance = Collaborator(firstname="John", lastname="Doe", email="john.doe@example.com",
+                                         role=Collaborator.RoleEnum.administrator, password="securepassword")
+    db_session.add(collaborator_instance)
+    db_session.commit()
+
+    # Mock the get_logged_as_user function to return the admin_user
+    with patch(
+            "app.controllers.auth_controllers.permission_controller.get_logged_as_user",
+            return_value=admin_user):
+        # Use `invoke` with `obj` argument to pass `db_session` to the command
+        result = runner.invoke(collaboratorform, ['deleteform'],
+                               input=f"{collaborator_instance.id}\n",
+                               obj=db_session)
+
+    # Vérifier que la commande s'est exécutée avec succès
+    assert result.exit_code == 0
+
+    assert "Collaborator deleted successfully" in result.output.strip()
