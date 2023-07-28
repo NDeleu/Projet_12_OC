@@ -4,6 +4,7 @@ from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.controllers.auth_controllers.permission_controller import login_required_admin_or_support, login_required_seller, login_required, login_required_support
 from app.views.class_views.event_view import display_event_detail, display_event_summary, display_announce_event_list
 from app.views.general_views.generic_message import display_message_error, display_message_success, display_message_correction
+import sentry_sdk
 
 
 @login_required_seller
@@ -16,6 +17,8 @@ def create_func(session, user, name, event_start, event_end, location, attendees
                     event = Event.create(session, name, event_start, event_end, location, attendees, instruction, contract_instance)
                     display_message_success("Event created successfully.")
                     display_event_detail(event)
+                    sentry_sdk.capture_message(
+                        f"Collaborator with id : {user.id} has create an event with id : {event.id}")
                 else:
                     display_message_error("The user is not the seller assigned to this contract. Only the designated seller can create an event relating to this contract.")
             else:
@@ -69,6 +72,8 @@ def update_func(session, user, event_id, name, event_start, event_end, location,
                         event.update(session, collaborator=support_collaborator)
                         display_message_correction("Support field has been updated but CARE : administrator can only update event support field. Any other changes will be ignored.")
                         display_event_detail(event)
+                        sentry_sdk.capture_message(
+                            f"Collaborator with id : {user.id} has update an event with id : {event.id}")
                     else:
                         display_message_error("Invalid support ID. Please provide a valid support collaborator.")
                 else:
@@ -106,6 +111,8 @@ def delete_func(session, user, event_id):
         if event:
             event.delete(session)
             display_message_success("Event deleted successfully.")
+            sentry_sdk.capture_message(
+                f"Collaborator with id : {user.id} has delete an event with id : {event.id}")
         else:
             display_message_error("Event not found.")
     except Exception as e:

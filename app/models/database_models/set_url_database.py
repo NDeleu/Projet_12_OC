@@ -17,7 +17,7 @@ def choice_change_url():
         display_message_info("Do you want change your Database configuration now ?")
         try:
             display_message_info("Choice select in numerical value: for Yes: 1, for No: 2.")
-            change_select_choice = int(input("Choice"))
+            change_select_choice = int(input("Choice : "))
             if change_select_choice == 1:
                 selected_choice = True
                 break
@@ -34,7 +34,7 @@ def choice_change_url():
 def form_url_config():
     while True:
         display_message_info("Enter your database administrator username in alphabetical value: ")
-        username_choice = str(input("Database administrator username"))
+        username_choice = str(input("Database administrator username : "))
 
         if re.match("^[a-zA-Z0-9]+$", username_choice):
             break
@@ -43,7 +43,7 @@ def form_url_config():
 
     while True:
         display_message_info("Enter your database password containing only letters, numbers, and a limited set of special characters.")
-        password_choice = str(input("Database password"))
+        password_choice = str(input("Database password : "))
         if password_choice.strip() and re.match("^[a-zA-Z0-9!@#$%^&*()_-]+$", password_choice):
             break
         else:
@@ -51,7 +51,7 @@ def form_url_config():
 
     while True:
         display_message_info("Enter your database name: ")
-        database_name_choice = str(input("Database name"))
+        database_name_choice = str(input("Database name : "))
 
         # Vérification avec une expression régulière pour restreindre à alphanumérique
         if re.match("^[a-zA-Z0-9]+$", database_name_choice):

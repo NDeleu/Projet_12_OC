@@ -5,6 +5,16 @@ from .user_controllers.collaborator_controllers.collaborator_cli import collabor
 from .business_controllers.customer_controllers.customer_cli import customer, customerform
 from .business_controllers.contract_controllers.contract_cli import contract, contractform
 from .business_controllers.event_controllers.event_cli import event, eventform
+from .utils_controllers.generate_uml_cli import generateuml
+
+
+@click.group(help="A variety of application-related utility tools")
+@click.pass_context
+def utils(ctx):
+    pass
+
+
+utils.add_command(generateuml, name="generateuml")
 
 
 @click.group(help="Various forms for login, logout, etc.")
@@ -27,6 +37,7 @@ def cli(ctx):
     pass
 
 
+cli.add_command(utils, name='utils')
 cli.add_command(form, name='form')
 cli.add_command(login, name='login')
 cli.add_command(logout, name='logout')

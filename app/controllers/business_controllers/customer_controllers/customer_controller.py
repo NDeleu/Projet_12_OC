@@ -3,6 +3,7 @@ from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.controllers.auth_controllers.permission_controller import login_required_seller, login_required
 from app.views.class_views.customer_view import display_customer_detail, display_customer_summary, display_announce_customer_list
 from app.views.general_views.generic_message import display_message_error, display_message_success, display_message_correction
+import sentry_sdk
 
 
 @login_required_seller
@@ -12,6 +13,8 @@ def create_func(session, user, firstname, lastname, email, phone, company):
         customer = Customer.create(session, firstname, lastname, email, phone, company, collaborator)
         display_message_success("Customer created successfully.")
         display_customer_detail(customer)
+        sentry_sdk.capture_message(
+            f"Collaborator with id : {user.id} has create a customer with id : {customer.id}")
     except ValueError as e:
         display_message_error(f"Error creating customer: {e}")
 
@@ -69,6 +72,8 @@ def update_func(session, user, customer_id, firstname, lastname, email, phone, c
                 customer.update(session, firstname=firstname, lastname=lastname, email=email, phone=phone, company=company)
                 display_message_success("Customer updated successfully.")
                 display_customer_detail(customer)
+                sentry_sdk.capture_message(
+                    f"Collaborator with id : {user.id} has update a customer with id : {customer.id}")
             else:
                 display_message_error("Only the seller assigned to the customer can edit the customer's profile.")
         else:
@@ -84,6 +89,8 @@ def delete_func(session, user, customer_id):
         if customer:
             customer.delete(session)
             display_message_success("Customer deleted successfully.")
+            sentry_sdk.capture_message(
+                f"Collaborator with id : {user.id} has delete a customer with id : {customer.id}")
         else:
             display_message_error("Customer not found.")
     except Exception as e:
