@@ -2,7 +2,7 @@ from app.models.class_models.business_models.event_model import Event
 from app.models.class_models.business_models.contract_model import Contract
 from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.controllers.auth_controllers.permission_controller import login_required_admin_or_support, login_required_seller, login_required, login_required_support
-from app.views.class_views.event_view import display_event_detail, display_event_summary, display_announce_event_list
+from app.views.class_views.event_view import display_event_detail, display_list_events
 from app.views.general_views.generic_message import display_message_error, display_message_success, display_message_correction
 import sentry_sdk
 
@@ -41,9 +41,7 @@ def read_func(session, user, mine, is_supported):
         else:
             list_events = Event.read(session, is_supported=is_supported)
 
-        display_announce_event_list()
-        for event in list_events:
-            display_event_summary(event)
+        display_list_events(list_events)
     except Exception as e:
         display_message_error(f"Error reading events: {e}")
 

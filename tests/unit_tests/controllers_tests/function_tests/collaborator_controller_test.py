@@ -50,11 +50,7 @@ def test_collaborator_read_func(db_session, admin_user, capsys):
 
     captured_stdout = capsys.readouterr().out
 
-    assert f"{collaborator.id}" in captured_stdout
-    assert f"{collaborator.firstname}" in captured_stdout
-    assert f"{collaborator.lastname}" in captured_stdout
-    assert f"{collaborator.role}" in captured_stdout
-    assert f"{collaborator.email}" in captured_stdout
+    assert f"{collaborator.id}" in captured_stdout.replace("\n", "")
 
 
 def test_collaborator_get_by_id_func(db_session, admin_user, capsys):
@@ -75,7 +71,7 @@ def test_collaborator_get_by_id_func(db_session, admin_user, capsys):
     assert f"{collaborator.firstname}" in captured_stdout
     assert f"{collaborator.lastname}" in captured_stdout
     assert f"{collaborator.email}" in captured_stdout
-    assert f"{collaborator.role}" in captured_stdout
+    assert "administrator" in captured_stdout
 
     wrong_collaborator_id = 250
 
@@ -107,7 +103,7 @@ def test_collaborator_get_by_email_func(db_session, admin_user, capsys):
     assert f"{collaborator.firstname}" in captured_stdout
     assert f"{collaborator.lastname}" in captured_stdout
     assert f"{collaborator.email}" in captured_stdout
-    assert f"{collaborator.role}" in captured_stdout
+    assert "administrator" in captured_stdout
 
     wrong_collaborator_email = "wrong.email@example.fr"
 

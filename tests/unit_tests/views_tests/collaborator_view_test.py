@@ -5,11 +5,7 @@ from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.models.class_models.business_models.contract_model import Contract
 from app.models.class_models.business_models.event_model import Event
 from app.models.class_models.business_models.customer_model import Customer
-from app.views.class_views.collaborator_view import (
-    display_collaborator_detail,
-    display_announce_collaborator_list,
-    display_collaborator_summary,
-)
+from app.views.class_views.collaborator_view import display_collaborator_detail
 
 @pytest.fixture
 def mock_console(monkeypatch):
@@ -79,23 +75,3 @@ def test_display_collaborator_detail(mock_console, db_session, support_user, sel
     ]
 
     mock_console.print.assert_has_calls(expected_output_seller)
-
-
-def test_display_announce_collaborator_list(mock_console):
-    display_announce_collaborator_list()
-    mock_console.print.assert_called_once_with("[bold yellow]Collaborator List:[/bold yellow]")
-
-
-def test_display_collaborator_summary(mock_console, db_session, admin_user):
-
-    display_collaborator_summary(admin_user)
-
-    expected_output = [
-        call(f" "),
-        call(f"ID: {admin_user.id}"),
-        call(f"Name: {admin_user.firstname} - {admin_user.lastname}"),
-        call(f"Role: {admin_user.role}"),
-        call(f"Email: {admin_user.email}"),
-    ]
-
-    mock_console.print.assert_has_calls(expected_output)

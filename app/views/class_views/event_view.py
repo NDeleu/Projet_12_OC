@@ -1,4 +1,5 @@
 from rich.console import Console
+from rich.table import Table
 
 console = Console()
 
@@ -34,26 +35,34 @@ def display_event_detail(event):
         console.print("Support assigned: None")
 
 
-def display_announce_event_list():
-    console.print("[bold yellow]Events List:[/bold yellow]")
-
-
 def display_event_summary(event):
-    console.print(" ")
-    console.print(f"Event ID: {event.id}")
-    console.print(f"Name: {event.name}")
-    console.print(f"Start Time: {event.event_start}")
-    console.print(f"End Time: {event.event_end}")
-    console.print(f"Location: {event.location}")
+    event_id = f"{event.id}"
+    event_name = f"{event.name}"
+    event_start = f"{event.event_start}"
+    event_end = f"{event.event_end}"
+    event_location = f"{event.location}"
     if event.contract.customer:
-        console.print(f"  Customer Email {event.contract.customer.email}")
+        event_customer_email = f"{event.contract.customer.email}"
     else:
-        console.print("  Customer: None")
-    if event.contract:
-        console.print(f"  Contract ID: {event.contract.id}")
-    else:
-        console.print("  Contract: None")
-    if event.collaborator:
-        console.print(f"  Support Email assigned: {event.collaborator.email}")
-    else:
-        console.print("  Support assigned: None")
+        event_customer_email = "None"
+
+    event_summary = f"{event_id}, {event_name}, {event_start}, {event_end}, {event_location}, {event_customer_email}"
+
+    return event_summary
+
+
+def display_list_events(events):
+    table = Table(title="[bold yellow]Events List:[/bold yellow]")
+
+    table.add_column("ID")
+    table.add_column("Name")
+    table.add_column("Start Time")
+    table.add_column("End Time")
+    table.add_column("Location")
+    table.add_column("Customer Email")
+
+    for event in events:
+        formatted_event = display_event_summary(event)
+        table.add_row(*formatted_event.split(", "))
+
+    console.print(table)

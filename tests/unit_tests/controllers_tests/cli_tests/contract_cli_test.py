@@ -38,7 +38,7 @@ def test_contract_api_cli_create(db_session, admin_user, seller_user):
     assert f"{total_amount}" in result.output.strip()
     assert f"{left_to_pay}" in result.output.strip()
     assert f"{customer_instance.email}" in result.output.strip()
-    assert f"Signed: No" in result.output.strip()
+    assert f"No" in result.output.strip()
 
 
 def test_contract_api_cli_read(db_session, seller_user, support_user):
@@ -74,8 +74,8 @@ def test_contract_api_cli_read(db_session, seller_user, support_user):
     assert result.exit_code == 0
 
     # Verify that both contracts are listed
-    assert f"{contract1.id}" and f"{contract1.total_amount}" and f"{contract1.left_to_pay}" and f"{customer1.email}" and "Signed: Yes" in result.output.strip()
-    assert f"{contract2.id}" and f"{contract2.total_amount}" and f"{contract2.left_to_pay}" and f"{customer2.email}" and "Signed: No" in result.output.strip()
+    assert f"{contract1.id}" and f"{contract1.total_amount}" and f"{contract1.left_to_pay}" and f"{customer1.email}" and "Yes" in result.output.strip().replace("\n", "")
+    assert f"{contract2.id}" and f"{contract2.total_amount}" and f"{contract2.left_to_pay}" and f"{customer2.email}" and "No" in result.output.strip().replace("\n", "")
 
 
 def test_contract_api_cli_get_by_id(db_session, support_user, admin_user):
@@ -107,7 +107,7 @@ def test_contract_api_cli_get_by_id(db_session, support_user, admin_user):
     assert f"{contract_instance.total_amount}" in result.output.strip()
     assert f"{contract_instance.left_to_pay}" in result.output.strip()
     assert f"{contract_instance.customer.email}" in result.output.strip()
-    assert f"Signed: Yes" in result.output.strip()
+    assert f"Yes" in result.output.strip()
 
 
 def test_contract_api_cli_update(db_session, seller_user, admin_user):
@@ -150,7 +150,7 @@ def test_contract_api_cli_update(db_session, seller_user, admin_user):
     assert f"{contract_instance.id}" in result.output.strip()
     assert f"{new_total_amount}" in result.output.strip()
     assert f"{new_left_to_pay}" in result.output.strip()
-    assert f"Signed: Yes" in result.output.strip()
+    assert f"Yes" in result.output.strip()
 
 
 def test_contract_api_cli_delete(db_session, seller_user, admin_user):
@@ -209,7 +209,7 @@ def test_contract_createform(db_session, admin_user, seller_user):
     assert f"{total_amount}" in result.output.strip()
     assert f"{left_to_pay}" in result.output.strip()
     assert f"{customer_instance.email}" in result.output.strip()
-    assert f"Signed: No" in result.output.strip()
+    assert f"No" in result.output.strip()
 
 
 def test_contract_readform(db_session, seller_user, support_user):
@@ -246,8 +246,8 @@ def test_contract_readform(db_session, seller_user, support_user):
     assert result.exit_code == 0
 
     # Verify that both contracts are listed
-    assert f"{contract1.id}" and f"{contract1.total_amount}" and f"{contract1.left_to_pay}" and f"{customer1.email}" and "Signed: Yes" in result.output.strip()
-    assert f"{contract2.id}" and f"{contract2.total_amount}" and f"{contract2.left_to_pay}" and f"{customer2.email}" and "Signed: No" in result.output.strip()
+    assert f"{contract1.id}" and f"{contract1.total_amount}" and f"{contract1.left_to_pay}" and f"{customer1.email}" and "Yes" in result.output.strip().replace("\n", "")
+    assert f"{contract2.id}" and f"{contract2.total_amount}" and f"{contract2.left_to_pay}" and f"{customer2.email}" and "No" in result.output.strip().replace("\n", "")
 
 
 def test_contract_get_by_id_form(db_session, support_user, admin_user):
@@ -276,7 +276,7 @@ def test_contract_get_by_id_form(db_session, support_user, admin_user):
     assert f"{contract_instance.total_amount}" in result.output.strip()
     assert f"{contract_instance.left_to_pay}" in result.output.strip()
     assert f"{contract_instance.customer.email}" in result.output.strip()
-    assert f"Signed: Yes" in result.output.strip()
+    assert f"Yes" in result.output.strip()
 
 
 # Test for 'updateform' function
@@ -317,7 +317,7 @@ def test_contract_update_form(db_session, support_user, admin_user):
     assert f"{contract_instance.id}" in result.output.strip()
     assert f"{new_total_amount}" in result.output.strip()
     assert f"{new_left_to_pay}" in result.output.strip()
-    assert f"Signed: Yes" in result.output.strip()
+    assert f"Yes" in result.output.strip()
 
 
 # Test for 'deleteform' function

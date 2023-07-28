@@ -1,4 +1,5 @@
 from rich.console import Console
+from rich.table import Table
 
 console = Console()
 
@@ -39,18 +40,36 @@ def display_customer_detail(customer):
         console.print("Contracts: None")
 
 
-def display_announce_customer_list():
-    console.print("[bold yellow]Customers List:[/bold yellow]")
-
-
 def display_customer_summary(customer):
-    console.print(" ")
-    console.print(f"ID: {customer.id}")
-    console.print(f"Name: {customer.firstname} - {customer.lastname}")
-    console.print(f"Email: {customer.email}")
-    console.print(f"Phone: {customer.phone}")
-    console.print(f"Company: {customer.company}")
+    customer_id = f"{customer.id}"
+    customer_firstname = f"{customer.firstname}"
+    customer_lastname = f"{customer.lastname}"
+    customer_email = f"{customer.email}"
+    customer_phone = f"{customer.phone}"
+    customer_company = f"{customer.company}"
     if customer.collaborator:
-        console.print(f"  Seller Email: {customer.collaborator.email}")
+        customer_seller_email = f"{customer.collaborator.email}"
     else:
-        console.print("  Seller: None")
+        customer_seller_email = "None"
+
+    customer_summary = f"{customer_id}, {customer_firstname}, {customer_lastname}, {customer_email}, {customer_phone}, {customer_company}, {customer_seller_email}"
+
+    return customer_summary
+
+
+def display_list_customer(customers):
+    table = Table(title="[bold yellow]Customers List:[/bold yellow]")
+
+    table.add_column("ID")
+    table.add_column("Firstname")
+    table.add_column("Lastname")
+    table.add_column("Email")
+    table.add_column("Phone")
+    table.add_column("Company")
+    table.add_column("Seller Email")
+
+    for customer in customers:
+        formatted_customer = display_customer_summary(customer)
+        table.add_row(*formatted_customer.split(", "))
+
+    console.print(table)

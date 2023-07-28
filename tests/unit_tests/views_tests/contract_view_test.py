@@ -5,8 +5,7 @@ from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.models.class_models.business_models.contract_model import Contract
 from app.models.class_models.business_models.event_model import Event
 from app.models.class_models.business_models.customer_model import Customer
-from app.views.class_views.contract_view import display_contract_detail, display_announce_contract_list, display_contract_summary
-
+from app.views.class_views.contract_view import display_contract_detail
 @pytest.fixture
 def mock_console(monkeypatch):
     mock_console = Mock()
@@ -48,37 +47,6 @@ def test_display_contract_detail(mock_console, db_session, seller_user, support_
         call(f"  Event Name: {event.name}"),
         call(f"  Event Start Time: {event.event_start}"),
         call(f"  Event End Time: {event.event_end}"),
-    ]
-
-    mock_console.print.assert_has_calls(expected_output)
-
-
-def test_display_announce_contract_list(mock_console):
-    display_announce_contract_list()
-    mock_console.print.assert_called_once_with("[bold yellow]Contract List:[/bold yellow]")
-
-
-def test_display_contract_summary(mock_console, db_session, seller_user, support_user):
-    customer = Customer(firstname="Customer1", lastname="Smith",
-                        email="customer1@example.com", phone="1234567890",
-                        company="Company A", collaborator=seller_user)
-    contract = Contract(total_amount=5000, left_to_pay=2000, customer=customer, signed=True)
-
-    db_session.add_all([customer, contract])
-    db_session.commit()
-
-    display_contract_summary(contract)
-
-    expected_output = [
-        call(" "),
-        call(f"Contract ID: {contract.id}"),
-        call(f"Total Amount: {contract.total_amount}"),
-        call(f"Left to Pay: {contract.left_to_pay}"),
-        call(f"Date Created: {contract.date_created}"),
-        call("Signed: Yes"),
-        call(f"  Customer Email: {contract.customer.email}"),
-        call(f"  Seller Email assigned: {contract.customer.collaborator.email}"),
-        call("  Event: None"),
     ]
 
     mock_console.print.assert_has_calls(expected_output)

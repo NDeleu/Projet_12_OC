@@ -1,6 +1,6 @@
 from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.controllers.auth_controllers.permission_controller import login_required_admin
-from app.views.class_views.collaborator_view import display_collaborator_detail, display_collaborator_summary, display_announce_collaborator_list
+from app.views.class_views.collaborator_view import display_collaborator_detail, display_list_contracts
 from app.views.general_views.generic_message import display_message_error, display_message_success
 import sentry_sdk
 
@@ -20,9 +20,7 @@ def create_func(session, user, firstname, lastname, email, role, password):
 def read_func(session, user):
     try:
         list_collaborators = Collaborator.read(session)
-        display_announce_collaborator_list()
-        for collaborator in list_collaborators:
-            display_collaborator_summary(collaborator)
+        display_list_contracts(list_collaborators)
     except Exception as e:
         display_message_error(f"Error reading collaborators: {e}")
 

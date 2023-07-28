@@ -1,7 +1,7 @@
 from app.models.class_models.business_models.customer_model import Customer
 from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.controllers.auth_controllers.permission_controller import login_required_seller, login_required
-from app.views.class_views.customer_view import display_customer_detail, display_customer_summary, display_announce_customer_list
+from app.views.class_views.customer_view import display_customer_detail, display_list_customer
 from app.views.general_views.generic_message import display_message_error, display_message_success, display_message_correction
 import sentry_sdk
 
@@ -32,9 +32,7 @@ def read_func(session, user, mine):
         else:
             list_customers = Customer.read(session)
 
-        display_announce_customer_list()
-        for customer in list_customers:
-            display_customer_summary(customer)
+        display_list_customer(list_customers)
     except Exception as e:
         display_message_error(f"Error reading customers: {e}")
 

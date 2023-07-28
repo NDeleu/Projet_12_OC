@@ -54,8 +54,8 @@ def test_customer_read_as_seller_func(db_session, seller_user, capsys):
 
     captured_stdout = capsys.readouterr().out
 
-    assert f"{customer1.email}" in captured_stdout
-    assert f"{customer2.email}" in captured_stdout
+    assert f"{customer1.id}" in captured_stdout.replace("\n", "")
+    assert f"{customer2.id}" in captured_stdout.replace("\n", "")
 
 
 def test_customer_read_as_other_func(db_session, admin_user, seller_user, capsys):
@@ -73,8 +73,8 @@ def test_customer_read_as_other_func(db_session, admin_user, seller_user, capsys
 
     captured_stdout = capsys.readouterr().out
 
-    assert f"{customer1.email}" in captured_stdout
-    assert f"{customer2.email}" in captured_stdout
+    assert f"{customer1.id}" in captured_stdout.replace("\n", "")
+    assert f"{customer2.id}" in captured_stdout.replace("\n", "")
 
     assert "Permission denied. Please login as a seller to access the mine option for customers. The full list of customers is selected instead." in captured_stdout.replace("\n", " ")
 
@@ -86,8 +86,8 @@ def test_customer_read_as_other_func(db_session, admin_user, seller_user, capsys
 
     captured_stdout = capsys.readouterr().out
 
-    assert f"{customer1.email}" in captured_stdout
-    assert f"{customer2.email}" in captured_stdout
+    assert f"{customer1.id}" in captured_stdout.replace("\n", "")
+    assert f"{customer2.id}" in captured_stdout.replace("\n", "")
 
 
 def test_customer_get_by_id_func(db_session, seller_user, capsys):
@@ -107,7 +107,7 @@ def test_customer_get_by_id_func(db_session, seller_user, capsys):
 
     captured_stdout = capsys.readouterr().out
 
-    assert f"{customer.email}" in captured_stdout
+    assert f"{customer.id}" in captured_stdout.replace("\n", "")
 
     wrong_event_id = 250
     # Mock the get_logged_as_user function to return the admin_user

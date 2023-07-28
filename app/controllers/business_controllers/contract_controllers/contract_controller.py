@@ -2,7 +2,7 @@ from app.models.class_models.business_models.contract_model import Contract
 from app.models.class_models.business_models.customer_model import Customer
 from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.controllers.auth_controllers.permission_controller import login_required_admin, login_required, login_required_admin_or_seller
-from app.views.class_views.contract_view import display_contract_detail, display_contract_summary, display_announce_contract_list
+from app.views.class_views.contract_view import display_contract_detail, display_list_contracts
 from app.views.general_views.generic_message import display_message_success, display_message_error, display_message_correction
 import sentry_sdk
 
@@ -35,9 +35,7 @@ def read_func(session, user, mine, is_signed, with_event, is_paid):
         else:
             contracts = Contract.read(session, signed=is_signed, event=with_event, paid=is_paid)
 
-        display_announce_contract_list()
-        for contract in contracts:
-            display_contract_summary(contract)
+        display_list_contracts(contracts)
     except ValueError as e:
         display_message_error(f"Error reading contracts: {e}")
 
