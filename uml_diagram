@@ -1,0 +1,16 @@
+digraph {
+	subgraph cluster_UML {
+		label="Diagramme UML"
+		Collaborator [label="{ Collaborator | id : INTEGER | firstname : VARCHAR(50) | lastname : VARCHAR(50) | email : VARCHAR(50) | role : VARCHAR(13) | password : VARCHAR(60) | token : VARCHAR | token_expiration : DATETIME | }" shape=record]
+		Customer [label="{ Customer | id : INTEGER | firstname : VARCHAR(50) | lastname : VARCHAR(50) | email : VARCHAR(100) | phone : VARCHAR(20) | company : VARCHAR(100) | date_created : DATETIME | date_updated : DATETIME | collaborator_id : INTEGER | }" shape=record]
+		Contract [label="{ Contract | id : INTEGER | date_created : DATETIME | total_amount : NUMERIC(10, 2) | left_to_pay : NUMERIC(10, 2) | signed : BOOLEAN | customer_id : INTEGER | }" shape=record]
+		Event [label="{ Event | id : INTEGER | name : VARCHAR(100) | event_start : DATETIME | event_end : DATETIME | location : VARCHAR(100) | attendees : INTEGER | instruction : VARCHAR(240) | collaborator_id : INTEGER | contract_id : INTEGER | }" shape=record]
+	}
+	subgraph cluster_ERD {
+		label="Diagramme Entité-Relation"
+		Collaborator -> Customer [label="1..*" arrowhead=crow]
+		Collaborator -> Event [label="1..*" arrowhead=crow]
+		Event -> Contract [label=1 arrowhead=none]
+		Customer -> Contract [label="1..*" arrowhead=crow]
+	}
+}
