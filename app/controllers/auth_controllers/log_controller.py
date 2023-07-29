@@ -1,8 +1,7 @@
 import re
 from datetime import datetime, timedelta
 
-from .permission_controller import generate_token, save_token_to_file, \
-    clear_token_from_file, login_required
+from .permission_controller import generate_token, save_token_to_file, clear_token_from_file, login_required
 from app.models.class_models.user_models.collaborator_model import Collaborator
 from app.views.general_views.generic_message import display_message_success, display_message_error
 

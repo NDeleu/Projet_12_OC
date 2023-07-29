@@ -168,14 +168,14 @@ def event():
     pass
 
 
-@event.command(help="Create an event\n\n"
-                     "Parameters:\n"
-                     "   name (str): Event Name in alphabetical value.\n"
-                     "   event_start (datetime): Event start date in this form: YYYY/MM/DD-HH:MM:SS.\n"
-                     "   event_end (datetime): Event end date in this form: YYYY/MM/DD-HH:MM:SS.\n"
-                     "   location (str): Event location in alphabetical value.\n"
-                     "   attendees (int): Attendees amount in numerical value.\n"
-                     "   instruction (str): Some instructions for the event in alphabetical value.\n"
+@event.command(help="Create an event\n\n\n"
+                     "Parameters:\n\n"
+                     "   name (str): Event Name in alphabetical value.\n\n"
+                     "   event_start (datetime): Event start date in this form: YYYY/MM/DD-HH:MM:SS.\n\n"
+                     "   event_end (datetime): Event end date in this form: YYYY/MM/DD-HH:MM:SS.\n\n"
+                     "   location (str): Event location in alphabetical value.\n\n"
+                     "   attendees (int): Attendees amount in numerical value.\n\n"
+                     "   instruction (str): Some instructions for the event in alphabetical value.\n\n"
                      "   contract (int): Contract Id in numerical value.")
 @click.pass_context
 @click.argument('name', type=str)
@@ -195,9 +195,9 @@ def create(ctx, name, event_start, event_end, location, attendees, instruction, 
         display_message_error(str(e))
 
 
-@event.command(help="Get a list of events\n\n"
-                     "Options:\n"
-                     "   --mine (bool): If you are support, filter awarded events: True, not this filter: False.\n"
+@event.command(help="Get a list of events\n\n\n"
+                     "Options:\n\n"
+                     "   --mine (bool): If you are support, filter awarded events: True, not this filter: False.\n\n"
                      "   --is_supported (bool): Filter only contracts with support assigned: True, without support assigned: False, both: None.")
 @click.option('--mine', type=bool, default=False, help="If you are support, filter awarded events: True, not this filter: False.")
 @click.option('--is_supported', type=bool, default=None, help="Filter only contracts with support assigned: True, without support assigned: False, both: None.")
@@ -210,8 +210,8 @@ def read(ctx, mine, is_supported):
         display_message_error(str(e))
 
 
-@event.command(help="Get an event with his ID\n\n"
-                     "Parameters:\n"
+@event.command(help="Get an event with his ID\n\n\n"
+                     "Parameters:\n\n"
                      "   event_id (int): Event ID in numerical value.")
 @click.argument('event_id', type=int)
 @click.pass_context
@@ -223,17 +223,17 @@ def getbyid(ctx, event_id):
         display_message_error(str(e))
 
 
-@event.command(help="Update an event\n\n"
-                     "Parameters:\n"
-                     "   event_id (int): Event ID in numerical value.\n"
-                     "Options:\n"
-                     "   --name (str): For change: Event Name in alphabetical value, for keep unchanged: None.\n"
-                     "   --event_start (datetime): For change: Event start date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.\n"
-                     "   --event_end (datetime): For change: Event end date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.\n"
-                     "   --location (str): For change: Event location in alphabetical value, for keep unchanged: None.\n"
-                     "   --attendees (int): For change: Attendees amount in numerical value, for keep unchanged: None.\n"
-                     "   --instruction (str): For change: Some instructions for the event in alphabetical value, for keep unchanged: None.\n"
-                     "   --contract (int): For change: Contract Id in numerical value, for keep unchanged: None.\n"
+@event.command(help="Update an event\n\n\n"
+                     "Parameters:\n\n"
+                     "   event_id (int): Event ID in numerical value.\n\n"
+                     "Options:\n\n"
+                     "   --name (str): For change: Event Name in alphabetical value, for keep unchanged: None.\n\n"
+                     "   --event_start (datetime): For change: Event start date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.\n\n"
+                     "   --event_end (datetime): For change: Event end date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.\n\n"
+                     "   --location (str): For change: Event location in alphabetical value, for keep unchanged: None.\n\n"
+                     "   --attendees (int): For change: Attendees amount in numerical value, for keep unchanged: None.\n\n"
+                     "   --instruction (str): For change: Some instructions for the event in alphabetical value, for keep unchanged: None.\n\n"
+                     "   --contract (int): For change: Contract Id in numerical value, for keep unchanged: None.\n\n"
                      "   --support (int): For change: Support Id in numerical value, for keep unchanged: None.")
 @click.pass_context
 @click.argument('event_id', type=int)
@@ -257,8 +257,8 @@ def update(ctx, event_id, name, event_start, event_end, location, attendees, ins
         display_message_error(str(e))
 
 
-@event.command(help="Delete an event\n\n"
-                     "Parameters:\n"
+@event.command(help="Delete an event\n\n\n"
+                     "Parameters:\n\n"
                      "   event_id (int): Event ID in numerical value.")
 @click.argument('event_id', type=int)
 @click.pass_context

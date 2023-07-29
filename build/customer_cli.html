@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Customer &#8212; Project12 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=af2ce170"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contract" href="contract_cli.html" />
+    <link rel="prev" title="Collaborator" href="collaborator_cli.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="customer">
+<h1>Customer<a class="headerlink" href="#customer" title="Permalink to this heading">¶</a></h1>
+<section id="main-py-customer-create">
+<h2>main.py customer create<a class="headerlink" href="#main-py-customer-create" title="Permalink to this heading">¶</a></h2>
+<p>Create a customer</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>firstname (str): Firstname in alphabetical value.</p>
+<p>lastname (str): Lastname in alphabetical value.</p>
+<p>email (str): Email in alphabetical value and in form <a class="reference external" href="mailto:alpha&#37;&#52;&#48;alpha&#46;alpha">alpha<span>&#64;</span>alpha<span>&#46;</span>alpha</a>.</p>
+<p>phone (str): Phone number in numerical value.</p>
+<p>company (str): Customer’s company in alphabetical value.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>customer<span class="w"> </span>create<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>FIRSTNAME<span class="w"> </span>LASTNAME<span class="w"> </span>EMAIL<span class="w"> </span>PHONE<span class="w"> </span>COMPANY
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-create-arg-FIRSTNAME">
+<span class="sig-name descname"><span class="pre">FIRSTNAME</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-customer-create-arg-FIRSTNAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-create-arg-LASTNAME">
+<span class="sig-name descname"><span class="pre">LASTNAME</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-customer-create-arg-LASTNAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-create-arg-EMAIL">
+<span class="sig-name descname"><span class="pre">EMAIL</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-customer-create-arg-EMAIL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-create-arg-PHONE">
+<span class="sig-name descname"><span class="pre">PHONE</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-customer-create-arg-PHONE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-create-arg-COMPANY">
+<span class="sig-name descname"><span class="pre">COMPANY</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-customer-create-arg-COMPANY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-customer-createform">
+<h2>main.py form customer createform<a class="headerlink" href="#main-py-form-customer-createform" title="Permalink to this heading">¶</a></h2>
+<p>Create a customer with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>customer<span class="w"> </span>createform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-customer-read">
+<h2>main.py customer read<a class="headerlink" href="#main-py-customer-read" title="Permalink to this heading">¶</a></h2>
+<p>Get a list of customers</p>
+<p>Options:</p>
+<blockquote>
+<div><p>–mine (bool): If you are seller, filter awarded customers: True, not this filter: False.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>customer<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-read-mine">
+<span class="sig-name descname"><span class="pre">--mine</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;mine&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-customer-read-mine" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are seller, filter awarded customers: True, not this filter: False.</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-customer-readform">
+<h2>main.py form customer readform<a class="headerlink" href="#main-py-form-customer-readform" title="Permalink to this heading">¶</a></h2>
+<p>Get a list of customers with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>customer<span class="w"> </span>readform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-customer-getbyid">
+<h2>main.py customer getbyid<a class="headerlink" href="#main-py-customer-getbyid" title="Permalink to this heading">¶</a></h2>
+<p>Get a customer with his ID</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>customer_id (int): Customer ID in numerical value.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>customer<span class="w"> </span>getbyid<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>CUSTOMER_ID
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-getbyid-arg-CUSTOMER_ID">
+<span class="sig-name descname"><span class="pre">CUSTOMER_ID</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-customer-getbyid-arg-CUSTOMER_ID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-customer-getbyidform">
+<h2>main.py form customer getbyidform<a class="headerlink" href="#main-py-form-customer-getbyidform" title="Permalink to this heading">¶</a></h2>
+<p>Get a customer with his ID with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>customer<span class="w"> </span>getbyidform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-customer-getbyemail">
+<h2>main.py customer getbyemail<a class="headerlink" href="#main-py-customer-getbyemail" title="Permalink to this heading">¶</a></h2>
+<p>Get a customer with his email</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>customer_email (str): Customer Email in alphabetical value and in form <a class="reference external" href="mailto:alpha&#37;&#52;&#48;alpha&#46;alpha">alpha<span>&#64;</span>alpha<span>&#46;</span>alpha</a>.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>customer<span class="w"> </span>getbyemail<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>CUSTOMER_EMAIL
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-getbyemail-arg-CUSTOMER_EMAIL">
+<span class="sig-name descname"><span class="pre">CUSTOMER_EMAIL</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-customer-getbyemail-arg-CUSTOMER_EMAIL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-customer-getbyemailform">
+<h2>main.py form customer getbyemailform<a class="headerlink" href="#main-py-form-customer-getbyemailform" title="Permalink to this heading">¶</a></h2>
+<p>Get a customer with his email with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>customer<span class="w"> </span>getbyemailform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-customer-update">
+<h2>main.py customer update<a class="headerlink" href="#main-py-customer-update" title="Permalink to this heading">¶</a></h2>
+<p>Update a customer</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>customer_id (int): Customer ID in numerical value.</p>
+</div></blockquote>
+<p>Options:</p>
+<blockquote>
+<div><p>–firstname (str): For change: Firstname in alphabetical value, for keep unchanged: None.</p>
+<p class="attribution">—lastname (str): For change: Lastname in alphabetical value, for keep unchanged: None.</p>
+</div></blockquote>
+<blockquote>
+<div><p>–email (str): For change: Email in alphabetical value and in form <a class="reference external" href="mailto:alpha&#37;&#52;&#48;alpha&#46;alpha">alpha<span>&#64;</span>alpha<span>&#46;</span>alpha</a>, for keep unchanged: None.</p>
+<p class="attribution">—phone (str): For change: Phone number in numerical value, for keep unchanged: None.</p>
+</div></blockquote>
+<blockquote>
+<div><p>–company (str): For change: Customer’s company in alphabetical value, for keep unchanged: None.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>customer<span class="w"> </span>update<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>CUSTOMER_ID
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-update-firstname">
+<span class="sig-name descname"><span class="pre">--firstname</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;firstname&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-customer-update-firstname" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Firstname in alphabetical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-update-lastname">
+<span class="sig-name descname"><span class="pre">--lastname</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;lastname&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-customer-update-lastname" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Lastname in alphabetical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-update-email">
+<span class="sig-name descname"><span class="pre">--email</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;email&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-customer-update-email" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Email in alphabetical value and in form <a class="reference external" href="mailto:alpha&#37;&#52;&#48;alpha&#46;alpha">alpha<span>&#64;</span>alpha<span>&#46;</span>alpha</a>, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-update-phone">
+<span class="sig-name descname"><span class="pre">--phone</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phone&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-customer-update-phone" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Phone number in numerical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-update-company">
+<span class="sig-name descname"><span class="pre">--company</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;company&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-customer-update-company" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Customer’s compagny in alphabetical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-update-arg-CUSTOMER_ID">
+<span class="sig-name descname"><span class="pre">CUSTOMER_ID</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-customer-update-arg-CUSTOMER_ID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-customer-updateform">
+<h2>main.py form customer updateform<a class="headerlink" href="#main-py-form-customer-updateform" title="Permalink to this heading">¶</a></h2>
+<p>Update a customer with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>customer<span class="w"> </span>updateform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-customer-delete">
+<h2>main.py customer delete<a class="headerlink" href="#main-py-customer-delete" title="Permalink to this heading">¶</a></h2>
+<p>Delete a customer</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>customer_id (int): Customer ID in numerical value.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>customer<span class="w"> </span>delete<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>CUSTOMER_ID
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-customer-delete-arg-CUSTOMER_ID">
+<span class="sig-name descname"><span class="pre">CUSTOMER_ID</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-customer-delete-arg-CUSTOMER_ID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-customer-deleteform">
+<h2>main.py form customer deleteform<a class="headerlink" href="#main-py-form-customer-deleteform" title="Permalink to this heading">¶</a></h2>
+<p>Delete a customer with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>customer<span class="w"> </span>deleteform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Project12</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="connexion_menu.html">Menu: Connexion</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="models_menu.html">Menu: Models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="collaborator_cli.html">Collaborator</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Customer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contract_cli.html">Contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_cli.html">Event</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils_menu.html">Menu: Utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="models_menu.html">Menu: Models</a><ul>
+      <li>Previous: <a href="collaborator_cli.html" title="previous chapter">Collaborator</a></li>
+      <li>Next: <a href="contract_cli.html" title="next chapter">Contract</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Nicolas Deleu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/customer_cli.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

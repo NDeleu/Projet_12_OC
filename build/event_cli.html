@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Event &#8212; Project12 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=af2ce170"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Menu: Utils" href="utils_menu.html" />
+    <link rel="prev" title="Contract" href="contract_cli.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="event">
+<h1>Event<a class="headerlink" href="#event" title="Permalink to this heading">¶</a></h1>
+<section id="main-py-event-create">
+<h2>main.py event create<a class="headerlink" href="#main-py-event-create" title="Permalink to this heading">¶</a></h2>
+<p>Create an event</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>name (str): Event Name in alphabetical value.</p>
+<p>event_start (datetime): Event start date in this form: YYYY/MM/DD-HH:MM:SS.</p>
+<p>event_end (datetime): Event end date in this form: YYYY/MM/DD-HH:MM:SS.</p>
+<p>location (str): Event location in alphabetical value.</p>
+<p>attendees (int): Attendees amount in numerical value.</p>
+<p>instruction (str): Some instructions for the event in alphabetical value.</p>
+<p>contract (int): Contract Id in numerical value.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>event<span class="w"> </span>create<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>NAME<span class="w"> </span>EVENT_START<span class="w"> </span>EVENT_END<span class="w"> </span>LOCATION<span class="w"> </span>ATTENDEES
+<span class="w">                     </span>INSTRUCTION<span class="w"> </span>CONTRACT
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-create-arg-NAME">
+<span class="sig-name descname"><span class="pre">NAME</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-create-arg-NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-create-arg-EVENT_START">
+<span class="sig-name descname"><span class="pre">EVENT_START</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-create-arg-EVENT_START" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-create-arg-EVENT_END">
+<span class="sig-name descname"><span class="pre">EVENT_END</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-create-arg-EVENT_END" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-create-arg-LOCATION">
+<span class="sig-name descname"><span class="pre">LOCATION</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-create-arg-LOCATION" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-create-arg-ATTENDEES">
+<span class="sig-name descname"><span class="pre">ATTENDEES</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-create-arg-ATTENDEES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-create-arg-INSTRUCTION">
+<span class="sig-name descname"><span class="pre">INSTRUCTION</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-create-arg-INSTRUCTION" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-create-arg-CONTRACT">
+<span class="sig-name descname"><span class="pre">CONTRACT</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-create-arg-CONTRACT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-event-createform">
+<h2>main.py form event createform<a class="headerlink" href="#main-py-form-event-createform" title="Permalink to this heading">¶</a></h2>
+<p>Create an event with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>event<span class="w"> </span>createform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-event-read">
+<h2>main.py event read<a class="headerlink" href="#main-py-event-read" title="Permalink to this heading">¶</a></h2>
+<p>Get a list of events</p>
+<p>Options:</p>
+<blockquote>
+<div><p>–mine (bool): If you are support, filter awarded events: True, not this filter: False.</p>
+<p class="attribution">—is_supported (bool): Filter only contracts with support assigned: True, without support assigned: False, both: None.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>event<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-read-mine">
+<span class="sig-name descname"><span class="pre">--mine</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;mine&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-read-mine" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are support, filter awarded events: True, not this filter: False.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-read-is_supported">
+<span class="sig-name descname"><span class="pre">--is_supported</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;is_supported&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-read-is_supported" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter only contracts with support assigned: True, without support assigned: False, both: None.</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-event-readform">
+<h2>main.py form event readform<a class="headerlink" href="#main-py-form-event-readform" title="Permalink to this heading">¶</a></h2>
+<p>Get a list of events with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>event<span class="w"> </span>readform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-event-getbyid">
+<h2>main.py event getbyid<a class="headerlink" href="#main-py-event-getbyid" title="Permalink to this heading">¶</a></h2>
+<p>Get an event with his ID</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>event_id (int): Event ID in numerical value.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>event<span class="w"> </span>getbyid<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>EVENT_ID
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-getbyid-arg-EVENT_ID">
+<span class="sig-name descname"><span class="pre">EVENT_ID</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-getbyid-arg-EVENT_ID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-event-getbyidform">
+<h2>main.py form event getbyidform<a class="headerlink" href="#main-py-form-event-getbyidform" title="Permalink to this heading">¶</a></h2>
+<p>Get an event with his ID with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>event<span class="w"> </span>getbyidform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-event-update">
+<h2>main.py event update<a class="headerlink" href="#main-py-event-update" title="Permalink to this heading">¶</a></h2>
+<p>Update an event</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>event_id (int): Event ID in numerical value.</p>
+</div></blockquote>
+<p>Options:</p>
+<blockquote>
+<div><p>–name (str): For change: Event Name in alphabetical value, for keep unchanged: None.</p>
+<p class="attribution">—event_start (datetime): For change: Event start date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.</p>
+</div></blockquote>
+<blockquote>
+<div><p>–event_end (datetime): For change: Event end date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.</p>
+<p class="attribution">—location (str): For change: Event location in alphabetical value, for keep unchanged: None.</p>
+</div></blockquote>
+<blockquote>
+<div><p>–attendees (int): For change: Attendees amount in numerical value, for keep unchanged: None.</p>
+<p class="attribution">—instruction (str): For change: Some instructions for the event in alphabetical value, for keep unchanged: None.</p>
+</div></blockquote>
+<blockquote>
+<div><p>–contract (int): For change: Contract Id in numerical value, for keep unchanged: None.</p>
+<p class="attribution">—support (int): For change: Support Id in numerical value, for keep unchanged: None.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>event<span class="w"> </span>update<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>EVENT_ID
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-update-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-update-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Event Name in alphabetical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-update-event_start">
+<span class="sig-name descname"><span class="pre">--event_start</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;event_start&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-update-event_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Event start date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-update-event_end">
+<span class="sig-name descname"><span class="pre">--event_end</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;event_end&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-update-event_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Event end date in this form: YYYY/MM/DD-HH:MM:SS, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-update-location">
+<span class="sig-name descname"><span class="pre">--location</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;location&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-update-location" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Event location in alphabetical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-update-attendees">
+<span class="sig-name descname"><span class="pre">--attendees</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;attendees&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-update-attendees" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Attendees amount in numerical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-update-instruction">
+<span class="sig-name descname"><span class="pre">--instruction</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;instruction&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-update-instruction" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Some instructions for the event in alphabetical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-update-contract">
+<span class="sig-name descname"><span class="pre">--contract</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;contract&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-update-contract" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Contract Id in numerical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-update-support">
+<span class="sig-name descname"><span class="pre">--support</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;support&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-event-update-support" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Support Id in numerical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-update-arg-EVENT_ID">
+<span class="sig-name descname"><span class="pre">EVENT_ID</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-update-arg-EVENT_ID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-event-updateform">
+<h2>main.py form event updateform<a class="headerlink" href="#main-py-form-event-updateform" title="Permalink to this heading">¶</a></h2>
+<p>Update an event with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>event<span class="w"> </span>updateform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-event-delete">
+<h2>main.py event delete<a class="headerlink" href="#main-py-event-delete" title="Permalink to this heading">¶</a></h2>
+<p>Delete an event</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>event_id (int): Event ID in numerical value.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>event<span class="w"> </span>delete<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>EVENT_ID
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-event-delete-arg-EVENT_ID">
+<span class="sig-name descname"><span class="pre">EVENT_ID</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-event-delete-arg-EVENT_ID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-event-deleteform">
+<h2>main.py form event deleteform<a class="headerlink" href="#main-py-form-event-deleteform" title="Permalink to this heading">¶</a></h2>
+<p>Delete an event with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>event<span class="w"> </span>deleteform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Project12</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="connexion_menu.html">Menu: Connexion</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="models_menu.html">Menu: Models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="collaborator_cli.html">Collaborator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customer_cli.html">Customer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contract_cli.html">Contract</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Event</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils_menu.html">Menu: Utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="models_menu.html">Menu: Models</a><ul>
+      <li>Previous: <a href="contract_cli.html" title="previous chapter">Contract</a></li>
+      <li>Next: <a href="utils_menu.html" title="next chapter">Menu: Utils</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Nicolas Deleu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/event_cli.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

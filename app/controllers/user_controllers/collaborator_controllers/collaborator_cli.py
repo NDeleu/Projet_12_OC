@@ -107,12 +107,12 @@ def collaborator():
     pass
 
 
-@collaborator.command(help="Create a collaborator with the following arguments:\n\n"
-                           "Parameters:\n"
-                           "   firstname: Firstname in alphabetical value.\n"
-                           "   lastname: Lastname in alphabetical value.\n"
-                           "   email: Email in alphabetical value and in form alpha@alpha.alpha.\n"
-                           "   role: Role in numerical value, administrator: 1, seller: 2, support: 3.\n"
+@collaborator.command(help="Create a collaborator with the following arguments:\n\n\n"
+                           "Parameters:\n\n"
+                           "   firstname: Firstname in alphabetical value.\n\n"
+                           "   lastname: Lastname in alphabetical value.\n\n"
+                           "   email: Email in alphabetical value and in form alpha@alpha.alpha.\n\n"
+                           "   role: Role in numerical value, administrator: 1, seller: 2, support: 3.\n\n"
                            "   password: Password in form with letters, numbers, and a limited set of special characters (!@#$%^&*()_-).")
 @click.pass_context
 @click.argument('firstname', type=str)
@@ -138,8 +138,8 @@ def read(ctx):
         display_message_error(str(e))
 
 
-@collaborator.command(help="Get a collaborator with his ID.\n\n"
-                           "Parameters:\n"
+@collaborator.command(help="Get a collaborator with his ID.\n\n\n"
+                           "Parameters:\n\n"
                             "   collaborator_id: Collaborator ID in numerical value.")
 @click.argument('collaborator_id', type=int)
 @click.pass_context
@@ -151,8 +151,8 @@ def getbyid(ctx, collaborator_id):
         display_message_error(str(e))
 
 
-@collaborator.command(help="Get a collaborator with his email.\n\n"
-                           "Parameters:\n"
+@collaborator.command(help="Get a collaborator with his email.\n\n\n"
+                           "Parameters:\n\n"
                                "   collaborator_email: Collaborator Email in alphabetical value and in form alpha@alpha.alpha.")
 @click.argument('collaborator_email', type=str)
 @click.pass_context
@@ -164,13 +164,13 @@ def getbyemail(ctx, collaborator_email):
         display_message_error(str(e))
 
 
-@collaborator.command(help="Update a collaborator with the following options:\n\n"
-                           "Parameters:\n"
-                           "   collaborator_id: Collaborator ID in numerical value.\n"
-                           "Options:\n"
-                           "   --firstname: For change: Firstname in alphabetical value, for keep unchanged: None.\n"
-                           "   --lastname: For change: Lastname in alphabetical value, for keep unchanged: None.\n"
-                           "   --email: For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.\n"
+@collaborator.command(help="Update a collaborator with the following options:\n\n\n"
+                           "Parameters:\n\n"
+                           "   collaborator_id: Collaborator ID in numerical value.\n\n"
+                           "Options:\n\n"
+                           "   --firstname: For change: Firstname in alphabetical value, for keep unchanged: None.\n\n"
+                           "   --lastname: For change: Lastname in alphabetical value, for keep unchanged: None.\n\n"
+                           "   --email: For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.\n\n"
                            "   --password: For change: Password in form with letters, numbers, and a limited set of special characters (!@#$%^&*()_-), for keep unchanged: None.")
 @click.pass_context
 @click.argument('collaborator_id', type=int)
@@ -186,8 +186,8 @@ def update(ctx, collaborator_id, firstname, lastname, email, password):
         display_message_error(str(e))
 
 
-@collaborator.command(help="Delete a collaborator with the following argument:\n\n"
-                           "Parameters:\n"
+@collaborator.command(help="Delete a collaborator with the following argument:\n\n\n"
+                           "Parameters:\n\n"
                            "   collaborator_id: Collaborator ID in numerical value.")
 @click.argument('collaborator_id', type=int)
 @click.pass_context

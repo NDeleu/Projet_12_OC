@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Contract &#8212; Project12 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=af2ce170"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Event" href="event_cli.html" />
+    <link rel="prev" title="Customer" href="customer_cli.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="contract">
+<h1>Contract<a class="headerlink" href="#contract" title="Permalink to this heading">¶</a></h1>
+<section id="main-py-contract-create">
+<h2>main.py contract create<a class="headerlink" href="#main-py-contract-create" title="Permalink to this heading">¶</a></h2>
+<p>Create a contract</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>total_amount (float): Total contract amount in numerical value.</p>
+<p>left_to_pay (float): Left to pay in numerical value.</p>
+<p>customer (int): Customer ID in numerical value.</p>
+<p>signed (bool): Contract signed, for yes: True, for no: False.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>contract<span class="w"> </span>create<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>TOTAL_AMOUNT<span class="w"> </span>LEFT_TO_PAY<span class="w"> </span>CUSTOMER<span class="w"> </span><span class="o">[</span>SIGNED<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-create-arg-TOTAL_AMOUNT">
+<span class="sig-name descname"><span class="pre">TOTAL_AMOUNT</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-contract-create-arg-TOTAL_AMOUNT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-create-arg-LEFT_TO_PAY">
+<span class="sig-name descname"><span class="pre">LEFT_TO_PAY</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-contract-create-arg-LEFT_TO_PAY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-create-arg-CUSTOMER">
+<span class="sig-name descname"><span class="pre">CUSTOMER</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-contract-create-arg-CUSTOMER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-create-arg-SIGNED">
+<span class="sig-name descname"><span class="pre">SIGNED</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-contract-create-arg-SIGNED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-contract-createform">
+<h2>main.py form contract createform<a class="headerlink" href="#main-py-form-contract-createform" title="Permalink to this heading">¶</a></h2>
+<p>Create a contract with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>contract<span class="w"> </span>createform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-contract-read">
+<h2>main.py contract read<a class="headerlink" href="#main-py-contract-read" title="Permalink to this heading">¶</a></h2>
+<p>Get a list of contracts</p>
+<p>Options:</p>
+<blockquote>
+<div><p>–mine (bool): If you are seller, filter awarded contracts: True, not this filter: False.</p>
+<p class="attribution">—is_signed (bool): Filter only contracts signed: True, not signed: False, both: None.</p>
+</div></blockquote>
+<blockquote>
+<div><p>–with_event (bool): Filter only contracts with existing event: True, without existing event: False, both: None.</p>
+<p class="attribution">—is_paid (bool): Filter only contracts paid: True, not paid: False, both: None.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>contract<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-read-mine">
+<span class="sig-name descname"><span class="pre">--mine</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;mine&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-contract-read-mine" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are seller, filter awarded contracts: True, not this filter: False.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-read-is_signed">
+<span class="sig-name descname"><span class="pre">--is_signed</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;is_signed&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-contract-read-is_signed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter only contracts signed: True, not signed: False, both: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-read-with_event">
+<span class="sig-name descname"><span class="pre">--with_event</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;with_event&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-contract-read-with_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter only contracts with existing event: True, without existing event: False, both: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-read-is_paid">
+<span class="sig-name descname"><span class="pre">--is_paid</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;is_paid&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-contract-read-is_paid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter only contracts paid: True, not paid: False, both: None.</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-contract-readform">
+<h2>main.py form contract readform<a class="headerlink" href="#main-py-form-contract-readform" title="Permalink to this heading">¶</a></h2>
+<p>Get a list of contracts with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>contract<span class="w"> </span>readform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-contract-getbyid">
+<h2>main.py contract getbyid<a class="headerlink" href="#main-py-contract-getbyid" title="Permalink to this heading">¶</a></h2>
+<p>Get a contract with his ID</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>contract_id (int): Contract ID in numerical value.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>contract<span class="w"> </span>getbyid<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>CONTRACT_ID
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-getbyid-arg-CONTRACT_ID">
+<span class="sig-name descname"><span class="pre">CONTRACT_ID</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-contract-getbyid-arg-CONTRACT_ID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-contract-getbyidform">
+<h2>main.py form contract getbyidform<a class="headerlink" href="#main-py-form-contract-getbyidform" title="Permalink to this heading">¶</a></h2>
+<p>Get a contract with his ID with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>contract<span class="w"> </span>getbyidform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-contract-update">
+<h2>main.py contract update<a class="headerlink" href="#main-py-contract-update" title="Permalink to this heading">¶</a></h2>
+<p>Update a contract</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>contract_id (int): Contract ID in numerical value.</p>
+</div></blockquote>
+<p>Options:</p>
+<blockquote>
+<div><p>–total_amount (float): For change: Total contract amount in numerical value, for keep unchanged: None.</p>
+<p class="attribution">—left_to_pay (float): For change: Left to pay in numerical value, for keep unchanged: None.</p>
+</div></blockquote>
+<blockquote>
+<div><p>–signed (bool): Contract signed, for yes: True, for no: False.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>contract<span class="w"> </span>update<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>CONTRACT_ID
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-update-total_amount">
+<span class="sig-name descname"><span class="pre">--total_amount</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;total_amount&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-contract-update-total_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Total contract amount in numerical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-update-left_to_pay">
+<span class="sig-name descname"><span class="pre">--left_to_pay</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;left_to_pay&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-contract-update-left_to_pay" title="Permalink to this definition">¶</a></dt>
+<dd><p>For change: Left to pay in numerical value, for keep unchanged: None.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-update-signed">
+<span class="sig-name descname"><span class="pre">--signed</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;signed&gt;</span></span><a class="headerlink" href="#cmdoption-main.py-contract-update-signed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contract signed, for yes: True, for no: False.</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-update-arg-CONTRACT_ID">
+<span class="sig-name descname"><span class="pre">CONTRACT_ID</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-contract-update-arg-CONTRACT_ID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-contract-updateform">
+<h2>main.py form contract updateform<a class="headerlink" href="#main-py-form-contract-updateform" title="Permalink to this heading">¶</a></h2>
+<p>Update a contract with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>contract<span class="w"> </span>updateform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py-contract-delete">
+<h2>main.py contract delete<a class="headerlink" href="#main-py-contract-delete" title="Permalink to this heading">¶</a></h2>
+<p>Delete a contract</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>contract_id (int): Contract ID in numerical value.</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>contract<span class="w"> </span>delete<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>CONTRACT_ID
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-main.py-contract-delete-arg-CONTRACT_ID">
+<span class="sig-name descname"><span class="pre">CONTRACT_ID</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-main.py-contract-delete-arg-CONTRACT_ID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+<section id="main-py-form-contract-deleteform">
+<h2>main.py form contract deleteform<a class="headerlink" href="#main-py-form-contract-deleteform" title="Permalink to this heading">¶</a></h2>
+<p>Delete a contract with form</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>main.py<span class="w"> </span>form<span class="w"> </span>contract<span class="w"> </span>deleteform<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Project12</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="connexion_menu.html">Menu: Connexion</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="models_menu.html">Menu: Models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="collaborator_cli.html">Collaborator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customer_cli.html">Customer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_cli.html">Event</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils_menu.html">Menu: Utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="models_menu.html">Menu: Models</a><ul>
+      <li>Previous: <a href="customer_cli.html" title="previous chapter">Customer</a></li>
+      <li>Next: <a href="event_cli.html" title="next chapter">Event</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Nicolas Deleu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/contract_cli.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

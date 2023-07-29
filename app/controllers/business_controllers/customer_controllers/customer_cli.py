@@ -113,12 +113,12 @@ def customer():
     pass
 
 
-@customer.command(help="Create a customer\n\n"
-                          "Parameters:\n"
-                          "   firstname (str): Firstname in alphabetical value.\n"
-                          "   lastname (str): Lastname in alphabetical value.\n"
-                          "   email (str): Email in alphabetical value and in form alpha@alpha.alpha.\n"
-                          "   phone (str): Phone number in numerical value.\n"
+@customer.command(help="Create a customer\n\n\n"
+                          "Parameters:\n\n"
+                          "   firstname (str): Firstname in alphabetical value.\n\n"
+                          "   lastname (str): Lastname in alphabetical value.\n\n"
+                          "   email (str): Email in alphabetical value and in form alpha@alpha.alpha.\n\n"
+                          "   phone (str): Phone number in numerical value.\n\n"
                           "   company (str): Customer's company in alphabetical value.")
 @click.pass_context
 @click.argument('firstname', type=str)
@@ -134,8 +134,8 @@ def create(ctx, firstname, lastname, email, phone, company):
         display_message_error(str(e))
 
 
-@customer.command(help="Get a list of customers\n\n"
-                          "Options:\n"
+@customer.command(help="Get a list of customers\n\n\n"
+                          "Options:\n\n"
                           "   --mine (bool): If you are seller, filter awarded customers: True, not this filter: False.")
 @click.option('--mine', type=bool, default=False, help="If you are seller, filter awarded customers: True, not this filter: False.")
 @click.pass_context
@@ -147,8 +147,8 @@ def read(ctx, mine):
         display_message_error(str(e))
 
 
-@customer.command(help="Get a customer with his ID\n\n"
-                          "Parameters:\n"
+@customer.command(help="Get a customer with his ID\n\n\n"
+                          "Parameters:\n\n"
                           "   customer_id (int): Customer ID in numerical value.")
 @click.argument('customer_id', type=int)
 @click.pass_context
@@ -160,8 +160,8 @@ def getbyid(ctx, customer_id):
         display_message_error(str(e))
 
 
-@customer.command(help="Get a customer with his email\n\n"
-                          "Parameters:\n"
+@customer.command(help="Get a customer with his email\n\n\n"
+                          "Parameters:\n\n"
                           "   customer_email (str): Customer Email in alphabetical value and in form alpha@alpha.alpha.")
 @click.argument('customer_email', type=str)
 @click.pass_context
@@ -173,14 +173,14 @@ def getbyemail(ctx, customer_email):
         display_message_error(str(e))
 
 
-@customer.command(help="Update a customer\n\n"
-                          "Parameters:\n"
-                          "   customer_id (int): Customer ID in numerical value.\n"
-                          "Options:\n"
-                          "   --firstname (str): For change: Firstname in alphabetical value, for keep unchanged: None.\n"
-                          "   --lastname (str): For change: Lastname in alphabetical value, for keep unchanged: None.\n"
-                          "   --email (str): For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.\n"
-                          "   --phone (str): For change: Phone number in numerical value, for keep unchanged: None.\n"
+@customer.command(help="Update a customer\n\n\n"
+                          "Parameters:\n\n"
+                          "   customer_id (int): Customer ID in numerical value.\n\n"
+                          "Options:\n\n"
+                          "   --firstname (str): For change: Firstname in alphabetical value, for keep unchanged: None.\n\n"
+                          "   --lastname (str): For change: Lastname in alphabetical value, for keep unchanged: None.\n\n"
+                          "   --email (str): For change: Email in alphabetical value and in form alpha@alpha.alpha, for keep unchanged: None.\n\n"
+                          "   --phone (str): For change: Phone number in numerical value, for keep unchanged: None.\n\n"
                           "   --company (str): For change: Customer's company in alphabetical value, for keep unchanged: None.")
 @click.pass_context
 @click.argument('customer_id', type=int)
@@ -197,8 +197,8 @@ def update(ctx, customer_id, firstname, lastname, email, phone, company):
         display_message_error(str(e))
 
 
-@customer.command(help="Delete a customer\n\n"
-                          "Parameters:\n"
+@customer.command(help="Delete a customer\n\n\n"
+                          "Parameters:\n\n"
                           "   customer_id (int): Customer ID in numerical value.")
 @click.argument('customer_id', type=int)
 @click.pass_context

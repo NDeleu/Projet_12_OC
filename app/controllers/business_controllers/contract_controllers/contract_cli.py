@@ -127,11 +127,11 @@ def contract():
     pass
 
 
-@contract.command(help="Create a contract\n\n"
-                       "Parameters:\n"
-                       "   total_amount (float): Total contract amount in numerical value.\n"
-                       "   left_to_pay (float): Left to pay in numerical value.\n"
-                       "   customer (int): Customer ID in numerical value.\n"
+@contract.command(help="Create a contract\n\n\n"
+                       "Parameters:\n\n"
+                       "   total_amount (float): Total contract amount in numerical value.\n\n"
+                       "   left_to_pay (float): Left to pay in numerical value.\n\n"
+                       "   customer (int): Customer ID in numerical value.\n\n"
                        "   signed (bool): Contract signed, for yes: True, for no: False.")
 @click.pass_context
 @click.argument('total_amount', type=float)
@@ -146,11 +146,11 @@ def create(ctx, total_amount, left_to_pay, customer, signed):
         display_message_error(str(e))
 
 
-@contract.command(help="Get a list of contracts\n\n"
-                       "Options:\n"
-                       "   --mine (bool): If you are seller, filter awarded contracts: True, not this filter: False.\n"
-                       "   --is_signed (bool): Filter only contracts signed: True, not signed: False, both: None.\n"
-                       "   --with_event (bool): Filter only contracts with existing event: True, without existing event: False, both: None.\n"
+@contract.command(help="Get a list of contracts\n\n\n"
+                       "Options:\n\n"
+                       "   --mine (bool): If you are seller, filter awarded contracts: True, not this filter: False.\n\n"
+                       "   --is_signed (bool): Filter only contracts signed: True, not signed: False, both: None.\n\n"
+                       "   --with_event (bool): Filter only contracts with existing event: True, without existing event: False, both: None.\n\n"
                        "   --is_paid (bool): Filter only contracts paid: True, not paid: False, both: None.")
 @click.option('--mine', type=bool, default=False, help="If you are seller, filter awarded contracts: True, not this filter: False.")
 @click.option('--is_signed', type=bool, default=None, help="Filter only contracts signed: True, not signed: False, both: None.")
@@ -165,8 +165,8 @@ def read(ctx, mine, is_signed, with_event, is_paid):
         display_message_error(str(e))
 
 
-@contract.command(help="Get a contract with his ID\n\n"
-                       "Parameters:\n"
+@contract.command(help="Get a contract with his ID\n\n\n"
+                       "Parameters:\n\n"
                        "   contract_id (int): Contract ID in numerical value.")
 @click.argument('contract_id', type=int)
 @click.pass_context
@@ -178,12 +178,12 @@ def getbyid(ctx, contract_id):
         display_message_error(str(e))
 
 
-@contract.command(help="Update a contract\n\n"
-                       "Parameters:\n"
-                       "   contract_id (int): Contract ID in numerical value.\n"
-                       "Options:\n"
-                       "   --total_amount (float): For change: Total contract amount in numerical value, for keep unchanged: None.\n"
-                       "   --left_to_pay (float): For change: Left to pay in numerical value, for keep unchanged: None.\n"
+@contract.command(help="Update a contract\n\n\n"
+                       "Parameters:\n\n"
+                       "   contract_id (int): Contract ID in numerical value.\n\n"
+                       "Options:\n\n"
+                       "   --total_amount (float): For change: Total contract amount in numerical value, for keep unchanged: None.\n\n"
+                       "   --left_to_pay (float): For change: Left to pay in numerical value, for keep unchanged: None.\n\n"
                        "   --signed (bool): Contract signed, for yes: True, for no: False.")
 @click.pass_context
 @click.argument('contract_id', type=int)
@@ -198,8 +198,8 @@ def update(ctx, contract_id, total_amount, left_to_pay, signed):
         display_message_error(str(e))
 
 
-@contract.command(help="Delete a contract\n\n"
-                       "Parameters:\n"
+@contract.command(help="Delete a contract\n\n\n"
+                       "Parameters:\n\n"
                        "   contract_id (int): Contract ID in numerical value.")
 @click.argument('contract_id', type=int)
 @click.pass_context

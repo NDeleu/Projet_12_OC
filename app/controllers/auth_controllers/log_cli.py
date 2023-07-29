@@ -28,9 +28,9 @@ def logoutform(ctx):
         display_message_error(str(e))
 
 
-@click.command(help="Login\n\n"
-                    "Parameters:\n"
-                    "   email (str): Enter your email\n"
+@click.command(help="Login\n\n\n"
+                    "Parameters:\n\n"
+                    "   email (str): Enter your email\n\n"
                     "   password (str): Enter your password")
 @click.pass_context
 @click.argument('email', type=str)
